@@ -1,0 +1,59 @@
+RemotePad Server README
+
+    This directory contains source files of RemotePad Server for Mac
+    OS X, Windows and X11.  This software 'RemotePad Server' is a
+    server application for and used with 'RemotePad,' an iPhone/iPod
+    touch application.
+
+        RemotePad is an application that controls a mouse cursor on
+        your desktop PC.  You can use an iPhone or iPod touch as a
+        wireless touchpad.  You can get RemotePad from the iTunes App
+        Store.
+
+    To compile RemotePad Server, please read a suitable part for your
+    system.
+
+X11 (Linux or BSDs)
+
+    1. Open terminal emulator (xterm perhaps).
+    2. Change your directory to where the downloaded file is.
+               prompt% cd the_directory_where_the_downloaded_file_is
+    3. Extract source files from the downloaded file.  This command
+       outputs extracted file names.
+               prompt% tar xvfz RemotePadServer-1.4-Source.tgz
+    4. Change your directory to an extracted one.  You have to enter
+       the command includes doublequotes.
+               prompt% cd "RemotePad Server"
+    5. Do compile with make command.  This command outputs compiling
+       commands and its outputs.
+               prompt% xmkmf
+               prompt% make
+    6. You have now get the RemotePad Server program named 'remotepad.'
+    7. Run this server.
+               prompt% ./remotepad
+    8. You may install this program to /usr/local/bin with root privilege.
+               prompt% su
+               prompt# make install
+
+Mac OS X
+
+    NOTE: Pre-compiled binary is available at
+          http://www.tenjin.org/RemotePad/
+    NOTE: You need a Xcode 3 development tool to compile.
+    1. Open file 'RemotePad Server.xcodeproj'.
+    2. Choose 'Active SDK' to 'Mac OS X 10.5' or 'Mac OS X 10.4' in a
+       Project menu.
+        - NOTE: RemotePad Server for 10.4 has some restriction currently.
+    3. Do 'Build' from Build menu.
+    4. 'RemotePad Server.app' is built in a directory 'build'.
+
+Windows
+
+    NOTE: Pre-compiled binary is available at
+          http://www.tenjin.org/RemotePad/
+    NOTE: You need a Visual C++ development tool to compile.
+    1. Open file 'RemotePad Server.vcproj'.
+    2. Choose a solution from 'Debug' to 'Release' in the 'Solution
+       Configuration' in the Toolbar.
+    3. Do 'Build Solution' from Build menu.
+    4. 'RemotePad Server.exe' is built in a directory 'Release'.
