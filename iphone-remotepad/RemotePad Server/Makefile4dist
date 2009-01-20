@@ -1,0 +1,16 @@
+SRC =	Event.h \
+	inputevent.h \
+	Makefile \
+	RemotePad\ Server.sln \
+	RemotePad\ Server.vcproj \
+	remotepad.c \
+	remotepadwin.cpp
+DIR =	RemotePad\ Server
+
+all: RemotePadServer-Source.tgz
+
+RemotePadServer-Source.tgz:
+	rm -rf ${DIR}
+	mkdir ${DIR}
+	cp -p ${SRC} ${DIR}
+	tar cvfz $@ ${DIR}

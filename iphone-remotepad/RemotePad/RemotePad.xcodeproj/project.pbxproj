@@ -1,0 +1,391 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		3A011E700E55E3CB006B8A65 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A011E6F0E55E3CB006B8A65 /* bg.png */; };
+		3A0D680F0E70E17F00142E59 /* PickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0D680E0E70E17F00142E59 /* PickerViewController.m */; };
+		3A1F06200E7F9DFF0065F8A7 /* adhoc-Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3A1F061F0E7F9DFF0065F8A7 /* adhoc-Entitlements.plist */; };
+		3A35DA810E5C856800061760 /* ButtonBack.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A35DA800E5C856800061760 /* ButtonBack.png */; };
+		3A4EDFE20E64055400C2548E /* ButtonCenter.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A4EDFD90E64055400C2548E /* ButtonCenter.png */; };
+		3A4EDFE30E64055400C2548E /* ButtonCenterHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A4EDFDA0E64055400C2548E /* ButtonCenterHighlighted.png */; };
+		3A4EDFE40E64055400C2548E /* ButtonLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A4EDFDB0E64055400C2548E /* ButtonLeft.png */; };
+		3A4EDFE50E64055400C2548E /* ButtonLeftHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A4EDFDC0E64055400C2548E /* ButtonLeftHighlighted.png */; };
+		3A4EDFE60E64055400C2548E /* ButtonRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A4EDFDD0E64055400C2548E /* ButtonRight.png */; };
+		3A4EDFE70E64055400C2548E /* ButtonRightHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A4EDFDE0E64055400C2548E /* ButtonRightHighlighted.png */; };
+		3A4EDFEA0E64055400C2548E /* ButtonRoundedHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A4EDFE10E64055400C2548E /* ButtonRoundedHighlighted.png */; };
+		3A6140460E55878A00B859F3 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6140450E55878A00B859F3 /* icon.png */; };
+		3A99D7730F20D3D000C16512 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 3A99D7720F20D3D000C16512 /* README */; };
+		3AA90C3C0E530F190086ADCD /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA90C3B0E530F190086ADCD /* AppController.m */; };
+		3AA90C3F0E530F4B0086ADCD /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA90C3E0E530F4B0086ADCD /* BrowserViewController.m */; };
+		3AA90C420E530F6C0086ADCD /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA90C410E530F6C0086ADCD /* TCPServer.m */; };
+		3AA90C450E530F9F0086ADCD /* Picker.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA90C440E530F9F0086ADCD /* Picker.m */; };
+		3AA90C550E5310070086ADCD /* TapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA90C540E5310070086ADCD /* TapView.m */; };
+		3AA90C5A0E5310420086ADCD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA90C590E5310420086ADCD /* CoreGraphics.framework */; };
+		3AC84E470E6465E100B418AE /* SetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AC84E460E6465E100B418AE /* SetupViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1D6058910D05DD3D006BFB54 /* RemotePad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemotePad.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		32CA4F630368D1EE00C91783 /* RemotePad_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemotePad_Prefix.pch; sourceTree = "<group>"; };
+		3A011E6F0E55E3CB006B8A65 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
+		3A0D680D0E70E17F00142E59 /* PickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PickerViewController.h; path = ../PickerViewController.h; sourceTree = "<group>"; };
+		3A0D680E0E70E17F00142E59 /* PickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PickerViewController.m; path = ../PickerViewController.m; sourceTree = "<group>"; };
+		3A1F061F0E7F9DFF0065F8A7 /* adhoc-Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "adhoc-Entitlements.plist"; sourceTree = "<group>"; };
+		3A35DA800E5C856800061760 /* ButtonBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonBack.png; sourceTree = "<group>"; };
+		3A4EDFD90E64055400C2548E /* ButtonCenter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonCenter.png; sourceTree = "<group>"; };
+		3A4EDFDA0E64055400C2548E /* ButtonCenterHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonCenterHighlighted.png; sourceTree = "<group>"; };
+		3A4EDFDB0E64055400C2548E /* ButtonLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonLeft.png; sourceTree = "<group>"; };
+		3A4EDFDC0E64055400C2548E /* ButtonLeftHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonLeftHighlighted.png; sourceTree = "<group>"; };
+		3A4EDFDD0E64055400C2548E /* ButtonRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonRight.png; sourceTree = "<group>"; };
+		3A4EDFDE0E64055400C2548E /* ButtonRightHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonRightHighlighted.png; sourceTree = "<group>"; };
+		3A4EDFDF0E64055400C2548E /* ButtonRounded.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonRounded.png; sourceTree = "<group>"; };
+		3A4EDFE00E64055400C2548E /* ButtonRounded.xcf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ButtonRounded.xcf; sourceTree = "<group>"; };
+		3A4EDFE10E64055400C2548E /* ButtonRoundedHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonRoundedHighlighted.png; sourceTree = "<group>"; };
+		3A6140450E55878A00B859F3 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		3A65D7160F207B43001C4E8B /* COPYRIGHT */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYRIGHT; sourceTree = "<group>"; };
+		3A8CAB570E65317A0042FC66 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		3A99D7720F20D3D000C16512 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		3A9C34960E8535F900F6140E /* icon.xcf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icon.xcf; sourceTree = "<group>"; };
+		3AA90C3A0E530F030086ADCD /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = ../AppController.h; sourceTree = "<group>"; };
+		3AA90C3B0E530F190086ADCD /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppController.m; path = ../AppController.m; sourceTree = "<group>"; };
+		3AA90C3D0E530F3C0086ADCD /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BrowserViewController.h; path = ../BrowserViewController.h; sourceTree = "<group>"; };
+		3AA90C3E0E530F4B0086ADCD /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BrowserViewController.m; path = ../BrowserViewController.m; sourceTree = "<group>"; };
+		3AA90C400E530F5B0086ADCD /* TCPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCPServer.h; path = ../TCPServer.h; sourceTree = "<group>"; };
+		3AA90C410E530F6C0086ADCD /* TCPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TCPServer.m; path = ../TCPServer.m; sourceTree = "<group>"; };
+		3AA90C430E530F920086ADCD /* Picker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Picker.h; path = ../Picker.h; sourceTree = "<group>"; };
+		3AA90C440E530F9F0086ADCD /* Picker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Picker.m; path = ../Picker.m; sourceTree = "<group>"; };
+		3AA90C530E530FFA0086ADCD /* TapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TapView.h; path = ../TapView.h; sourceTree = "<group>"; };
+		3AA90C540E5310070086ADCD /* TapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TapView.m; path = ../TapView.m; sourceTree = "<group>"; };
+		3AA90C590E5310420086ADCD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		3AC84E450E6465E100B418AE /* SetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetupViewController.h; path = ../SetupViewController.h; sourceTree = "<group>"; };
+		3AC84E460E6465E100B418AE /* SetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SetupViewController.m; path = ../SetupViewController.m; sourceTree = "<group>"; wrapsLines = 1; };
+		3AE1F7760E6FB96F001DF387 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
+				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
+				3AA90C5A0E5310420086ADCD /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				3AC84E450E6465E100B418AE /* SetupViewController.h */,
+				3AC84E460E6465E100B418AE /* SetupViewController.m */,
+				3AA90C540E5310070086ADCD /* TapView.m */,
+				3AA90C530E530FFA0086ADCD /* TapView.h */,
+				3A0D680D0E70E17F00142E59 /* PickerViewController.h */,
+				3A0D680E0E70E17F00142E59 /* PickerViewController.m */,
+				3AA90C440E530F9F0086ADCD /* Picker.m */,
+				3AA90C430E530F920086ADCD /* Picker.h */,
+				3AA90C410E530F6C0086ADCD /* TCPServer.m */,
+				3AA90C400E530F5B0086ADCD /* TCPServer.h */,
+				3AA90C3E0E530F4B0086ADCD /* BrowserViewController.m */,
+				3AA90C3D0E530F3C0086ADCD /* BrowserViewController.h */,
+				3AA90C3B0E530F190086ADCD /* AppController.m */,
+				3AA90C3A0E530F030086ADCD /* AppController.h */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D6058910D05DD3D006BFB54 /* RemotePad.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				3AE1F7760E6FB96F001DF387 /* Constants.h */,
+				3A8CAB570E65317A0042FC66 /* Event.h */,
+				32CA4F630368D1EE00C91783 /* RemotePad_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3A99D7720F20D3D000C16512 /* README */,
+				3A65D7160F207B43001C4E8B /* COPYRIGHT */,
+				3A1F061F0E7F9DFF0065F8A7 /* adhoc-Entitlements.plist */,
+				3A4EDFD90E64055400C2548E /* ButtonCenter.png */,
+				3A4EDFDA0E64055400C2548E /* ButtonCenterHighlighted.png */,
+				3A4EDFDB0E64055400C2548E /* ButtonLeft.png */,
+				3A4EDFDC0E64055400C2548E /* ButtonLeftHighlighted.png */,
+				3A4EDFDD0E64055400C2548E /* ButtonRight.png */,
+				3A4EDFDE0E64055400C2548E /* ButtonRightHighlighted.png */,
+				3A4EDFDF0E64055400C2548E /* ButtonRounded.png */,
+				3A4EDFE00E64055400C2548E /* ButtonRounded.xcf */,
+				3A4EDFE10E64055400C2548E /* ButtonRoundedHighlighted.png */,
+				3A35DA800E5C856800061760 /* ButtonBack.png */,
+				3A011E6F0E55E3CB006B8A65 /* bg.png */,
+				3A6140450E55878A00B859F3 /* icon.png */,
+				3A9C34960E8535F900F6140E /* icon.xcf */,
+				8D1107310486CEB800E47090 /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3AA90C590E5310420086ADCD /* CoreGraphics.framework */,
+				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+				1D30AB110D05D00D00671497 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* RemotePad */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "RemotePad" */;
+			buildPhases = (
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RemotePad;
+			productName = RemotePad;
+			productReference = 1D6058910D05DD3D006BFB54 /* RemotePad.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "RemotePad" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* RemotePad */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A6140460E55878A00B859F3 /* icon.png in Resources */,
+				3A011E700E55E3CB006B8A65 /* bg.png in Resources */,
+				3A35DA810E5C856800061760 /* ButtonBack.png in Resources */,
+				3A4EDFE20E64055400C2548E /* ButtonCenter.png in Resources */,
+				3A4EDFE30E64055400C2548E /* ButtonCenterHighlighted.png in Resources */,
+				3A4EDFE40E64055400C2548E /* ButtonLeft.png in Resources */,
+				3A4EDFE50E64055400C2548E /* ButtonLeftHighlighted.png in Resources */,
+				3A4EDFE60E64055400C2548E /* ButtonRight.png in Resources */,
+				3A4EDFE70E64055400C2548E /* ButtonRightHighlighted.png in Resources */,
+				3A4EDFEA0E64055400C2548E /* ButtonRoundedHighlighted.png in Resources */,
+				3A1F06200E7F9DFF0065F8A7 /* adhoc-Entitlements.plist in Resources */,
+				3A99D7730F20D3D000C16512 /* README in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
+				3AA90C3C0E530F190086ADCD /* AppController.m in Sources */,
+				3AA90C3F0E530F4B0086ADCD /* BrowserViewController.m in Sources */,
+				3AA90C420E530F6C0086ADCD /* TCPServer.m in Sources */,
+				3AA90C450E530F9F0086ADCD /* Picker.m in Sources */,
+				3AA90C550E5310070086ADCD /* TapView.m in Sources */,
+				3AC84E470E6465E100B418AE /* SetupViewController.m in Sources */,
+				3A0D680F0E70E17F00142E59 /* PickerViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = RemotePad_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				PRODUCT_NAME = RemotePad;
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = RemotePad_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				PRODUCT_NAME = RemotePad;
+			};
+			name = Release;
+		};
+		3A166BE40E7F860800001374 /* Distribution Ad-Hoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_ENTITLEMENTS = "adhoc-Entitlements.plist";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Yoshihisa Kawamoto";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				PROVISIONING_PROFILE = DefaultProfileUuid;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0E89C2CB-646A-41DB-BC91-10A7D69E6FC4";
+				SDKROOT = iphoneos2.0;
+			};
+			name = "Distribution Ad-Hoc";
+		};
+		3A166BE50E7F860800001374 /* Distribution Ad-Hoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = RemotePad_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				PRODUCT_NAME = RemotePad;
+			};
+			name = "Distribution Ad-Hoc";
+		};
+		3A6C13210E75253700D4B6E3 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Yoshihisa Kawamoto";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				PROVISIONING_PROFILE = DefaultProfileUuid;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "288E304E-7472-4E52-8519-4B7A2A77F785";
+				SDKROOT = iphoneos2.0;
+			};
+			name = Distribution;
+		};
+		3A6C13220E75253700D4B6E3 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = RemotePad_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				PRODUCT_NAME = RemotePad;
+			};
+			name = Distribution;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = iphoneos2.0;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = iphoneos2.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "RemotePad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+				3A6C13220E75253700D4B6E3 /* Distribution */,
+				3A166BE50E7F860800001374 /* Distribution Ad-Hoc */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "RemotePad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+				3A6C13210E75253700D4B6E3 /* Distribution */,
+				3A166BE40E7F860800001374 /* Distribution Ad-Hoc */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

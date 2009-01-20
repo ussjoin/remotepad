@@ -1,0 +1,16 @@
+RemotePad README
+
+    This directory contains source files of RemotePad application for
+    an iPhone / iPod touch.
+
+        RemotePad is an application that controls a mouse cursor on
+        your desktop PC.  You can use an iPhone or iPod touch as a
+        wireless touchpad.  You can get RemotePad from the iTunes App
+        Store.
+
+    To compile this, you need a iPhone SDK(free).  And to run this on
+    iPhone or iPod touch, you need a iPhone Developer Program(not
+    free).
+
+    I'm sorry to say that I don't answer the generic questions related
+    to the iPhone SDK.  Please see the iPhone Dev Center resources.
