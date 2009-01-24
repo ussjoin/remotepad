@@ -62,7 +62,7 @@
 #include "inputevent.h"
 #include "Event.h"
 
-#define kVersionX11 "1.5"
+#define kVersionX11 "1.6"
 
 #define SCROLL_AMT 40
 #define BUTTON_SCROLL_UP Button5
