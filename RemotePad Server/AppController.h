@@ -1,15 +1,17 @@
 //
-//  MyDocument.h
+//  AppController.h
 //  RemotePad Server
 //
 //  Derived from an Apple's sample code AppController.h of WiTap.
 //  Modified by iKawamoto Yosihisa! on 08/08/17.
+//  Modified by Rui Paulo on 23/01/2009.
 //  Copyright 2008, 2009 tenjin.org. All rights reserved.
+//
 //
 
 /*
  
- File: AppController.h
+ File: AppController.m
  Abstract: UIApplication's delegate class, the central controller of the
  application.
  
@@ -54,46 +56,48 @@
  Copyright (C) 2008 Apple Inc. All Rights Reserved.
  
  */
-
 #import <Cocoa/Cocoa.h>
 #import <ApplicationServices/ApplicationServices.h>
+
 #import "TCPServer.h"
 #import "Event.h"
 
-
-@interface MyDocument : NSDocument <TCPServerDelegate> {
-	IBOutlet NSTextView *message;
-	IBOutlet NSWindow *mainWindow;
+@interface AppController : NSObject <TCPServerDelegate> {
 	TCPServer* _server;
 	NSInputStream* _inStream;
 	NSOutputStream* _outStream;
 	BOOL _inReady;
 	BOOL _outReady;
-	struct mouseEvent prevevent;
+	struct mouseEvent prevevent;	
 	BOOL mouse1Clicked;
 	BOOL mouse2Clicked;
 	BOOL mouse3Clicked;
 	NSThread *streamThread;
-	IBOutlet NSButton *disconnectButton;
-    CFRunLoopSourceRef runLoopSource;
+	CFRunLoopSourceRef runLoopSource;
 	NSTimer *keepAliveTimer;
+	
+	NSStatusItem *statusItem;
 }
+- (void)setup:(id)sender;
+- (void)applicationWillFinishLaunching:(NSNotification *)aNotification;
+- (void)applicationTerminated:(NSNotification *)aNotification;
+- (void)disconnect:(id)sender;
+- (void)_showAlert:(NSString *)title;
+
+- (void)quitMenu:(id)sender;
+- (void)aboutMenu:(id)sender;
 
 - (void)mouseDown:(struct mouseEvent)event0;
 - (void)mouseUp:(struct mouseEvent)event0;
 - (void)mouseMoveX:(struct mouseEvent)x Y:(struct mouseEvent)y;
 - (void)scrollWheelW:(struct mouseEvent)w Z:(struct mouseEvent)z;
 - (void)scrollWheelZ:(struct mouseEvent)z;
-- (void)setup;
-- (IBAction)disconnect:(id)sender;
-- (void)exitStreamThread;
-- (void)sendKeepAlive:(NSTimer*)theTimer;
 
 - (void)addSourceToCurrentRunLoop;
 // Client interface for registering commands to process
 - (void)requestExitStreamThread;
-
 @end
+
 
 // These are the CFRunLoopSourceRef callback functions.
 void RunLoopSourceScheduleRoutine (void *info, CFRunLoopRef rl, CFStringRef mode);

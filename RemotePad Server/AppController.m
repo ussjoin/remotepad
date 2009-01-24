@@ -1,10 +1,12 @@
 //
-//  MyDocument.m
+//  AppController.m
 //  RemotePad Server
 //
 //  Derived from an Apple's sample code AppController.m of WiTap.
 //  Modified by iKawamoto Yosihisa! on 08/08/17.
+//  Modified by Rui Paulo on 23/01/2009.
 //  Copyright 2008, 2009 tenjin.org. All rights reserved.
+//
 //
 
 /*
@@ -55,9 +57,12 @@
  
  */
 
+
 #import <Carbon/Carbon.h>
-#import "MyDocument.h"
 #include <sys/time.h>
+
+#import "AppController.h"
+
 
 #if (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5)
 #define kVersion	@"1.2 for Mac OS X 10.5"
@@ -72,32 +77,29 @@
 // It should also be descriptive and human-readable
 // See the following for more information:
 // http://developer.apple.com/networking/bonjour/faq.html
-#define kGameIdentifier		@"remotepad"
+
+#define kBonjourIdentifier		@"remotepad"
 
 #define delta 5
 
-@implementation MyDocument
+@implementation AppController
 
-- (void) _showAlert:(NSString *)title {
-	[message setEditable:YES];
-	[message insertText:title];
-	[message insertText:@"\n"];
-	[message setEditable:NO];
-}
+#pragma mark (De-)Initialization routines
 
 - (id)init
 {
-    self = [super init];
+	self = [super init];
     if (self) {
-		CFRunLoopSourceContext context = {0, self, NULL, NULL, NULL, NULL, NULL, NULL, NULL, RunLoopSourcePerformRoutine};
-
+		CFRunLoopSourceContext context = { 0, self, NULL, NULL, NULL, NULL,
+			NULL, NULL, NULL, RunLoopSourcePerformRoutine };
+		
 		runLoopSource = CFRunLoopSourceCreate(NULL, 0, &context);
     }
     return self;
 }
 
-- (void) dealloc
-{	
+- (void)dealloc
+{
 	[_inStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:(NSString*)kCFRunLoopCommonModes];
 	[_inStream release];
 	
@@ -111,23 +113,11 @@
 	[super dealloc];
 }
 
-- (NSString *)windowNibName
+- (void)setup:(id)sender
 {
-    // Override returning the nib file name of the document
-    // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
-    return @"MyDocument";
-}
-
-- (void)windowControllerDidLoadNib:(NSWindowController *) aController
-{
-    [super windowControllerDidLoadNib:aController];
-    // Add any code here that needs to be executed once the windowController has loaded the document's window.
-	[self _showAlert:[NSString stringWithFormat:@"RemotePad Server version %@", kVersion]];
-	[self _showAlert:@"Application launched."];
-	[self setup];
-}
-
-- (void) setup {
+	//
+	// Server setup
+	//
 	streamThread = nil;
 	
 	[_server release];
@@ -148,72 +138,114 @@
 	NSError* error;
 	if(_server == nil || ![_server start:&error]) {
 		NSLog(@"Failed creating server: %@", error);
-		[self _showAlert:@"Failed creating server"];
+		//[self _showAlert:@"Failed creating server"];
 		return;
 	}
 	
 	//Start advertising to clients, passing nil for the name to tell Bonjour to pick use default name
-	if(![_server enableBonjourWithDomain:@"local" applicationProtocol:[TCPServer bonjourTypeFromIdentifier:kGameIdentifier] name:nil]) {
-		[self _showAlert:@"Failed advertising server"];
+	if(![_server enableBonjourWithDomain:@"local" applicationProtocol:[TCPServer bonjourTypeFromIdentifier:kBonjourIdentifier] name:nil]) {
+		//[self _showAlert:@"Failed advertising server"];
 		return;
 	}
 	
-	//[self presentPicker:nil];
-	[self _showAlert:[NSString stringWithFormat:@"Waiting with Bonjour (port %d)", [_server port]]];
-}
-
-- (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError
+}	
+- (void)applicationWillFinishLaunching:(NSNotification *)aNotification
 {
-    if ( outError != NULL ) {
-		*outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:NULL];
-	}
-	return nil;
+	[self setup:self];
+	
+	//
+	// Setup the menu bar item
+	//
+	statusItem = [[NSStatusBar systemStatusBar]
+					statusItemWithLength:NSVariableStatusItemLength];
+	
+	[statusItem retain];
+	NSString *imageName = [[NSBundle mainBundle]
+						   pathForResource:@"pointer" ofType:@"png"];
+	NSImage *tempImage = [[NSImage alloc] initWithContentsOfFile:imageName];
+	[statusItem setImage:tempImage];
+	[statusItem setHighlightMode:YES];
+	
+	NSMenu *menu = [[NSMenu alloc] initWithTitle:@"Menu"];	
+	NSMenuItem *menuItem;
+	
+	[menu setAutoenablesItems:NO];
+	
+	menuItem = [[NSMenuItem alloc]
+				initWithTitle:@"RemotePad: No peer connected"
+				action:nil keyEquivalent:@""];
+	[menuItem setEnabled:NO];
+	[menu addItem:menuItem];
+	
+	[menu addItem:[NSMenuItem separatorItem]];
+	
+	menuItem = [[NSMenuItem alloc] initWithTitle:@"About RemotePad..."
+										  action:@selector(aboutMenu:)
+								   keyEquivalent:@""];
+	[menuItem setEnabled:YES];
+	[menu addItem:menuItem];
+
+	menuItem = [[NSMenuItem alloc] initWithTitle:@"Quit RemotePad"
+										  action:@selector(quitMenu:)
+								   keyEquivalent:@""];
+	[menuItem setEnabled:YES];
+	[menu addItem:menuItem];
+	
+	[statusItem setMenu:menu];
 }
 
-- (BOOL)readFromData:(NSData *)data ofType:(NSString *)typeName error:(NSError **)outError
+- (void)applicationTerminated:(NSNotification *)aNotification;
 {
-    if ( outError != NULL ) {
-		*outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:NULL];
-	}
-    return YES;
-}
 
-- (void) openStreams
+}
+- (void)disconnect:(id)sender
 {
-	streamThread = [NSThread currentThread];
-	_inStream.delegate = self;
-	[_inStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-	[_inStream open];
-	_outStream.delegate = self;
-	[_outStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-	[_outStream open];
-	[self addSourceToCurrentRunLoop];
-	keepAliveTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(sendKeepAlive:) userInfo:nil repeats:YES];
-	[[NSRunLoop currentRunLoop] run];
+	[self requestExitStreamThread];
+	[_inStream close];
+	[_outStream close];
+	[self _showAlert:@"Disconnected!"];
+	//[disconnectButton setEnabled:NO];
+	[self setup:sender];
 }
 
-- (void)exitStreamThread {
-	if (streamThread) {
-		if (![streamThread isEqual:[NSThread currentThread]]) {
-			fprintf(stderr, "warning: exitStreamThread: invoked from a non streaming thread\n");
-		}
-		streamThread = nil;
-	}
-	[NSThread exit];
+
+- (void)_showAlert:(NSString *)title
+{
+	[NSAlert alertWithMessageText:@"RemotePad error"
+					defaultButton:@"OK"
+				  alternateButton:nil
+					  otherButton:nil
+		informativeTextWithFormat:title];
 }
 
-- (CGPoint)getMousePointWithDeltaX:(int)x deltaY:(int)y {
+#pragma mark Menu actions
+
+- (void)quitMenu:(id)sender
+{
+	[NSApp terminate:sender];
+}
+
+- (void)aboutMenu:(id)sender
+{
+	[NSApp orderFrontStandardAboutPanel:sender];
+}
+
+#pragma mark CG routines
+
+- (CGPoint)getMousePointWithDeltaX:(int)x deltaY:(int)y
+{
 	CGPoint point;
 	Point globalPoint;
 	CGDirectDisplayID displayID;
 	CGDisplayCount displayCnt;
 	CGRect disp = CGDisplayBounds(kCGDirectMainDisplay);
+	
 	GetGlobalMouse(&globalPoint);
 	point.x = globalPoint.h;
 	point.y = globalPoint.v;
 	if (x == 0 && y == 0)
 		return point;
-
+	
 	double accel = 1;
 	if (delta < abs(x) || delta < abs(y)) {
 		accel = sqrt(x*x+y*y)/delta;
@@ -231,13 +263,16 @@
 		if (point.y < disp.origin.y) point.y = disp.origin.y;
 		else if (disp.origin.y + disp.size.height - 1 < point.y) point.y = disp.origin.y + disp.size.height - 1;
 	}
+	
 	return point;
 }
 
-- (void)mouseDown:(struct mouseEvent)event0 {
+- (void)mouseDown:(struct mouseEvent)event0
+{
 	CGPoint point = [self getMousePointWithDeltaX:0 deltaY:0];
 	CGEventType type;
 	CGMouseButton button;
+	
 	int mouseNum = MouseNumber(event0.value), clickCount = MouseClickCount(event0.value);
 	if (mouseNum == 0) {
 		type = kCGEventLeftMouseDown;
@@ -260,10 +295,12 @@
 	CFRelease(event);
 }
 
-- (void)mouseUp:(struct mouseEvent)event0 {
+- (void)mouseUp:(struct mouseEvent)event0
+{
 	CGPoint point = [self getMousePointWithDeltaX:0 deltaY:0];
 	CGEventType type;
 	CGMouseButton button;
+	
 	int mouseNum = MouseNumber(event0.value), clickCount = MouseClickCount(event0.value);
 	if (mouseNum == 0) {
 		type = kCGEventLeftMouseUp;
@@ -286,10 +323,12 @@
 	CFRelease(event);
 }
 
-- (void)mouseMoveX:(struct mouseEvent)x Y:(struct mouseEvent)y {
+- (void)mouseMoveX:(struct mouseEvent)x Y:(struct mouseEvent)y
+{
 	CGPoint point = [self getMousePointWithDeltaX:x.value deltaY:y.value];
 	CGEventType type;
 	CGMouseButton button;
+	
 	if (mouse1Clicked) {
 		type = kCGEventLeftMouseDragged;
 		button = kCGMouseButtonLeft;
@@ -303,6 +342,7 @@
 		type = kCGEventMouseMoved;
 		button = kCGMouseButtonLeft;
 	}
+	
 	CFRelease(CGEventCreate(NULL));
 	CGEventRef event = CGEventCreateMouseEvent(NULL, type, point, button);
 	CGEventSetType(event, type);
@@ -310,13 +350,17 @@
 	CFRelease(event);
 }
 
-- (void)scrollWheelW:(struct mouseEvent)w Z:(struct mouseEvent)z {
+- (void)scrollWheelW:(struct mouseEvent)w Z:(struct mouseEvent)z
+{
 	double accel = 1;
+	
 	if (delta < abs(w.value) || delta < abs(z.value)) {
 		accel = sqrt(w.value*w.value+z.value*z.value)/delta;
 	}
+	
 	int32_t countW = -w.value*accel;
 	int32_t countZ = -z.value*accel;
+	
 	if (countW != 0 || countZ != 0) {
 		CFRelease(CGEventCreate(NULL));
 #if (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5)
@@ -333,12 +377,16 @@
 	}
 }
 
-- (void)scrollWheelZ:(struct mouseEvent)z {
+- (void)scrollWheelZ:(struct mouseEvent)z
+{
 	double accel = 1;
+	
 	if (delta < abs(z.value)) {
 		accel = abs(z.value)/delta;
 	}
+	
 	int32_t countZ = -z.value*accel;
+	
 	if (countZ != 0) {
 		CFRelease(CGEventCreate(NULL));
 #if (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5)
@@ -355,7 +403,8 @@
 	}
 }
 
-- (void)keyDown:(struct mouseEvent)event0 {
+- (void)keyDown:(struct mouseEvent)event0
+{
 	CGKeyCode key = (CGKeyCode)event0.value;
 	CFRelease(CGEventCreate(NULL));
 	CGEventRef event = CGEventCreateKeyboardEvent(NULL, key, true);
@@ -364,7 +413,8 @@
 	CFRelease(event);
 }
 
-- (void)keyUp:(struct mouseEvent)event0 {
+- (void)keyUp:(struct mouseEvent)event0
+{
 	CGKeyCode key = (CGKeyCode)event0.value;
 	CFRelease(CGEventCreate(NULL));
 	CGEventRef event = CGEventCreateKeyboardEvent(NULL, key, false);
@@ -373,25 +423,72 @@
 	CFRelease(event);
 }
 
-- (IBAction)disconnect:(id)sender {
-	[self requestExitStreamThread];
-	[_inStream close];
-	[_outStream close];
-	[self _showAlert:@"Disconnected!"];
-	[disconnectButton setEnabled:NO];
-	[self setup];
+#pragma mark Stream routines
+
+- (void)openStreams
+{
+	streamThread = [NSThread currentThread];
+	_inStream.delegate = self;
+	[_inStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+	[_inStream open];
+	_outStream.delegate = self;
+	[_outStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+	[_outStream open];
+	[self addSourceToCurrentRunLoop];
+	keepAliveTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(sendKeepAlive:) userInfo:nil repeats:YES];
+	[[NSRunLoop currentRunLoop] run];
 }
 
-- (void)addSourceToCurrentRunLoop {
+- (void)exitStreamThread
+{
+	if (streamThread) {
+		if (![streamThread isEqual:[NSThread currentThread]]) {
+			fprintf(stderr, "warning: exitStreamThread: invoked from a non streaming thread\n");
+		}
+		streamThread = nil;
+	}
+	[NSThread exit];
+}
+
+#pragma mark SOMETHING delegates
+
+- (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError
+{
+    if (outError != NULL) {
+		*outError = [NSError errorWithDomain:NSOSStatusErrorDomain
+										code:unimpErr
+									userInfo:NULL];
+	}
+	return nil;
+}
+
+- (BOOL)readFromData:(NSData *)data ofType:(NSString *)typeName error:(NSError **)outError
+{
+    if (outError != NULL) {
+		*outError = [NSError errorWithDomain:NSOSStatusErrorDomain
+										code:unimpErr
+									userInfo:NULL];
+	}
+    return YES;
+}
+
+#pragma mark Run Loop delegates/routines
+
+- (void)addSourceToCurrentRunLoop
+{
     CFRunLoopRef runLoop = CFRunLoopGetCurrent();
     CFRunLoopAddSource(runLoop, runLoopSource, kCFRunLoopDefaultMode);
 }
 
-- (void)requestExitStreamThread {
+- (void)requestExitStreamThread
+{
     CFRunLoopSourceSignal(runLoopSource);
 }
 
-- (void)sendKeepAlive:(NSTimer*)theTimer {
+#pragma mark Keep alive delegates
+
+- (void)sendKeepAlive:(NSTimer*)theTimer
+{
 	struct timeval tv;
 	gettimeofday(&tv, NULL);
 	
@@ -403,15 +500,10 @@
 
 @end
 
-// This is the CFRunLoopSourceRef callback function.
-void RunLoopSourcePerformRoutine (void *info) {
-    MyDocument* obj = (MyDocument*)info;
-    [obj exitStreamThread];
-}
 
-@implementation MyDocument (NSStreamDelegate)
+@implementation AppController (NSStreamDelegate)
 
-- (void) stream:(NSStream*)stream handleEvent:(NSStreamEvent)eventCode
+- (void) stream:(NSStream *)stream handleEvent:(NSStreamEvent)eventCode
 {
 	switch(eventCode) {
 		case NSStreamEventOpenCompleted:
@@ -425,12 +517,14 @@ void RunLoopSourcePerformRoutine (void *info) {
 				_outReady = YES;
 			
 			if (_inReady && _outReady) {
-				[self _showAlert:@"Connected!"];
+				[[[statusItem menu] itemAtIndex:0] setTitle:@"RemotePad: peer connected"];
+				 
+				
 				prevevent.type = EVENT_NULL;
 				mouse1Clicked = NO;
 				mouse2Clicked = NO;
 				mouse3Clicked = NO;
-				[disconnectButton setEnabled:YES];
+				//XXX [disconnectButton setEnabled:YES];
 			}
 			break;
 		}
@@ -492,7 +586,7 @@ void RunLoopSourcePerformRoutine (void *info) {
 		}
 		case NSStreamEventEndEncountered:
 		{
-			[self _showAlert:@"Connection Closed."];
+			[[[statusItem menu] itemAtIndex:0] setTitle:@"RemotePad: no peer connected"];
 			[self performSelectorOnMainThread:@selector(disconnect:) withObject:nil waitUntilDone:YES];
 			break;
 		}
@@ -507,7 +601,7 @@ void RunLoopSourcePerformRoutine (void *info) {
 
 @end
 
-@implementation MyDocument (TCPServerDelegate)
+@implementation AppController (TCPServerDelegate)
 
 - (void) serverDidEnableBonjour:(TCPServer*)server withName:(NSString*)string
 {
@@ -531,3 +625,12 @@ void RunLoopSourcePerformRoutine (void *info) {
 }
 
 @end
+
+
+// This is the CFRunLoopSourceRef callback function.
+void RunLoopSourcePerformRoutine (void *info)
+{
+    AppController* obj = (AppController*)info;
+    [obj exitStreamThread];
+}
+

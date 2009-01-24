@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1DDD582C0DA1D0D100B32029 /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58280DA1D0D100B32029 /* MyDocument.xib */; };
 		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
 		3A166AF30E7F6B8F00001374 /* RemotePad Server.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3A166AF20E7F6B8F00001374 /* RemotePad Server.icns */; };
 		3A99D79A0F20D63700C16512 /* COPYRIGHT in Resources */ = {isa = PBXBuildFile; fileRef = 3A99D7990F20D63700C16512 /* COPYRIGHT */; };
 		3AB151190E7F5D0500FB4375 /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB151180E7F5D0500FB4375 /* TCPServer.m */; };
 		3AB1512C0E7F5D8B00FB4375 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AB1512B0E7F5D8B00FB4375 /* Carbon.framework */; };
+		5631BFD80F2A2FD80042B665 /* pointer.png in Resources */ = {isa = PBXBuildFile; fileRef = 5631BFD70F2A2FD80042B665 /* pointer.png */; };
+		5650583F0F2A0A220067B358 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5650583E0F2A0A220067B358 /* AppController.m */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
-		8D15AC310486D014006FF6A4 /* MyDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4ACFDCFA73011CA2CEA /* MyDocument.m */; settings = {ATTRIBUTES = (); }; };
 		8D15AC320486D014006FF6A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -24,10 +24,7 @@
 		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
-		1DDD58290DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MyDocument.xib; sourceTree = "<group>"; };
 		1DDD582B0DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		2A37F4ACFDCFA73011CA2CEA /* MyDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyDocument.m; sourceTree = "<group>"; };
-		2A37F4AEFDCFA73011CA2CEA /* MyDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyDocument.h; sourceTree = "<group>"; };
 		2A37F4B0FDCFA73011CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2A37F4BAFDCFA73011CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -49,6 +46,9 @@
 		3ACB0F6F0F2059A400502F28 /* Imakefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Imakefile; sourceTree = "<group>"; };
 		3ACB0FD30F206FB700502F28 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		3AF6AE0C0F11A049005EDBB2 /* Makefile4dist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile4dist; sourceTree = "<group>"; };
+		5631BFD70F2A2FD80042B665 /* pointer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pointer.png; sourceTree = "<group>"; };
+		5650583D0F2A0A220067B358 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		5650583E0F2A0A220067B358 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
 		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* RemotePad Server.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RemotePad Server.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -112,8 +112,8 @@
 			children = (
 				3AB151170E7F5D0500FB4375 /* TCPServer.h */,
 				3AB151180E7F5D0500FB4375 /* TCPServer.m */,
-				2A37F4AEFDCFA73011CA2CEA /* MyDocument.h */,
-				2A37F4ACFDCFA73011CA2CEA /* MyDocument.m */,
+				5650583D0F2A0A220067B358 /* AppController.h */,
+				5650583E0F2A0A220067B358 /* AppController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -131,6 +131,7 @@
 		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5631BFD70F2A2FD80042B665 /* pointer.png */,
 				3A99D7990F20D63700C16512 /* COPYRIGHT */,
 				3ACB0FD30F206FB700502F28 /* README */,
 				3A166AF50E7F6C6300001374 /* icon.xcf */,
@@ -138,7 +139,6 @@
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
 				8D15AC360486D014006FF6A4 /* Info.plist */,
 				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
-				1DDD58280DA1D0D100B32029 /* MyDocument.xib */,
 				1DDD582A0DA1D0D100B32029 /* MainMenu.xib */,
 			);
 			name = Resources;
@@ -168,9 +168,9 @@
 		3A1A616B0E835FD4002C5A80 /* Windows Sources */ = {
 			isa = PBXGroup;
 			children = (
+				3A2F27B00E83816900C7AD70 /* RemotePad Server.sln */,
 				3A1A61650E835F66002C5A80 /* remotepadwin.cpp */,
 				3A2F27AE0E83815500C7AD70 /* RemotePad Server.vcproj */,
-				3A2F27B00E83816900C7AD70 /* RemotePad Server.sln */,
 			);
 			name = "Windows Sources";
 			sourceTree = "<group>";
@@ -220,10 +220,10 @@
 			files = (
 				8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */,
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
-				1DDD582C0DA1D0D100B32029 /* MyDocument.xib in Resources */,
 				1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */,
 				3A166AF30E7F6B8F00001374 /* RemotePad Server.icns in Resources */,
 				3A99D79A0F20D63700C16512 /* COPYRIGHT in Resources */,
+				5631BFD80F2A2FD80042B665 /* pointer.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,9 +234,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D15AC310486D014006FF6A4 /* MyDocument.m in Sources */,
 				8D15AC320486D014006FF6A4 /* main.m in Sources */,
 				3AB151190E7F5D0500FB4375 /* TCPServer.m in Sources */,
+				5650583F0F2A0A220067B358 /* AppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,14 +249,6 @@
 				089C1660FE840EACC02AAC07 /* English */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		1DDD58280DA1D0D100B32029 /* MyDocument.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1DDD58290DA1D0D100B32029 /* English */,
-			);
-			name = MyDocument.xib;
 			sourceTree = "<group>";
 		};
 		1DDD582A0DA1D0D100B32029 /* MainMenu.xib */ = {
