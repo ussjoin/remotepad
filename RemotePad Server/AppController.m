@@ -65,9 +65,9 @@
 
 
 #if (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5)
-#define kVersion	@"1.2 for Mac OS X 10.5"
+#define kVersion	@"2.0 for Mac OS X 10.5"
 #else
-#define kVersion	@"1.2 for Mac OS X 10.4"
+#define kVersion	@"2.0 for Mac OS X 10.4"
 #endif
 
 // The Bonjour application protocol, which must:
