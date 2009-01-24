@@ -72,12 +72,12 @@ struct timespec {
 #define MSG_WAITALL 0
 #endif
 
-void handleKeyEvent( struct mouseEvent *pEvent );
+void handleKeyEvent( MouseEvent *pEvent );
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	struct mouseEvent event, prevevent;
-	struct mouseEvent *pEvent = &event;
+	MouseEvent event, prevevent;
+	MouseEvent *pEvent = &event;
 	//POINT pt;
 	prevevent.type = EVENT_NULL;
 	prevevent.value = 0;
@@ -170,14 +170,14 @@ int _tmain(int argc, _TCHAR* argv[])
 
 		while( 1 )
 		{
-			recvsize = recv( s_accept, (char *)pEvent, sizeof( struct mouseEvent ), MSG_WAITALL );
+			recvsize = recv( s_accept, (char *)pEvent, sizeof( MouseEvent ), MSG_WAITALL );
 			int errorno = WSAGetLastError();
-			if ( recvsize == sizeof( struct mouseEvent ) )//got data
+			if ( recvsize == sizeof( MouseEvent ) )//got data
 			{
 				event.type = ntohl(event.type);
 				event.value = ntohl(event.value);
-				event.time.tv_sec = htonl((u_long)event.time.tv_sec);
-				event.time.tv_nsec = htonl(event.time.tv_nsec);
+				event.tv_sec = ntohl(event.tv_sec);
+				event.tv_nsec = ntohl(event.tv_nsec);
 
 				switch( event.type )
 				{
@@ -287,7 +287,7 @@ int _tmain(int argc, _TCHAR* argv[])
 			{
 				if (errorno == WSAETIMEDOUT) {
 					// sending a keep-alive packet
-					struct mouseEvent event = {htonl(EVENT_NULL), 0, {0, 0}};
+					MouseEvent event = {htonl(EVENT_NULL), 0, 0, 0};
 					send(s_accept, (const char *)&event, sizeof(event), 0);
 				} else {
 					if (errorno == WSAECONNRESET) {
@@ -313,7 +313,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	return 0;
 }
 
-void handleKeyEvent( struct mouseEvent *pEvent )
+void handleKeyEvent( MouseEvent *pEvent )
 {
 	unsigned int key = pEvent->value, mod = 0;
 

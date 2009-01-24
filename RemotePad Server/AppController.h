@@ -68,7 +68,7 @@
 	NSOutputStream* _outStream;
 	BOOL _inReady;
 	BOOL _outReady;
-	struct mouseEvent prevevent;	
+	MouseEvent prevevent;	
 	BOOL mouse1Clicked;
 	BOOL mouse2Clicked;
 	BOOL mouse3Clicked;
@@ -87,11 +87,11 @@
 - (void)quitMenu:(id)sender;
 - (void)aboutMenu:(id)sender;
 
-- (void)mouseDown:(struct mouseEvent)event0;
-- (void)mouseUp:(struct mouseEvent)event0;
-- (void)mouseMoveX:(struct mouseEvent)x Y:(struct mouseEvent)y;
-- (void)scrollWheelW:(struct mouseEvent)w Z:(struct mouseEvent)z;
-- (void)scrollWheelZ:(struct mouseEvent)z;
+- (void)mouseDown:(MouseEvent)event0;
+- (void)mouseUp:(MouseEvent)event0;
+- (void)mouseMoveX:(MouseEvent)x Y:(MouseEvent)y;
+- (void)scrollWheelW:(MouseEvent)w Z:(MouseEvent)z;
+- (void)scrollWheelZ:(MouseEvent)z;
 
 - (void)addSourceToCurrentRunLoop;
 // Client interface for registering commands to process

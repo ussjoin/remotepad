@@ -79,12 +79,12 @@ typedef int SOCKET;
 /*-----------------------------------------------------------------------------
  *  Local method declarations
  *-----------------------------------------------------------------------------*/
-void handleKeyEvent( Display * dpy, struct mouseEvent *pEvent );
+void handleKeyEvent( Display * dpy, MouseEvent *pEvent );
 
 int main( int argc, char ** argv)
 {
-	struct mouseEvent event, prevevent;
-	struct mouseEvent *pEvent = &event;
+	MouseEvent event, prevevent;
+	MouseEvent *pEvent = &event;
 	prevevent.type = EVENT_NULL;
 	prevevent.value = 0;
 
@@ -190,13 +190,13 @@ int main( int argc, char ** argv)
 
 		while( 1 )
 		{
-			recvsize = recv( s_accept, pEvent, sizeof( struct mouseEvent ), MSG_WAITALL );
-			if ( recvsize == sizeof( struct mouseEvent ) )//got data
+			recvsize = recv( s_accept, pEvent, sizeof( MouseEvent ), MSG_WAITALL );
+			if ( recvsize == sizeof( MouseEvent ) )//got data
 			{
 				event.type = ntohl(event.type);
-				event.value = htonl(event.value);
-				event.time.tv_sec = htonl(event.time.tv_sec);
-				event.time.tv_nsec = htonl(event.time.tv_nsec);
+				event.value = ntohl(event.value);
+				event.tv_sec = ntohl(event.tv_sec);
+				event.tv_nsec = ntohl(event.tv_nsec);
 
 				switch( event.type )
 				{
@@ -296,7 +296,7 @@ int main( int argc, char ** argv)
 			    // sending a keep-alive packet
 			    struct timeval tv;
 			    gettimeofday(&tv, NULL);
-			    struct mouseEvent event = {htonl(EVENT_NULL), 0, {htonl(tv.tv_sec), htonl(tv.tv_usec*1000)}};
+			    MouseEvent event = {htonl(EVENT_NULL), 0, htonl(tv.tv_sec), htonl(tv.tv_usec*1000)};
 			    send(s_accept, (void *)&event, sizeof(event), 0);
 			}
 			else
@@ -317,7 +317,7 @@ int main( int argc, char ** argv)
 	return 0;
 }
 
-void handleKeyEvent( Display * dpy, struct mouseEvent *pEvent )
+void handleKeyEvent( Display * dpy, MouseEvent *pEvent )
 {
 	//TODO: do something with the modifier field!!
 	int keysym;

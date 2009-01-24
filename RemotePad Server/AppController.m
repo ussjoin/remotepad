@@ -267,7 +267,7 @@
 	return point;
 }
 
-- (void)mouseDown:(struct mouseEvent)event0
+- (void)mouseDown:(MouseEvent)event0
 {
 	CGPoint point = [self getMousePointWithDeltaX:0 deltaY:0];
 	CGEventType type;
@@ -295,7 +295,7 @@
 	CFRelease(event);
 }
 
-- (void)mouseUp:(struct mouseEvent)event0
+- (void)mouseUp:(MouseEvent)event0
 {
 	CGPoint point = [self getMousePointWithDeltaX:0 deltaY:0];
 	CGEventType type;
@@ -323,7 +323,7 @@
 	CFRelease(event);
 }
 
-- (void)mouseMoveX:(struct mouseEvent)x Y:(struct mouseEvent)y
+- (void)mouseMoveX:(MouseEvent)x Y:(MouseEvent)y
 {
 	CGPoint point = [self getMousePointWithDeltaX:x.value deltaY:y.value];
 	CGEventType type;
@@ -350,7 +350,7 @@
 	CFRelease(event);
 }
 
-- (void)scrollWheelW:(struct mouseEvent)w Z:(struct mouseEvent)z
+- (void)scrollWheelW:(MouseEvent)w Z:(MouseEvent)z
 {
 	double accel = 1;
 	
@@ -377,7 +377,7 @@
 	}
 }
 
-- (void)scrollWheelZ:(struct mouseEvent)z
+- (void)scrollWheelZ:(MouseEvent)z
 {
 	double accel = 1;
 	
@@ -403,7 +403,7 @@
 	}
 }
 
-- (void)keyDown:(struct mouseEvent)event0
+- (void)keyDown:(MouseEvent)event0
 {
 	CGKeyCode key = (CGKeyCode)event0.value;
 	CFRelease(CGEventCreate(NULL));
@@ -413,7 +413,7 @@
 	CFRelease(event);
 }
 
-- (void)keyUp:(struct mouseEvent)event0
+- (void)keyUp:(MouseEvent)event0
 {
 	CGKeyCode key = (CGKeyCode)event0.value;
 	CFRelease(CGEventCreate(NULL));
@@ -492,9 +492,9 @@
 	struct timeval tv;
 	gettimeofday(&tv, NULL);
 	
-	struct mouseEvent event = {htonl(EVENT_NULL), htonl(0), {htonl(tv.tv_sec), htonl(tv.tv_usec*1000)}};
+	MouseEvent event = {htonl(EVENT_NULL), 0, htonl(tv.tv_sec), htonl(tv.tv_usec*1000)};
 	if (_outStream && [_outStream hasSpaceAvailable])
-		if([_outStream write:(uint8_t *)&event maxLength:sizeof(struct mouseEvent)] == -1)
+		if([_outStream write:(uint8_t *)&event maxLength:sizeof(MouseEvent)] == -1)
 			[self _showAlert:@"Failed sending data to peer"];
 }
 
@@ -531,17 +531,17 @@
 		case NSStreamEventHasBytesAvailable:
 		{
 			if (stream == _inStream) {
-				struct mouseEvent event;
+				MouseEvent event;
 				unsigned int len = 0;
-				len = [_inStream read:(uint8_t *)&event maxLength:sizeof(struct mouseEvent)];
-				if(len != sizeof(struct mouseEvent)) {
+				len = [_inStream read:(uint8_t *)&event maxLength:sizeof(MouseEvent)];
+				if(len != sizeof(MouseEvent)) {
 					if ([stream streamStatus] != NSStreamStatusAtEnd)
 						[self _showAlert:@"Failed reading data from peer"];
 				} else {
 					event.type = ntohl(event.type);
-					event.value = htonl(event.value);
-					event.time.tv_sec = htonl(event.time.tv_sec);
-					event.time.tv_nsec = htonl(event.time.tv_nsec);
+					event.value = ntohl(event.value);
+					event.tv_sec = ntohl(event.tv_sec);
+					event.tv_nsec = ntohl(event.tv_nsec);
 					//We received a remote tap update, forward it to the appropriate view
 					switch (event.type) {
 						case EVENT_MOUSE_DOWN:
