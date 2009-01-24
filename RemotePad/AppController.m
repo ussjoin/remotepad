@@ -204,11 +204,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 }
 
 - (void)send:(uint32_t)type with:(int32_t)value time:(NSTimeInterval)timestamp {
-	time_t tv_sec = (time_t)timestamp;
-	struct mouseEvent event = {htonl(type), htonl(value), {htonl(tv_sec), htonl((long)((timestamp-tv_sec)*1.0E9))}};
+	uint32_t tv_sec = (uint32_t)timestamp;
+	MouseEvent event = {htonl(type), htonl(value), htonl(tv_sec), htonl((long)((timestamp-tv_sec)*1.0E9))};
 
 	if (_outStream && [_outStream hasSpaceAvailable])
-		if([_outStream write:(uint8_t *)&event maxLength:sizeof(struct mouseEvent)] == -1)
+		if([_outStream write:(uint8_t *)&event maxLength:sizeof(MouseEvent)] == -1)
 			[self _showAlert:@"Failed sending data to peer"];
 }
 

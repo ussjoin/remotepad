@@ -1,6 +1,6 @@
 /*
  *  Event.h
- *  RemotePad
+ *  RemotePad, RemotePad Server
  *
  *  Created by iKawamoto Yosihisa! on 08/08/27.
  *  Copyright 2008, 2009 tenjin.org. All rights reserved.
@@ -51,11 +51,12 @@
 #define kKeycodeDown             125
 #define kKeycodeUp               126
 
-struct mouseEvent {
+typedef struct {
 	uint32_t type;
 	int32_t  value;
-	struct timespec time;
-};
+	uint32_t tv_sec;
+	uint32_t tv_nsec;
+} MouseEvent;
 
 #define MouseNumber(v)			((int)(v) & 0xff)
 #define MouseClickCount(v)		((int)(v) >> 8)
