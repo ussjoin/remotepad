@@ -1,6 +1,7 @@
 NAME = remotepad
 SRCS = $(NAME).c
 OBJS = $(NAME).o
+CFLAGS = -I ../Common
 LOCAL_LIBRARIES = -lX11 -lXtst -lm
 BINDIR = /usr/local/bin
 ComplexProgramTargetNoMan($(NAME))

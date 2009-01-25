@@ -54,7 +54,6 @@
 		3A4EDFE10E64055400C2548E /* ButtonRoundedHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonRoundedHighlighted.png; sourceTree = "<group>"; };
 		3A6140450E55878A00B859F3 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		3A65D7160F207B43001C4E8B /* COPYRIGHT */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYRIGHT; sourceTree = "<group>"; };
-		3A8CAB570E65317A0042FC66 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		3A99D7720F20D3D000C16512 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		3A9C34960E8535F900F6140E /* icon.xcf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icon.xcf; sourceTree = "<group>"; };
 		3AA90C3A0E530F030086ADCD /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = ../AppController.h; sourceTree = "<group>"; };
@@ -70,6 +69,7 @@
 		3AA90C590E5310420086ADCD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		3AC84E450E6465E100B418AE /* SetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetupViewController.h; path = ../SetupViewController.h; sourceTree = "<group>"; };
 		3AC84E460E6465E100B418AE /* SetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SetupViewController.m; path = ../SetupViewController.m; sourceTree = "<group>"; wrapsLines = 1; };
+		3AD7F5490F2BFFC500CD6BF7 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Event.h; path = ../Common/Event.h; sourceTree = SOURCE_ROOT; };
 		3AE1F7760E6FB96F001DF387 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -133,7 +133,6 @@
 			isa = PBXGroup;
 			children = (
 				3AE1F7760E6FB96F001DF387 /* Constants.h */,
-				3A8CAB570E65317A0042FC66 /* Event.h */,
 				32CA4F630368D1EE00C91783 /* RemotePad_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
@@ -159,6 +158,7 @@
 				3A011E6F0E55E3CB006B8A65 /* bg.png */,
 				3A6140450E55878A00B859F3 /* icon.png */,
 				3A9C34960E8535F900F6140E /* icon.xcf */,
+				3AD7F5490F2BFFC500CD6BF7 /* Event.h */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 			);
 			name = Resources;

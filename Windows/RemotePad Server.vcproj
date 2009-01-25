@@ -38,6 +38,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/I&quot;..\Common&quot;"
 				Optimization="0"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;"
 				MinimalRebuild="true"
@@ -111,6 +112,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/I&quot;..\Common&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
@@ -170,11 +172,11 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\Event.h"
+				RelativePath="..\Common\Event.h"
 				>
 			</File>
 			<File
-				RelativePath=".\inputevent.h"
+				RelativePath="..\Common\inputevent.h"
 				>
 			</File>
 		</Filter>
