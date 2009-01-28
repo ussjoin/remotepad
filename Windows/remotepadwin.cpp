@@ -61,7 +61,7 @@ struct timespec {
 };
 #include "Event.h"
 
-#define kVersionWindows	"1.7alpha1"
+#define kVersionWindows	"1.7"
 
 #define USE_ACCEL 1
 
