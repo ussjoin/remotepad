@@ -61,7 +61,7 @@ struct timespec {
 };
 #include "Event.h"
 
-#define kVersionWindows	"1.6"
+#define kVersionWindows	"1.7alpha1"
 
 #define USE_ACCEL 1
 
@@ -271,7 +271,10 @@ int _tmain(int argc, _TCHAR* argv[])
 				prevevent = event;
 
 				//XFlush( dpy );
-			
+
+				//sending a ACK packet for the winsock 200ms problem
+				MouseEvent event = {htonl(EVENT_NULL), 0, 0, 0};
+				send(s_accept, (const char *)&event, sizeof(event), 0);
 			}
 			else if ( recvsize > 0 )
 			{
