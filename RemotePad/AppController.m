@@ -256,9 +256,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	switch(eventCode) {
 		case NSStreamEventOpenCompleted:
 		{
-			[self showTapView];
-			[tapViewController prepareToolbarsAndStatusbar];
-			
 			[_server release];
 			_server = nil;
 
@@ -268,6 +265,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 				_outReady = YES;
 			
 			if (_inReady && _outReady) {
+				[self showTapView];
+				[tapViewController prepareToolbarsAndStatusbar];
+				
 				alertView = [[UIAlertView alloc] initWithTitle:@"Connected!" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Continue", nil];
 				[alertView show];
 				[alertView release];
