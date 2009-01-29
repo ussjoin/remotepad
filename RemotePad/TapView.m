@@ -88,6 +88,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	self.view = view;
 	
 	topviewLocation = rect.origin;
+	topviewLocation.y += 20;
 	topview = [[UIView alloc] initWithFrame:CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, kButtonHeight)];
 	// Disable user interaction for this view. You must do this if you want to handle touches for more than one object at at time.
 	// You'll get events for the superview, and then dispatch them to the appropriate subview in the touch handling methods.
