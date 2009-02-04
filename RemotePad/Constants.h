@@ -79,6 +79,7 @@
 // See the following for more information:
 // http://developer.apple.com/networking/bonjour/faq.html
 #define kBonjourIdentifier		@"remotepad"
+#define kDefaultPort			5583
 
 
 // Accelerometer constants

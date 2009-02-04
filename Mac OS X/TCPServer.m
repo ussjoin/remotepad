@@ -60,6 +60,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #import "TCPServer.h"
 
+#define kDefaultPort	5583
+
 NSString * const TCPServerErrorDomain = @"TCPServerErrorDomain";
 
 @implementation TCPServer
@@ -158,7 +160,7 @@ static void TCPServerAcceptCallBack(CFSocketRef socket, CFSocketCallBackType typ
     memset(&addr4, 0, sizeof(addr4));
     addr4.sin_len = sizeof(addr4);
     addr4.sin_family = AF_INET;
-    addr4.sin_port = 0;
+    addr4.sin_port = htons(kDefaultPort);
     addr4.sin_addr.s_addr = htonl(INADDR_ANY);
     NSData *address4 = [NSData dataWithBytes:&addr4 length:sizeof(addr4)];
 	

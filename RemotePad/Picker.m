@@ -148,7 +148,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		[serverName setTextAlignment:UITextAlignmentCenter];
 		[serverName setFont:[UIFont boldSystemFontOfSize:24.0]];
 		[serverName setBorderStyle:UITextBorderStyleRoundedRect];
-		[serverName setPlaceholder:@"<IP:port>"];
+		[serverName setPlaceholder:@"<IP or Hostname>"];
 		[serverName setText:[defaults stringForKey:kDefaultKeyServerName]];
 		[serverName sizeToFit];
 		serverName.frame = CGRectMake(kOffset, runningY, width, serverName.frame.size.height);
@@ -242,32 +242,35 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		return;
 	}
 	NSRange separator = [serverString rangeOfString:@":" options:NSBackwardsSearch];
+	NSInteger port;
+	NSString *hostname;
 	if (separator.location != NSNotFound) {
-		NSString *hostname = [serverString substringToIndex:separator.location];
-		NSHost *host = [NSHost hostWithAddress:hostname];
-		if (host == nil) {
-			host = [NSHost hostWithName:hostname];
-			if (host == nil) {
-				[self setMessage:@"Invalid IP address or hostname:"];
-				return;
-			}
-		}
-		NSInteger port = [[serverString substringFromIndex:separator.location + separator.length] integerValue];
+		hostname = [serverString substringToIndex:separator.location];
+		port = [[serverString substringFromIndex:separator.location + separator.length] integerValue];
 		if (port <= 0 || 65536 <= port) {
 			[self setMessage:@"Invalid port number:"];
 			return;
 		}
-		NSInputStream *inputStream;
-		NSOutputStream *outputStream;
-		[NSStream getStreamsToHost:host port:port inputStream:&inputStream outputStream:&outputStream];
-		if (inputStream == nil || outputStream == nil) {
-			[self setMessage:@"Cannot connect:"];
-		} else {
-			[self setMessage:@""];
-			[(AppController *)[UIApplication sharedApplication].delegate setInputStream:inputStream outputStream:outputStream];
-		}
 	} else {
-		[self setMessage:@"Port number not found:"];
+		hostname = serverString;
+		port = kDefaultPort;
+	}
+	NSHost *host = [NSHost hostWithAddress:hostname];
+	if (host == nil) {
+		host = [NSHost hostWithName:hostname];
+		if (host == nil) {
+			[self setMessage:@"Invalid IP address or hostname:"];
+			return;
+		}
+	}
+	NSInputStream *inputStream;
+	NSOutputStream *outputStream;
+	[NSStream getStreamsToHost:host port:port inputStream:&inputStream outputStream:&outputStream];
+	if (inputStream == nil || outputStream == nil) {
+		[self setMessage:@"Cannot connect:"];
+	} else {
+		[self setMessage:@""];
+		[(AppController *)[UIApplication sharedApplication].delegate setInputStream:inputStream outputStream:outputStream];
 	}
 }
 
@@ -275,7 +278,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (void)setMessage:(NSString *)message {
 	if (!message || [message isEqual:@""]) {
 		[messageLabel setTextColor:[UIColor whiteColor]];
-		[messageLabel setText:@"Enter server IP address and port:"];
+		[messageLabel setText:@"Enter server IP address or Hostname:"];
 	} else {
 		[messageLabel setTextColor:[UIColor redColor]];
 		[messageLabel setText:message];
