@@ -78,7 +78,7 @@
 // It should also be descriptive and human-readable
 // See the following for more information:
 // http://developer.apple.com/networking/bonjour/faq.html
-#define kGameIdentifier		@"remotepad"
+#define kBonjourIdentifier		@"remotepad"
 
 
 // Accelerometer constants

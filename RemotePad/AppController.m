@@ -161,7 +161,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	}
 	
 	//Start advertising to clients, passing nil for the name to tell Bonjour to pick use default name
-	if(![_server enableBonjourWithDomain:@"local" applicationProtocol:[TCPServer bonjourTypeFromIdentifier:kGameIdentifier] name:nil]) {
+	if(![_server enableBonjourWithDomain:@"local" applicationProtocol:[TCPServer bonjourTypeFromIdentifier:kBonjourIdentifier] name:nil]) {
 		[self _showAlert:@"Failed advertising server"];
 		return;
 	}

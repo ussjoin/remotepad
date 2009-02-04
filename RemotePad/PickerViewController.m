@@ -36,7 +36,7 @@
 @implementation PickerViewController
 
 - (void)loadView {
-	Picker *picker = [[Picker alloc] initWithFrame:[[UIScreen mainScreen] bounds] type:[TCPServer bonjourTypeFromIdentifier:kGameIdentifier]];
+	Picker *picker = [[Picker alloc] initWithFrame:[[UIScreen mainScreen] bounds] type:[TCPServer bonjourTypeFromIdentifier:kBonjourIdentifier]];
 	picker.delegate = (AppController *)[UIApplication sharedApplication].delegate;
 	self.view = picker;
 }
