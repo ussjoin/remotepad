@@ -41,6 +41,7 @@ enum TableSections
 	kSectionToggleStatusbar,
 	kSectionArrowKeyGestures,
 	kSectionAccelMouse,
+	kSectionOrientation,
 	kSectionResetButtonLocation,
 	kSectionConnection,
 	kSectionVersion,
@@ -151,6 +152,12 @@ enum TableSections
 	[tapViewController setEnableAccelMouse:value];
 }
 
+- (void)changeAutorotateOrientation:(id)sender {
+	BOOL value = [sender isOn];
+	[[NSUserDefaults standardUserDefaults] setInteger:value forKey:kDefaultKeyAutorotateOrientation];
+	[tapViewController setAutorotateOrientation:value];
+}
+
 - (void)resetButtonLocation {
 	[tapViewController setTopviewLocation:CGPointMake(0, 0)];
 	[tapViewController prepareToolbarsAndStatusbar];
@@ -227,6 +234,9 @@ enum TableSections
 		case kSectionAccelMouse:
 			title = @"Mouse moving by Accelerometer";
 			break;
+		case kSectionOrientation:
+			title = @"Application Orientation";
+			break;
 		case kSectionResetButtonLocation:
 		case kSectionConnection:
 		case kSectionVersion:
@@ -242,6 +252,7 @@ enum TableSections
 		case kSectionToggleStatusbar:
 		case kSectionAccelMouse:
 		case kSectionResetButtonLocation:
+		case kSectionOrientation:
 		case kSectionConnection:
 		case kSectionVersion:
 			number = 1;
@@ -270,6 +281,7 @@ enum TableSections
 			height = kUIRowSegmentHeight;
 			break;
 		case kSectionScrollingOptions:
+		case kSectionOrientation:
 			height = kUIRowSwitchHeight;
 			break;
 		case kSectionClickingOptions:
@@ -444,6 +456,15 @@ enum TableSections
 			[segment setFrame:CGRectMake(0, 0, kSegmentedControlWidthLong, kSegmentedControlHeight)];
 			[cell setAccessoryView:segment];
 			[segment release];
+			break;
+		case kSectionOrientation:
+			[cell setText:@"Autorotating"];
+			switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
+			[switchui addTarget:self action:@selector(changeAutorotateOrientation:) forControlEvents:UIControlEventValueChanged];
+			switchui.on = tapViewController.autorotateOrientation;
+			switchui.backgroundColor = [UIColor clearColor];
+			[cell setAccessoryView:switchui];
+			[switchui release];
 			break;
 		case kSectionResetButtonLocation:
 			[cell setText:@"Reset button location"];

@@ -171,11 +171,17 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) showSetupView:(id)sender {
 	[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
+	if (tapViewController.tapViewOrientation != UIInterfaceOrientationPortrait) {
+		[tapViewController showToolbars:NO showStatusbar:NO temporal:YES];
+		[[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait];
+		[[UIApplication sharedApplication] setStatusBarHidden:NO animated:YES];
+	}
 	[navigationController pushViewController:setupViewController animated:YES];
 }
 
 - (void) hideSetupView:(id)sender {
 	[navigationController popViewControllerAnimated:YES];
+	[tapViewController prepareTapView];
 	[[UIAccelerometer sharedAccelerometer] setDelegate:tapViewController];
 }
 
@@ -183,6 +189,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	[[UIApplication sharedApplication] setStatusBarHidden:YES animated:YES];
 	[tapViewController resetAllStates:self];
 	[navigationController pushViewController:tapViewController animated:YES];
+	[tapViewController prepareTapView];
 	[[UIAccelerometer sharedAccelerometer] setDelegate:tapViewController];
 }
 
@@ -192,6 +199,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 // Bonjour may detect a name conflict and rename dynamically.
 - (void) presentPicker:(NSString*)name {
 	[(Picker *)[pickerViewController view] setGameName:name];
+	[[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait];
 	[[UIApplication sharedApplication] setStatusBarHidden:NO animated:YES];
 	[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
 	[navigationController popToRootViewControllerAnimated:YES];
@@ -266,7 +274,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 			
 			if (_inReady && _outReady) {
 				[self showTapView];
-				[tapViewController prepareToolbarsAndStatusbar];
 				
 				alertView = [[UIAlertView alloc] initWithTitle:@"Connected!" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Continue", nil];
 				[alertView show];
