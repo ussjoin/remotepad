@@ -49,6 +49,7 @@
 #define kDefaultKeyServerName				@"serverName"
 #define kDefaultKeyTapViewOrientation		@"tapviewOrientation"
 #define kDefaultKeyAutorotateOrientation	@"autorotateOrientation"
+#define kDefaultKeyTwoFingersSecondary		@"twoFingersSecondary"
 // application defaults values
 #define kDefaultVersion					kVersion
 #define kDefaultNumberOfButtons			@"3"
@@ -66,6 +67,7 @@
 #define kDefaultServerName				@""
 #define kDefaultTapViewOrientation		@"1"
 #define kDefaultAutorotateOrientation	@"YES"
+#define kDefaultTwoFingersSecondary		@"YES"
 
 // Bonjour constants
 
@@ -102,7 +104,8 @@
 
 #define kOffsetDragBegins			50
 #define kButtonHeight				100
-
+#define kTapHoldInterval			0.3
+#define kOffsetMultiTapDrift		4
 
 // setup view constants
 
