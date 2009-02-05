@@ -34,6 +34,8 @@
 
 // application defaults keys
 #define kDefaultKeyVersion					@"version"
+#define kDefaultKeyTopviewLocationX			@"topviewLocationX"
+#define kDefaultKeyTopviewLocationY			@"topviewLocationY"
 #define kDefaultKeyNumberOfButtons			@"numberOfButtons"
 #define kDefaultKeyMouseMapLeftToRight		@"leftPrimaryButton"
 #define kDefaultKeyNumberArrowKeyGesture	@"numberArrowKeyGesture"
@@ -52,6 +54,8 @@
 #define kDefaultKeyTwoFingersSecondary		@"twoFingersSecondary"
 // application defaults values
 #define kDefaultVersion					kVersion
+#define kDefaultTopviewLocationX		@"0"
+#define kDefaultTopviewLocationY		@"20"
 #define kDefaultNumberOfButtons			@"3"
 #define kDefaultMouseMapLeftToRight		@"YES"
 #define kDefaultNumberArrowKeyGesture	@"0"

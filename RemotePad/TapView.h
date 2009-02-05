@@ -98,7 +98,6 @@ typedef struct {
 	UIToolbar *bottombar;
 	BOOL hiddenStatusbar;
 	BOOL hiddenToolbars;
-	CGPoint topviewLocation;
 	UIImage *buttonLeftImage, *buttonLeftHighlightedImage;
 	UIImage *buttonRightImage, *buttonRightHighlightedImage;
 	UIImage *buttonCenterImage, *buttonCenterHighlightedImage;
@@ -108,6 +107,7 @@ typedef struct {
 	NSTimer *clickTimer;
 	UITouch *clickTimerTouch;
 	//config value
+	CGPoint topviewLocation;
 	int numberOfButtons;
 	BOOL mouseMapLeftToRight;
 	int numberArrowKeyGesture;

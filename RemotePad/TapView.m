@@ -90,8 +90,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	[view setBackgroundColor:[UIColor blackColor]];
 	self.view = view;
 	
-	topviewLocation = rect.origin;
-	topviewLocation.y += 20;
 	int buttonHeight = rect.size.height / 5;
 	topview = [[UIView alloc] initWithFrame:CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, buttonHeight)];
 	// Disable user interaction for this view. You must do this if you want to handle touches for more than one object at at time.
@@ -155,6 +153,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (void) registerDefaults {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultVersion forKey:kDefaultKeyVersion]];
+	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultTopviewLocationX forKey:kDefaultKeyTopviewLocationX]];
+	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultTopviewLocationY forKey:kDefaultKeyTopviewLocationY]];
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultNumberOfButtons forKey:kDefaultKeyNumberOfButtons]];
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultMouseMapLeftToRight forKey:kDefaultKeyMouseMapLeftToRight]];
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultNumberArrowKeyGesture forKey:kDefaultKeyNumberArrowKeyGesture]];
@@ -174,6 +174,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) readDefaults {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	topviewLocation = CGPointMake([defaults floatForKey:kDefaultKeyTopviewLocationX], [defaults floatForKey:kDefaultKeyTopviewLocationY]);
 	numberOfButtons = [defaults integerForKey:kDefaultKeyNumberOfButtons];
 	if (numberOfButtons < 1 || 3 < numberOfButtons)
 		numberOfButtons = 3;
@@ -298,10 +299,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 }
 
 - (void)setNumberOfButtons:(int)val mouseMapLeftToRight:(BOOL)isLeftToRight {
+	CGRect rect = [self.view bounds];
+	[topview setFrame:CGRectMake([topview frame].origin.x, [topview frame].origin.y, rect.size.width, rect.size.height / 5)];
 	numberOfButtons = val;
 	mouseMapLeftToRight = isLeftToRight;
-	int buttonWidth = [self.view bounds].size.width / numberOfButtons;
-	int buttonHeight = [self.view bounds].size.height / 5;
+	int buttonWidth = rect.size.width / numberOfButtons;
+	int buttonHeight = rect.size.height / 5;
 	UIImage *mouse1Norm, *mouse1High, *mouse2Norm, *mouse2High;
 	if (isLeftToRight) {
 		mouse1Norm = buttonLeftImage;
@@ -478,6 +481,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 			[mouse3Tap.button setHighlighted:NO];
 			mouse3Tap.touch = nil;
 		} else if (touch == topviewTap.touch) {
+			[[NSUserDefaults standardUserDefaults] setFloat:topviewLocation.x forKey:kDefaultKeyTopviewLocationX];
+			[[NSUserDefaults standardUserDefaults] setFloat:topviewLocation.y forKey:kDefaultKeyTopviewLocationY];
 			topviewTap.touch = nil;
 		} else if (touch == arrowKeyTap.touch) {
 			arrowKeyTap.touch = nil;

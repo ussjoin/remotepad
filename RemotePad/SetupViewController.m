@@ -165,7 +165,10 @@ enum TableSections
 }
 
 - (void)resetButtonLocation {
-	[tapViewController setTopviewLocation:CGPointMake(0, 0)];
+	CGPoint value = CGPointMake([kDefaultTopviewLocationX floatValue], [kDefaultTopviewLocationY floatValue]);
+	[[NSUserDefaults standardUserDefaults] setFloat:value.x forKey:kDefaultKeyTopviewLocationX];
+	[[NSUserDefaults standardUserDefaults] setFloat:value.y forKey:kDefaultKeyTopviewLocationY];
+	[tapViewController setTopviewLocation:value];
 	[tapViewController prepareToolbarsAndStatusbar];
 }
 
