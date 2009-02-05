@@ -30,6 +30,7 @@
 		3AA90C550E5310070086ADCD /* TapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA90C540E5310070086ADCD /* TapView.m */; };
 		3AA90C5A0E5310420086ADCD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA90C590E5310420086ADCD /* CoreGraphics.framework */; };
 		3AC84E470E6465E100B418AE /* SetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AC84E460E6465E100B418AE /* SetupViewController.m */; };
+		561989460F3B7D5E00A9A910 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 561989450F3B7D5E00A9A910 /* Default.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +73,7 @@
 		3AC84E460E6465E100B418AE /* SetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SetupViewController.m; path = ../SetupViewController.m; sourceTree = "<group>"; wrapsLines = 1; };
 		3AD7F5490F2BFFC500CD6BF7 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Event.h; path = ../Common/Event.h; sourceTree = SOURCE_ROOT; };
 		3AE1F7760E6FB96F001DF387 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		561989450F3B7D5E00A9A910 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -158,6 +160,7 @@
 				3A4EDFE10E64055400C2548E /* ButtonRoundedHighlighted.png */,
 				3A35DA800E5C856800061760 /* ButtonBack.png */,
 				3A011E6F0E55E3CB006B8A65 /* bg.png */,
+				561989450F3B7D5E00A9A910 /* Default.png */,
 				3A6140450E55878A00B859F3 /* icon.png */,
 				3A9C34960E8535F900F6140E /* icon.xcf */,
 				3AD7F5490F2BFFC500CD6BF7 /* Event.h */,
@@ -230,6 +233,7 @@
 				3A4EDFEA0E64055400C2548E /* ButtonRoundedHighlighted.png in Resources */,
 				3A1F06200E7F9DFF0065F8A7 /* adhoc-Entitlements.plist in Resources */,
 				3A99D7730F20D3D000C16512 /* README in Resources */,
+				561989460F3B7D5E00A9A910 /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,7 +296,7 @@
 				PREBINDING = NO;
 				PROVISIONING_PROFILE = DefaultProfileUuid;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0E89C2CB-646A-41DB-BC91-10A7D69E6FC4";
-				SDKROOT = iphoneos2.0;
+				SDKROOT = iphoneos2.2.1;
 			};
 			name = "Distribution Ad-Hoc";
 		};
@@ -319,7 +323,7 @@
 				PREBINDING = NO;
 				PROVISIONING_PROFILE = DefaultProfileUuid;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "288E304E-7472-4E52-8519-4B7A2A77F785";
-				SDKROOT = iphoneos2.0;
+				SDKROOT = iphoneos2.2.1;
 			};
 			name = Distribution;
 		};
@@ -345,7 +349,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos2.0;
+				SDKROOT = iphoneos2.2.1;
 			};
 			name = Debug;
 		};
@@ -358,7 +362,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos2.0;
+				SDKROOT = iphoneos2.2.1;
 			};
 			name = Release;
 		};
