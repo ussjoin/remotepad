@@ -259,7 +259,6 @@ enum TableSections
 	NSInteger number;
 	switch (section) {
 		case kSectionToggleStatusbar:
-		case kSectionAccelMouse:
 		case kSectionResetButtonLocation:
 		case kSectionOrientation:
 		case kSectionConnection:
@@ -268,6 +267,7 @@ enum TableSections
 			break;
 		case kSectionButtonOptions:
 		case kSectionArrowKeyGestures:
+		case kSectionAccelMouse:
 			number = 2;
 			break;
 		case kSectionScrollingOptions:
@@ -286,7 +286,6 @@ enum TableSections
 	switch ([indexPath section]) {
 		case kSectionButtonOptions:
 		case kSectionToggleStatusbar:
-		case kSectionAccelMouse:
 			height = kUIRowSegmentHeight;
 			break;
 		case kSectionScrollingOptions:
@@ -305,6 +304,7 @@ enum TableSections
 			}
 			break;
 		case kSectionArrowKeyGestures:
+		case kSectionAccelMouse:
 			if ([indexPath row] == 0)
 				height = kUIRowSegmentHeight;
 			else
@@ -474,14 +474,20 @@ enum TableSections
 			}
 			break;
 		case kSectionAccelMouse:
-			[cell setText:@""];
-			segment = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Pseudo high pass filter", @"Disable", nil]];
-			[segment addTarget:self action:@selector(changeEnableAccelMouse:) forControlEvents:UIControlEventValueChanged];
-			segment.segmentedControlStyle = UISegmentedControlStyleBar;
-			segment.selectedSegmentIndex = tapViewController.enableAccelMouse ? 0 : 1;
-			[segment setFrame:CGRectMake(0, 0, kSegmentedControlWidthLong, kSegmentedControlHeight)];
-			[cell setAccessoryView:segment];
-			[segment release];
+			if (row == 0) {
+				[cell setText:@""];
+				segment = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Pseudo high pass filter", @"Disable", nil]];
+				[segment addTarget:self action:@selector(changeEnableAccelMouse:) forControlEvents:UIControlEventValueChanged];
+				segment.segmentedControlStyle = UISegmentedControlStyleBar;
+				segment.selectedSegmentIndex = tapViewController.enableAccelMouse ? 0 : 1;
+				[segment setFrame:CGRectMake(0, 0, kSegmentedControlWidthLong, kSegmentedControlHeight)];
+				[cell setAccessoryView:segment];
+				[segment release];
+			} else {
+				[cell setText:@"Cursor moves only when you hold tapping"];
+				[cell setIndentationLevel:1];
+				[cell setFont:[UIFont systemFontOfSize:14.0]];
+			}
 			break;
 		case kSectionOrientation:
 			[cell setText:@"Autorotating"];
