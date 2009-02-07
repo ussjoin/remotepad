@@ -29,7 +29,7 @@
 
 
 // version
-#define kVersion @"1.2"
+#define kVersion @"1.3"
 
 
 // application defaults keys
