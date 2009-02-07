@@ -316,7 +316,18 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 			_outReady = NO;
 			NSError *theError = [stream streamError];
 			UIAlertView *alertView;
-			alertView = [[UIAlertView alloc] initWithTitle:@"Error from stream!" message:[theError localizedDescription] delegate:self cancelButtonTitle:nil otherButtonTitles:@"Continue", nil];
+			NSString *message = @"";
+			if ([[theError domain] isEqualToString:NSPOSIXErrorDomain]) {
+				switch ([theError code]) {
+					case EAFNOSUPPORT:
+						message = @"\nAdvice:\nPlease change the settings of your Firewall on your Mac to allow connections for the RemotePad Server.";
+						break;
+					case ETIMEDOUT:
+						message = @"\nAdvice:\nPlease change the settings of your Windows Firewall on your PC to allow connections for the RemotePad Server.";
+						break;
+				}
+			}
+			alertView = [[UIAlertView alloc] initWithTitle:@"Error from stream!" message:[NSString stringWithFormat:@"System Message:\n%@%@", [theError localizedDescription], message] delegate:self cancelButtonTitle:nil otherButtonTitles:@"Continue", nil];
 			[alertView show];
 			[alertView release];
 			if (!_server)
