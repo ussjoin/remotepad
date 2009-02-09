@@ -1,24 +1,23 @@
-RemotePad is an open source application that controls a mouse cursor on your desktop PC.  You can use an iPhone or iPod touch as a wireless touchpad.
+RemotePad is an open source application that controls the mouse cursor of your desktop PC. This way, you can use your iPhone or iPod touch as a wireless touchpad!
 
-Features:
-* mouse control with touchpad
-* various host(server) platform support
-  + Mac OS X, Windows, Linux, BSD, ... 
-* host(server) detection with Bonjour
-* 3, 2, 1 or 0 button(s) apparence
-  + clicking with tap
-  + dragging with mouse button dragging 
-* scrolling with two fingers or center button dragging
-* mouse control with accelerometer
-* send key codes (arrow keys only)
-* BSD-style licensed source codes
+FEATURES:
+• Mouse control with a virtual touchpad.
+• Server support for major platforms, namely, Mac OS X, Windows, Linux and BSD.
+• Bonjour (Zeroconf) server detection under Mac OS X.
+• Customizable appearence and behaviour: number of buttons to display, tap clicking and dragging. 
+• Two finger vertical and horizontal scrolling.
+• Mouse control via acceleromenter.
+• Send arrow keys.
+• BSD-style licensed source codes
 
-Requirements:
-* iPhone or iPod touch
-* Desktop PC running a RemotePad Server
-  (freely downloadable from http://www.tenjin.org/RemotePad/downloads.html)
-* WiFi connection
+ADDITIONAL REQUIREMENTS:
+• Computer running a version of the RemotePad Server
+  (free download from http://www.tenjin.org/RemotePad/downloads.html)
+• WiFi connection
 
-Bug fixes:
-* movement lags for Windows server is fixed.
-* A compiling problem with 64bit system is fixed.
+WHAT'S NEW IN THIS VERSION:
+• Landscape mode now available.
+• Two finger tapping for secondary click.
+• Top button location is now stored in the preferences.
+
+Servers were also improved and critical bugs fixed (Windows server no longer has the 'lag' effect).
