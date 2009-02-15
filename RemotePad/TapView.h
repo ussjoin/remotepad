@@ -124,6 +124,7 @@ typedef struct {
 	UIInterfaceOrientation tapViewOrientation;
 	BOOL autorotateOrientation;
 	BOOL twoFingersSecondary;
+	BOOL prohibitSleeping;
 }
 
 - (void)resetAllStates:(id)applicationControllerDelegate;
@@ -134,6 +135,7 @@ typedef struct {
 - (void)setNumberOfButtons:(int)val;
 - (void)setMouseMapLeftToRight:(BOOL)isLeftToRight;
 - (void)setNumberOfButtons:(int)val mouseMapLeftToRight:(BOOL)isLeftToRight;
+- (void)setProhibitSleeping:(BOOL)value;
 - (void)registerDefaults;
 - (void)readDefaults;
 - (void)prepareTapView;
@@ -155,5 +157,6 @@ typedef struct {
 @property UIInterfaceOrientation tapViewOrientation;
 @property BOOL autorotateOrientation;
 @property BOOL twoFingersSecondary;
+@property (readonly) BOOL prohibitSleeping;
 
 @end

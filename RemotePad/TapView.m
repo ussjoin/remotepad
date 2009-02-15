@@ -79,6 +79,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @synthesize tapViewOrientation;
 @synthesize autorotateOrientation;
 @synthesize twoFingersSecondary;
+@synthesize prohibitSleeping;
 
 
 - (void)loadView {
@@ -170,6 +171,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultTapViewOrientation forKey:kDefaultKeyTapViewOrientation]];
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultAutorotateOrientation forKey:kDefaultKeyAutorotateOrientation]];
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultTwoFingersSecondary forKey:kDefaultKeyTwoFingersSecondary]];
+	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultProhibitSleeping forKey:kDefaultKeyProhibitSleeping]];
 }
 
 - (void) readDefaults {
@@ -198,6 +200,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	tapViewOrientation = (UIInterfaceOrientation)[defaults integerForKey:kDefaultKeyTapViewOrientation];
 	autorotateOrientation = [defaults boolForKey:kDefaultKeyAutorotateOrientation];
 	twoFingersSecondary = [defaults boolForKey:kDefaultKeyTwoFingersSecondary];
+	prohibitSleeping = [defaults boolForKey:kDefaultKeyProhibitSleeping];
 }
 
 - (void) showToolbars:(BOOL)showToolbars showStatusbar:(BOOL)showStatusbar temporal:(BOOL)temporally {
@@ -363,6 +366,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void)setMouseMapLeftToRight:(BOOL)isLeftToRight {
 	[self setNumberOfButtons:numberOfButtons mouseMapLeftToRight:isLeftToRight];
+}
+
+- (void)setProhibitSleeping:(BOOL)value {
+	prohibitSleeping = value;
+	[[UIApplication sharedApplication] setIdleTimerDisabled:prohibitSleeping];
 }
 
 - (void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event

@@ -52,6 +52,7 @@
 #define kDefaultKeyTapViewOrientation		@"tapviewOrientation"
 #define kDefaultKeyAutorotateOrientation	@"autorotateOrientation"
 #define kDefaultKeyTwoFingersSecondary		@"twoFingersSecondary"
+#define kDefaultKeyProhibitSleeping			@"prohibitSleeping"
 // application defaults values
 #define kDefaultVersion					kVersion
 #define kDefaultTopviewLocationX		@"0"
@@ -72,6 +73,7 @@
 #define kDefaultTapViewOrientation		@"1"
 #define kDefaultAutorotateOrientation	@"YES"
 #define kDefaultTwoFingersSecondary		@"YES"
+#define kDefaultProhibitSleeping		@"NO"
 
 // Bonjour constants
 

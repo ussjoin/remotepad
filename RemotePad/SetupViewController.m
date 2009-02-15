@@ -41,7 +41,7 @@ enum TableSections
 	kSectionToggleStatusbar,
 	kSectionArrowKeyGestures,
 	kSectionAccelMouse,
-	kSectionOrientation,
+	kSectionApplication,
 	kSectionResetButtonLocation,
 	kSectionConnection,
 	kSectionVersion,
@@ -164,6 +164,12 @@ enum TableSections
 	[tapViewController setTwoFingersSecondary:value];
 }
 
+- (void)changeProhibitSleeping:(id)sender {
+	BOOL value = [sender isOn];
+	[[NSUserDefaults standardUserDefaults] setInteger:value forKey:kDefaultKeyProhibitSleeping];
+	[tapViewController setProhibitSleeping:value];
+}
+
 - (void)resetButtonLocation {
 	CGPoint value = CGPointMake([kDefaultTopviewLocationX floatValue], [kDefaultTopviewLocationY floatValue]);
 	[[NSUserDefaults standardUserDefaults] setFloat:value.x forKey:kDefaultKeyTopviewLocationX];
@@ -243,8 +249,8 @@ enum TableSections
 		case kSectionAccelMouse:
 			title = @"Mouse moving by Accelerometer";
 			break;
-		case kSectionOrientation:
-			title = @"Application Orientation";
+		case kSectionApplication:
+			title = @"Application Options";
 			break;
 		case kSectionResetButtonLocation:
 		case kSectionConnection:
@@ -260,7 +266,6 @@ enum TableSections
 	switch (section) {
 		case kSectionToggleStatusbar:
 		case kSectionResetButtonLocation:
-		case kSectionOrientation:
 		case kSectionConnection:
 		case kSectionVersion:
 			number = 1;
@@ -268,6 +273,7 @@ enum TableSections
 		case kSectionButtonOptions:
 		case kSectionArrowKeyGestures:
 		case kSectionAccelMouse:
+		case kSectionApplication:
 			number = 2;
 			break;
 		case kSectionScrollingOptions:
@@ -289,7 +295,7 @@ enum TableSections
 			height = kUIRowSegmentHeight;
 			break;
 		case kSectionScrollingOptions:
-		case kSectionOrientation:
+		case kSectionApplication:
 			height = kUIRowSwitchHeight;
 			break;
 		case kSectionClickingOptions:
@@ -489,14 +495,24 @@ enum TableSections
 				[cell setFont:[UIFont systemFontOfSize:14.0]];
 			}
 			break;
-		case kSectionOrientation:
-			[cell setText:@"Autorotating"];
-			switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
-			[switchui addTarget:self action:@selector(changeAutorotateOrientation:) forControlEvents:UIControlEventValueChanged];
-			switchui.on = tapViewController.autorotateOrientation;
-			switchui.backgroundColor = [UIColor clearColor];
-			[cell setAccessoryView:switchui];
-			[switchui release];
+		case kSectionApplication:
+			if (row == 0) {
+				[cell setText:@"Autorotating orientation"];
+				switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
+				[switchui addTarget:self action:@selector(changeAutorotateOrientation:) forControlEvents:UIControlEventValueChanged];
+				switchui.on = tapViewController.autorotateOrientation;
+				switchui.backgroundColor = [UIColor clearColor];
+				[cell setAccessoryView:switchui];
+				[switchui release];
+			} else {
+				[cell setText:@"Prohibit sleeping"];
+				switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
+				[switchui addTarget:self action:@selector(changeProhibitSleeping:) forControlEvents:UIControlEventValueChanged];
+				switchui.on = tapViewController.prohibitSleeping;
+				switchui.backgroundColor = [UIColor clearColor];
+				[cell setAccessoryView:switchui];
+				[switchui release];
+			}
 			break;
 		case kSectionResetButtonLocation:
 			[cell setText:@"Reset button location"];
