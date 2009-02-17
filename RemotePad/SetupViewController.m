@@ -83,6 +83,25 @@ enum TableSections
 	[setupTableView setAutoresizesSubviews:YES];
 	[contentView addSubview:setupTableView];
 	[contentView release];
+	numberOfButtonsCell = nil;
+	mouseMapLeftToRightCell = nil;
+	twoFingersScrollCell = nil;
+	allowHorizontalScrollCell = nil;
+	scrollWithMouse3Cell = nil;
+	clickByTapCell = nil;
+	dragByTapCell = nil;
+	dragByTapLockCell = nil;
+	dragByTapLockCommentCell = nil;
+	twoFingersSecondaryCell = nil;
+	twoFingersSecondaryCommentCell = nil;
+	numberToggleStatusbarCell = nil;
+	numberArrowKeyGestureCell = nil;
+	numberArrowKeyGestureCommentCell = nil;
+	enableAccelMouseCell = nil;
+	enableAccelMouseCommentCell = nil;
+	autorotateOrientationCell = nil;
+	prohibitSleepingCell = nil;
+	topviewLocationCell = nil;
 }
 
 // callback routines
@@ -346,7 +365,7 @@ enum TableSections
 //
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	NSInteger row = [indexPath row];
-	UITableViewCell *cell = [self obtainTableCell];
+	UITableViewCell *cell;
 	UISegmentedControl *segment;
 	UISwitch *switchui;
 	UILabel *label;
@@ -354,186 +373,291 @@ enum TableSections
 	switch ([indexPath section]) {
 		case kSectionButtonOptions:
 			if (row == 0) {
-				[cell setText:@"Number of buttons"];
-				segment = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"1", @"2", @"3", nil]];
-				[segment addTarget:self action:@selector(changeNumButtons:) forControlEvents:UIControlEventValueChanged];
-				segment.segmentedControlStyle = UISegmentedControlStyleBar;
-				segment.selectedSegmentIndex = tapViewController.numberOfButtons - 1;
-				[segment setFrame:CGRectMake(0, 0, kSegmentedControlWidth, kSegmentedControlHeight)];
-				[cell setAccessoryView:segment];
-				[segment release];
+				if (numberOfButtonsCell == nil) {
+					cell = [self obtainTableCell];
+					numberOfButtonsCell = [cell retain];
+					[cell setText:@"Number of buttons"];
+					segment = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"1", @"2", @"3", nil]];
+					[segment addTarget:self action:@selector(changeNumButtons:) forControlEvents:UIControlEventValueChanged];
+					segment.segmentedControlStyle = UISegmentedControlStyleBar;
+					segment.selectedSegmentIndex = tapViewController.numberOfButtons - 1;
+					[segment setFrame:CGRectMake(0, 0, kSegmentedControlWidth, kSegmentedControlHeight)];
+					[cell setAccessoryView:segment];
+					[segment release];
+				}
+				cell = numberOfButtonsCell;
 			} else {
-				[cell setText:@"Primary mouse button"];
-				segment = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Left", @"Right", nil]];
-				[segment addTarget:self action:@selector(changeButtonMapping:) forControlEvents:UIControlEventValueChanged];
-				segment.segmentedControlStyle = UISegmentedControlStyleBar;
-				segment.selectedSegmentIndex = tapViewController.mouseMapLeftToRight ? 0 : 1;
-				[segment setFrame:CGRectMake(0, 0, kSegmentedControlWidth, kSegmentedControlHeight)];
-				[cell setAccessoryView:segment];
-				[segment release];
+				if (mouseMapLeftToRightCell == nil) {
+					cell = [self obtainTableCell];
+					mouseMapLeftToRightCell = [cell retain];
+					[cell setText:@"Primary mouse button"];
+					segment = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Left", @"Right", nil]];
+					[segment addTarget:self action:@selector(changeButtonMapping:) forControlEvents:UIControlEventValueChanged];
+					segment.segmentedControlStyle = UISegmentedControlStyleBar;
+					segment.selectedSegmentIndex = tapViewController.mouseMapLeftToRight ? 0 : 1;
+					[segment setFrame:CGRectMake(0, 0, kSegmentedControlWidth, kSegmentedControlHeight)];
+					[cell setAccessoryView:segment];
+					[segment release];
+				}
+				cell = mouseMapLeftToRightCell;
 			}
 			break;
 		case kSectionScrollingOptions:
 			if (row == 0) {
-				[cell setText:@"Use two fingers to scroll"];
-				switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
-				[switchui addTarget:self action:@selector(changeTwoFingersScroll:) forControlEvents:UIControlEventValueChanged];
-				switchui.on = tapViewController.twoFingersScroll;
-				switchui.backgroundColor = [UIColor clearColor];
-				[cell setAccessoryView:switchui];
-				[switchui release];
+				if (twoFingersScrollCell == nil) {
+					cell = [self obtainTableCell];
+					twoFingersScrollCell = [cell retain];
+					[cell setText:@"Use two fingers to scroll"];
+					switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
+					[switchui addTarget:self action:@selector(changeTwoFingersScroll:) forControlEvents:UIControlEventValueChanged];
+					switchui.on = tapViewController.twoFingersScroll;
+					switchui.backgroundColor = [UIColor clearColor];
+					[cell setAccessoryView:switchui];
+					[switchui release];
+				}
+				cell = twoFingersScrollCell;
 			} else if (row == 1) {
-				[cell setText:@"Arrow horizontal scrolling"];
-				switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
-				[switchui addTarget:self action:@selector(changeAllowHorizontalScroll:) forControlEvents:UIControlEventValueChanged];
-				switchui.on = tapViewController.allowHorizontalScroll;
-				switchui.backgroundColor = [UIColor clearColor];
-				[cell setAccessoryView:switchui];
-				[switchui release];
+				if (allowHorizontalScrollCell == nil) {
+					cell = [self obtainTableCell];
+					allowHorizontalScrollCell = [cell retain];
+					[cell setText:@"Arrow horizontal scrolling"];
+					switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
+					[switchui addTarget:self action:@selector(changeAllowHorizontalScroll:) forControlEvents:UIControlEventValueChanged];
+					switchui.on = tapViewController.allowHorizontalScroll;
+					switchui.backgroundColor = [UIColor clearColor];
+					[cell setAccessoryView:switchui];
+					[switchui release];
+				}
+				cell = allowHorizontalScrollCell;
 			} else {
-				[cell setText:@"Center button scrolling"];
-				switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
-				[switchui addTarget:self action:@selector(changeScrollWithMouse3:) forControlEvents:UIControlEventValueChanged];
-				switchui.on = tapViewController.scrollWithMouse3;
-				switchui.backgroundColor = [UIColor clearColor];
-				[cell setAccessoryView:switchui];
-				[switchui release];
+				if (scrollWithMouse3Cell == nil) {
+					cell = [self obtainTableCell];
+					scrollWithMouse3Cell = [cell retain];
+					[cell setText:@"Center button scrolling"];
+					switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
+					[switchui addTarget:self action:@selector(changeScrollWithMouse3:) forControlEvents:UIControlEventValueChanged];
+					switchui.on = tapViewController.scrollWithMouse3;
+					switchui.backgroundColor = [UIColor clearColor];
+					[cell setAccessoryView:switchui];
+					[switchui release];
+				}
+				cell = scrollWithMouse3Cell;
 			}
 			break;
 		case kSectionClickingOptions:
 			if (row == 0) {
-				[cell setText:@"Clicking"];
-				switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
-				[switchui addTarget:self action:@selector(changeClickByTap:) forControlEvents:UIControlEventValueChanged];
-				switchui.on = tapViewController.clickByTap;
-				switchui.backgroundColor = [UIColor clearColor];
-				[cell setAccessoryView:switchui];
-				[switchui release];
+				if (clickByTapCell == nil) {
+					cell = [self obtainTableCell];
+					clickByTapCell = [cell retain];
+					[cell setText:@"Clicking"];
+					switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
+					[switchui addTarget:self action:@selector(changeClickByTap:) forControlEvents:UIControlEventValueChanged];
+					switchui.on = tapViewController.clickByTap;
+					switchui.backgroundColor = [UIColor clearColor];
+					[cell setAccessoryView:switchui];
+					[switchui release];
+				}
+				cell = clickByTapCell;
 			} else if (row == 1) {
-				[cell setText:@"Dragging"];
-				switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
-				[switchui addTarget:self action:@selector(changeDragByTap:) forControlEvents:UIControlEventValueChanged];
-				switchui.on = tapViewController.dragByTap;
-				switchui.backgroundColor = [UIColor clearColor];
-				[cell setAccessoryView:switchui];
-				[switchui release];
+				if (dragByTapCell == nil) {
+					cell = [self obtainTableCell];
+					dragByTapCell = [cell retain];
+					[cell setText:@"Dragging"];
+					switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
+					[switchui addTarget:self action:@selector(changeDragByTap:) forControlEvents:UIControlEventValueChanged];
+					switchui.on = tapViewController.dragByTap;
+					switchui.backgroundColor = [UIColor clearColor];
+					[cell setAccessoryView:switchui];
+					[switchui release];
+				}
+				cell = dragByTapCell;
 			} else if (row == 2) {
-				[cell setText:@"Drag Lock"];
-				switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
-				[switchui addTarget:self action:@selector(changeDragByTapLock:) forControlEvents:UIControlEventValueChanged];
-				switchui.on = tapViewController.dragByTapLock;
-				switchui.backgroundColor = [UIColor clearColor];
-				[cell setAccessoryView:switchui];
-				[switchui release];
+				if (dragByTapLockCell == nil) {
+					cell = [self obtainTableCell];
+					dragByTapLockCell = [cell retain];
+					[cell setText:@"Drag Lock"];
+					switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
+					[switchui addTarget:self action:@selector(changeDragByTapLock:) forControlEvents:UIControlEventValueChanged];
+					switchui.on = tapViewController.dragByTapLock;
+					switchui.backgroundColor = [UIColor clearColor];
+					[cell setAccessoryView:switchui];
+					[switchui release];
+				}
+				cell = dragByTapLockCell;
 			} else if (row == 3) {
-				[cell setText:@"tap again to release"];
-				[cell setIndentationLevel:1];
-				[cell setFont:[UIFont systemFontOfSize:14.0]];
+				if (dragByTapLockCommentCell == nil) {
+					cell = [self obtainTableCell];
+					dragByTapLockCommentCell = [cell retain];
+					[cell setText:@"tap again to release"];
+					[cell setIndentationLevel:1];
+					[cell setFont:[UIFont systemFontOfSize:14.0]];
+				}
+				cell = dragByTapLockCommentCell;
 			} else if (row == 4) {
-				[cell setText:@"Secondary clicking"];
-				switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
-				[switchui addTarget:self action:@selector(changeTwoFingersSecondary:) forControlEvents:UIControlEventValueChanged];
-				switchui.on = tapViewController.twoFingersSecondary;
-				switchui.backgroundColor = [UIColor clearColor];
-				[cell setAccessoryView:switchui];
-				[switchui release];
+				if (twoFingersSecondaryCell == nil) {
+					cell = [self obtainTableCell];
+					twoFingersSecondaryCell = [cell retain];
+					[cell setText:@"Secondary clicking"];
+					switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
+					[switchui addTarget:self action:@selector(changeTwoFingersSecondary:) forControlEvents:UIControlEventValueChanged];
+					switchui.on = tapViewController.twoFingersSecondary;
+					switchui.backgroundColor = [UIColor clearColor];
+					[cell setAccessoryView:switchui];
+					[switchui release];
+				}
+				cell = twoFingersSecondaryCell;
 			} else {
-				[cell setText:@"by two fingers"];
-				[cell setIndentationLevel:1];
-				[cell setFont:[UIFont systemFontOfSize:14.0]];
+				if (twoFingersSecondaryCommentCell == nil) {
+					cell = [self obtainTableCell];
+					twoFingersSecondaryCommentCell = [cell retain];
+					[cell setText:@"by two fingers"];
+					[cell setIndentationLevel:1];
+					[cell setFont:[UIFont systemFontOfSize:14.0]];
+				}
+				cell = twoFingersSecondaryCommentCell;
 			}
 			break;
 		case kSectionToggleStatusbar:
-			[cell setText:@""];
-			segment = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Single-Click", @"Triple-Click", @"Disable", nil]];
-			[segment addTarget:self action:@selector(changeToggleStatusbarClick:) forControlEvents:UIControlEventValueChanged];
-			segment.segmentedControlStyle = UISegmentedControlStyleBar;
-			if (tapViewController.numberToggleStatusbar == 0)
-				segment.selectedSegmentIndex = 2;
-			else if (tapViewController.numberToggleStatusbar == 1)
-				segment.selectedSegmentIndex = 0;
-			else
-				segment.selectedSegmentIndex = 1;
-			[segment setFrame:CGRectMake(0, 0, kSegmentedControlWidthLong, kSegmentedControlHeight)];
-			[cell setAccessoryView:segment];
-			[segment release];
-			break;
-		case kSectionArrowKeyGestures:
-			if (row == 0) {
+			if (numberToggleStatusbarCell == nil) {
+				cell = [self obtainTableCell];
+				numberToggleStatusbarCell = [cell retain];
 				[cell setText:@""];
-				segment = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Single-Click", @"Double-Click", @"Disable", nil]];
-				[segment addTarget:self action:@selector(changeArrowKeyGestureClick:) forControlEvents:UIControlEventValueChanged];
+				segment = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Single-Click", @"Triple-Click", @"Disable", nil]];
+				[segment addTarget:self action:@selector(changeToggleStatusbarClick:) forControlEvents:UIControlEventValueChanged];
 				segment.segmentedControlStyle = UISegmentedControlStyleBar;
-				if (tapViewController.numberArrowKeyGesture == 0)
+				if (tapViewController.numberToggleStatusbar == 0)
 					segment.selectedSegmentIndex = 2;
-				else if (tapViewController.numberArrowKeyGesture == 1)
+				else if (tapViewController.numberToggleStatusbar == 1)
 					segment.selectedSegmentIndex = 0;
 				else
 					segment.selectedSegmentIndex = 1;
 				[segment setFrame:CGRectMake(0, 0, kSegmentedControlWidthLong, kSegmentedControlHeight)];
 				[cell setAccessoryView:segment];
 				[segment release];
+			}
+			cell = numberToggleStatusbarCell;
+			break;
+		case kSectionArrowKeyGestures:
+			if (row == 0) {
+				if (numberArrowKeyGestureCell == nil) {
+					cell = [self obtainTableCell];
+					numberArrowKeyGestureCell = [cell retain];
+					[cell setText:@""];
+					segment = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Single-Click", @"Double-Click", @"Disable", nil]];
+					[segment addTarget:self action:@selector(changeArrowKeyGestureClick:) forControlEvents:UIControlEventValueChanged];
+					segment.segmentedControlStyle = UISegmentedControlStyleBar;
+					if (tapViewController.numberArrowKeyGesture == 0)
+						segment.selectedSegmentIndex = 2;
+					else if (tapViewController.numberArrowKeyGesture == 1)
+						segment.selectedSegmentIndex = 0;
+					else
+						segment.selectedSegmentIndex = 1;
+					[segment setFrame:CGRectMake(0, 0, kSegmentedControlWidthLong, kSegmentedControlHeight)];
+					[cell setAccessoryView:segment];
+					[segment release];
+				}
+				cell = numberArrowKeyGestureCell;
 			} else {
-				[cell setText:@"Click and drag to input arrow key"];
-				[cell setIndentationLevel:1];
-				[cell setFont:[UIFont systemFontOfSize:14.0]];
+				if (numberArrowKeyGestureCommentCell == nil) {
+					cell = [self obtainTableCell];
+					numberArrowKeyGestureCommentCell = [cell retain];
+					[cell setText:@"Click and drag to input arrow key"];
+					[cell setIndentationLevel:1];
+					[cell setFont:[UIFont systemFontOfSize:14.0]];
+				}
+				cell = numberArrowKeyGestureCommentCell;
 			}
 			break;
 		case kSectionAccelMouse:
 			if (row == 0) {
-				[cell setText:@""];
-				segment = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Pseudo high pass filter", @"Disable", nil]];
-				[segment addTarget:self action:@selector(changeEnableAccelMouse:) forControlEvents:UIControlEventValueChanged];
-				segment.segmentedControlStyle = UISegmentedControlStyleBar;
-				segment.selectedSegmentIndex = tapViewController.enableAccelMouse ? 0 : 1;
-				[segment setFrame:CGRectMake(0, 0, kSegmentedControlWidthLong, kSegmentedControlHeight)];
-				[cell setAccessoryView:segment];
-				[segment release];
+				if (enableAccelMouseCell == nil) {
+					cell = [self obtainTableCell];
+					enableAccelMouseCell = [cell retain];
+					[cell setText:@""];
+					segment = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Pseudo high pass filter", @"Disable", nil]];
+					[segment addTarget:self action:@selector(changeEnableAccelMouse:) forControlEvents:UIControlEventValueChanged];
+					segment.segmentedControlStyle = UISegmentedControlStyleBar;
+					segment.selectedSegmentIndex = tapViewController.enableAccelMouse ? 0 : 1;
+					[segment setFrame:CGRectMake(0, 0, kSegmentedControlWidthLong, kSegmentedControlHeight)];
+					[cell setAccessoryView:segment];
+					[segment release];
+				}
+				cell = enableAccelMouseCell;
 			} else {
-				[cell setText:@"Cursor moves only when you hold tapping"];
-				[cell setIndentationLevel:1];
-				[cell setFont:[UIFont systemFontOfSize:14.0]];
+				if (enableAccelMouseCommentCell == nil) {
+					cell = [self obtainTableCell];
+					enableAccelMouseCommentCell = [cell retain];
+					[cell setText:@"Cursor moves only when you hold tapping"];
+					[cell setIndentationLevel:1];
+					[cell setFont:[UIFont systemFontOfSize:14.0]];
+				}
+				cell = enableAccelMouseCommentCell;
 			}
 			break;
 		case kSectionApplication:
 			if (row == 0) {
-				[cell setText:@"Autorotating orientation"];
-				switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
-				[switchui addTarget:self action:@selector(changeAutorotateOrientation:) forControlEvents:UIControlEventValueChanged];
-				switchui.on = tapViewController.autorotateOrientation;
-				switchui.backgroundColor = [UIColor clearColor];
-				[cell setAccessoryView:switchui];
-				[switchui release];
+				if (autorotateOrientationCell == nil) {
+					cell = [self obtainTableCell];
+					autorotateOrientationCell = [cell retain];
+					[cell setText:@"Autorotating orientation"];
+					switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
+					[switchui addTarget:self action:@selector(changeAutorotateOrientation:) forControlEvents:UIControlEventValueChanged];
+					switchui.on = tapViewController.autorotateOrientation;
+					switchui.backgroundColor = [UIColor clearColor];
+					[cell setAccessoryView:switchui];
+					[switchui release];
+				}
+				cell = autorotateOrientationCell;
 			} else {
-				[cell setText:@"Prohibit sleeping"];
-				switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
-				[switchui addTarget:self action:@selector(changeProhibitSleeping:) forControlEvents:UIControlEventValueChanged];
-				switchui.on = tapViewController.prohibitSleeping;
-				switchui.backgroundColor = [UIColor clearColor];
-				[cell setAccessoryView:switchui];
-				[switchui release];
+				if (prohibitSleepingCell == nil) {
+					cell = [self obtainTableCell];
+					prohibitSleepingCell = [cell retain];
+					[cell setText:@"Prohibit sleeping"];
+					switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
+					[switchui addTarget:self action:@selector(changeProhibitSleeping:) forControlEvents:UIControlEventValueChanged];
+					switchui.on = tapViewController.prohibitSleeping;
+					switchui.backgroundColor = [UIColor clearColor];
+					[cell setAccessoryView:switchui];
+					[switchui release];
+				}
+				cell = prohibitSleepingCell;
 			}
 			break;
 		case kSectionResetButtonLocation:
-			[cell setText:@"Reset button location"];
-			[cell setTextAlignment:UITextAlignmentCenter];
-			[cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
+			if (topviewLocationCell == nil) {
+				cell = [self obtainTableCell];
+				topviewLocationCell = [cell retain];
+				[cell setText:@"Reset button location"];
+				[cell setTextAlignment:UITextAlignmentCenter];
+				[cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
+			}
+			cell = topviewLocationCell;
 			break;
 		case kSectionConnection:
-			[cell setText:@"Disconnect this session"];
-			[cell setTextAlignment:UITextAlignmentCenter];
-			[cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
+			if (connectionCell == nil) {
+				cell = [self obtainTableCell];
+				connectionCell = [cell retain];
+				[cell setText:@"Disconnect this session"];
+				[cell setTextAlignment:UITextAlignmentCenter];
+				[cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
+			}
+			cell = connectionCell;
 			break;
 		case kSectionVersion:
-			[cell setText:@"Version"];
-			label = [[UILabel alloc] initWithFrame:CGRectZero];
-			[label setText:kVersion];
-			[label setFont:[UIFont systemFontOfSize:16.0]];
-			[label setTextColor:[UIColor colorWithRed:0.2 green:0.3 blue:0.4 alpha:1.0]];
-			[label setBackgroundColor:[UIColor clearColor]];
-			[label sizeToFit];
-			[cell setAccessoryView:label];
-			[label release];
+			if (versionCell == nil) {
+				cell = [self obtainTableCell];
+				versionCell = [cell retain];
+				[cell setText:@"Version"];
+				label = [[UILabel alloc] initWithFrame:CGRectZero];
+				[label setText:kVersion];
+				[label setFont:[UIFont systemFontOfSize:16.0]];
+				[label setTextColor:[UIColor colorWithRed:0.2 green:0.3 blue:0.4 alpha:1.0]];
+				[label setBackgroundColor:[UIColor clearColor]];
+				[label sizeToFit];
+				[cell setAccessoryView:label];
+				[label release];
+			}
+			cell = versionCell;
 			break;
 	}
 	

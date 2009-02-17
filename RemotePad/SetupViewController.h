@@ -34,6 +34,37 @@
 @interface SetupViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
 	TapViewController *tapViewController;
 	UITableView *setupTableView;
+
+	UITableViewCell *numberOfButtonsCell;
+	UITableViewCell *mouseMapLeftToRightCell;
+
+	UITableViewCell *twoFingersScrollCell;
+	UITableViewCell *allowHorizontalScrollCell;
+	UITableViewCell *scrollWithMouse3Cell;
+
+	UITableViewCell *clickByTapCell;
+	UITableViewCell *dragByTapCell;
+	UITableViewCell *dragByTapLockCell;
+	UITableViewCell *dragByTapLockCommentCell;
+	UITableViewCell *twoFingersSecondaryCell;
+	UITableViewCell *twoFingersSecondaryCommentCell;
+
+	UITableViewCell *numberToggleStatusbarCell;
+
+	UITableViewCell *numberArrowKeyGestureCell;
+	UITableViewCell *numberArrowKeyGestureCommentCell;
+
+	UITableViewCell *enableAccelMouseCell;
+	UITableViewCell *enableAccelMouseCommentCell;
+
+	UITableViewCell *autorotateOrientationCell;
+	UITableViewCell *prohibitSleepingCell;
+
+	UITableViewCell *topviewLocationCell;
+
+	UITableViewCell *connectionCell;
+
+	UITableViewCell *versionCell;
 }
 
 + (UILabel *)labelWithFrame:(CGRect)frame title:(NSString *)title;
