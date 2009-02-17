@@ -4,8 +4,10 @@ FEATURES:
 • Mouse control with a virtual touchpad.
 • Server support for major platforms, namely, Mac OS X, Windows, Linux and BSD.
 • Bonjour (Zeroconf) server detection under Mac OS X.
-• Customizable appearence and behaviour: number of buttons to display, tap clicking and dragging. 
+• Customizable appearence and behaviour: number of buttons to display, tap clicking and dragging.
+• Landscape mode.
 • Two finger vertical and horizontal scrolling.
+• Two finger tapping for secondary click.
 • Mouse control via acceleromenter.
 • Send arrow keys.
 • BSD-style licensed source codes
@@ -16,8 +18,6 @@ ADDITIONAL REQUIREMENTS:
 • WiFi connection
 
 WHAT'S NEW IN THIS VERSION:
-• Landscape mode now available.
-• Two finger tapping for secondary click.
-• Top button location is now stored in the preferences.
+• Option to keep an iPhone/iPod touch from going to sleep.
 
 Servers were also improved and critical bugs fixed (Windows server no longer has the 'lag' effect).
