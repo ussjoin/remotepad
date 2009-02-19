@@ -55,6 +55,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #import <UIKit/UIKit.h>
 #import "Event.h"
+#import "Constants.h"
 
 @class AppController;
 
@@ -125,6 +126,8 @@ typedef struct {
 	BOOL autorotateOrientation;
 	BOOL twoFingersSecondary;
 	BOOL prohibitSleeping;
+	int trackingSpeed;
+	int scrollingSpeed;
 }
 
 - (void)resetAllStates:(id)applicationControllerDelegate;
@@ -158,5 +161,7 @@ typedef struct {
 @property BOOL autorotateOrientation;
 @property BOOL twoFingersSecondary;
 @property (readonly) BOOL prohibitSleeping;
+@property int trackingSpeed;
+@property int scrollingSpeed;
 
 @end

@@ -246,12 +246,8 @@
 	if (x == 0 && y == 0)
 		return point;
 	
-	double accel = 1;
-	if (delta < abs(x) || delta < abs(y)) {
-		accel = sqrt(x*x+y*y)/delta;
-	}
-	point.x += x*accel;
-	point.y += y*accel;
+	point.x += x;
+	point.y += y;
 	if (CGGetDisplaysWithPoint(point, 1, &displayID, &displayCnt) != 0 || displayCnt < 1) {
 		CGPoint oldPoint;
 		oldPoint.x = globalPoint.h;
@@ -352,14 +348,8 @@
 
 - (void)scrollWheelW:(MouseEvent)w Z:(MouseEvent)z
 {
-	double accel = 1;
-	
-	if (delta < abs(w.value) || delta < abs(z.value)) {
-		accel = sqrt(w.value*w.value+z.value*z.value)/delta;
-	}
-	
-	int32_t countW = -w.value*accel;
-	int32_t countZ = -z.value*accel;
+	int32_t countW = -w.value;
+	int32_t countZ = -z.value;
 	
 	if (countW != 0 || countZ != 0) {
 		CFRelease(CGEventCreate(NULL));
@@ -379,13 +369,7 @@
 
 - (void)scrollWheelZ:(MouseEvent)z
 {
-	double accel = 1;
-	
-	if (delta < abs(z.value)) {
-		accel = abs(z.value)/delta;
-	}
-	
-	int32_t countZ = -z.value*accel;
+	int32_t countZ = -z.value;
 	
 	if (countZ != 0) {
 		CFRelease(CGEventCreate(NULL));

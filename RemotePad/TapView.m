@@ -80,6 +80,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @synthesize autorotateOrientation;
 @synthesize twoFingersSecondary;
 @synthesize prohibitSleeping;
+@synthesize trackingSpeed;
+@synthesize scrollingSpeed;
 
 
 - (void)loadView {
@@ -201,6 +203,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	autorotateOrientation = [defaults boolForKey:kDefaultKeyAutorotateOrientation];
 	twoFingersSecondary = [defaults boolForKey:kDefaultKeyTwoFingersSecondary];
 	prohibitSleeping = [defaults boolForKey:kDefaultKeyProhibitSleeping];
+	trackingSpeed = [defaults integerForKey:kDefaultKeyTrackingSpeed];
+	scrollingSpeed = [defaults integerForKey:kDefaultKeyScrollingSpeed];
 }
 
 - (void) showToolbars:(BOOL)showToolbars showStatusbar:(BOOL)showStatusbar temporal:(BOOL)temporally {
@@ -549,6 +553,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+	int trackingDelta[kTrackingSpeedSteps] = { 480, 16, 8, 7, 6, 5, 4, 3, 2, 1 };
+	int scrollingDelta[kScrollingSpeedSteps] = { 480, 16, 8, 7, 6, 5, 4, 3, 2, 1 };
 	if ([clickTimer isValid])
 		[clickTimer fire];
 	for (UITouch *touch in touches) {
@@ -624,9 +630,16 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 			}
 			multiFingersTap.phase = UITouchPhaseMoved;
 			if (twoFingersScroll && numTouches == 2 || scrollWithMouse3 && mouse3Tap.dragMode && numTouches == 1) {
+				float accel = 1;
+				int deltaRange = scrollingDelta[scrollingSpeed];
+				CGRect accelRect = CGRectMake(-deltaRange, -deltaRange, deltaRange*2, deltaRange*2);
+				if (!CGRectContainsPoint(accelRect, delta)) {
+					accel = sqrt(delta.x*delta.x + delta.y*delta.y) / deltaRange;
+				}
+				accel = accel / numTouches;
 				if (allowHorizontalScroll)
-					[appc send:EVENT_MOUSE_DELTA_W with:(delta.x + prevDelta.x) / 2 time:event.timestamp];
-				[appc send:EVENT_MOUSE_DELTA_Z with:(delta.y + prevDelta.y) / 2 time:event.timestamp];
+					[appc send:EVENT_MOUSE_DELTA_W with:accel * (delta.x + prevDelta.x) / 2 time:event.timestamp];
+				[appc send:EVENT_MOUSE_DELTA_Z with:accel * (delta.y + prevDelta.y) / 2 time:event.timestamp];
 				prevDelta = delta;
 			} else if (numTouches == 1) {
 				NSUInteger tapCount = [touch tapCount];
@@ -634,8 +647,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 					[appc send:EVENT_MOUSE_DOWN with:MouseEventValue(0, tapCount) time:event.timestamp];
 					dragByTapDragMode = YES;
 				}
-				[appc send:EVENT_MOUSE_DELTA_X with:(delta.x + prevDelta.x) / 2 time:event.timestamp];
-				[appc send:EVENT_MOUSE_DELTA_Y with:(delta.y + prevDelta.y) / 2 time:event.timestamp];
+				float accel = 1;
+				int deltaRange = trackingDelta[trackingSpeed];
+				CGRect accelRect = CGRectMake(-deltaRange, -deltaRange, deltaRange*2, deltaRange*2);
+				if (!CGRectContainsPoint(accelRect, delta)) {
+					accel = sqrt(delta.x*delta.x + delta.y*delta.y) / deltaRange;
+				}
+				[appc send:EVENT_MOUSE_DELTA_X with:accel * (delta.x + prevDelta.x) / 2 time:event.timestamp];
+				[appc send:EVENT_MOUSE_DELTA_Y with:accel * (delta.y + prevDelta.y) / 2 time:event.timestamp];
 				prevDelta = delta;
 			}
 		}

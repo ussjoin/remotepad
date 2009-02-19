@@ -37,6 +37,7 @@ enum TableSections
 {
 	kSectionButtonOptions = 0,
 	kSectionScrollingOptions,
+	kSectionTrackingOptions,
 	kSectionClickingOptions,
 	kSectionToggleStatusbar,
 	kSectionArrowKeyGestures,
@@ -88,6 +89,8 @@ enum TableSections
 	twoFingersScrollCell = nil;
 	allowHorizontalScrollCell = nil;
 	scrollWithMouse3Cell = nil;
+	scrollingSpeedCell = nil;
+	trackingSpeedCell = nil;
 	clickByTapCell = nil;
 	dragByTapCell = nil;
 	dragByTapLockCell = nil;
@@ -189,6 +192,32 @@ enum TableSections
 	[tapViewController setProhibitSleeping:value];
 }
 
+- (void)changeScrollingSpeed:(id)sender {
+	int value = (int)([(UISlider *)sender value] + 0.5);
+	if (value < [sender minimumValue])
+		value = (int)[sender minimumValue];
+	else if ([sender maximumValue] < value)
+		value = (int)[sender maximumValue];
+	[sender setValue:(float)value];
+	if (tapViewController.scrollingSpeed != value) {
+		[[NSUserDefaults standardUserDefaults] setInteger:value forKey:kDefaultKeyScrollingSpeed];
+		[tapViewController setScrollingSpeed:value];
+	}
+}
+
+- (void)changeTrackingSpeed:(id)sender {
+	int value = (int)([(UISlider *)sender value] + 0.5);
+	if (value < [sender minimumValue])
+		value = (int)[sender minimumValue];
+	else if ([sender maximumValue] < value)
+		value = (int)[sender maximumValue];
+	[sender setValue:(float)value];
+	if (tapViewController.trackingSpeed != value) {
+		[[NSUserDefaults standardUserDefaults] setInteger:value forKey:kDefaultKeyTrackingSpeed];
+		[tapViewController setTrackingSpeed:value];
+	}
+}
+
 - (void)resetButtonLocation {
 	CGPoint value = CGPointMake([kDefaultTopviewLocationX floatValue], [kDefaultTopviewLocationY floatValue]);
 	[[NSUserDefaults standardUserDefaults] setFloat:value.x forKey:kDefaultKeyTopviewLocationX];
@@ -256,6 +285,9 @@ enum TableSections
 		case kSectionScrollingOptions:
 			title = @"Scrolling Options";
 			break;
+		case kSectionTrackingOptions:
+			title = @"Tracking Options";
+			break;
 		case kSectionClickingOptions:
 			title = @"Clicking Options";
 			break;
@@ -283,6 +315,7 @@ enum TableSections
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	NSInteger number;
 	switch (section) {
+		case kSectionTrackingOptions:
 		case kSectionToggleStatusbar:
 		case kSectionResetButtonLocation:
 		case kSectionConnection:
@@ -296,7 +329,7 @@ enum TableSections
 			number = 2;
 			break;
 		case kSectionScrollingOptions:
-			number = 3;
+			number = 4;
 			break;
 		case kSectionClickingOptions:
 			number = 6;
@@ -314,6 +347,14 @@ enum TableSections
 			height = kUIRowSegmentHeight;
 			break;
 		case kSectionScrollingOptions:
+			if ([indexPath row] == 3)
+				height = kUIRowSliderHeight;
+			else
+				height = kUIRowSwitchHeight;
+			break;
+		case kSectionTrackingOptions:
+			height = kUIRowSliderHeight;
+			break;
 		case kSectionApplication:
 			height = kUIRowSwitchHeight;
 			break;
@@ -369,6 +410,7 @@ enum TableSections
 	UISegmentedControl *segment;
 	UISwitch *switchui;
 	UILabel *label;
+	UISlider *sliderui;
 	
 	switch ([indexPath section]) {
 		case kSectionButtonOptions:
@@ -429,7 +471,7 @@ enum TableSections
 					[switchui release];
 				}
 				cell = allowHorizontalScrollCell;
-			} else {
+			} else if (row == 2) {
 				if (scrollWithMouse3Cell == nil) {
 					cell = [self obtainTableCell];
 					scrollWithMouse3Cell = [cell retain];
@@ -442,7 +484,42 @@ enum TableSections
 					[switchui release];
 				}
 				cell = scrollWithMouse3Cell;
+			} else {
+				if (scrollingSpeedCell == nil) {
+					cell = [self obtainTableCell];
+					scrollingSpeedCell = [cell retain];
+					[cell setText:@"Scrolling Speed"];
+					sliderui = [[UISlider alloc] initWithFrame:CGRectMake(0.0, 0.0, kSliderWidth, kSliderHeight)];
+					[sliderui addTarget:self action:@selector(changeScrollingSpeed:) forControlEvents:UIControlEventValueChanged];
+					sliderui.minimumValue = 0.0;
+					sliderui.maximumValue = kScrollingSpeedSteps - 1.0;
+					sliderui.continuous = YES;
+					sliderui.value = tapViewController.scrollingSpeed;
+					sliderui.backgroundColor = [UIColor clearColor];
+					[sliderui setTag:kScrollingSpeedTag];
+					[cell setAccessoryView:sliderui];
+					[sliderui release];
+				}
+				cell = scrollingSpeedCell;
 			}
+			break;
+		case kSectionTrackingOptions:
+			if (trackingSpeedCell == nil) {
+				cell = [self obtainTableCell];
+				trackingSpeedCell = [cell retain];
+				[cell setText:@"Tracking Speed"];
+				sliderui = [[UISlider alloc] initWithFrame:CGRectMake(0.0, 0.0, kSliderWidth, kSliderHeight)];
+				[sliderui addTarget:self action:@selector(changeTrackingSpeed:) forControlEvents:UIControlEventValueChanged];
+				sliderui.minimumValue = 0.0;
+				sliderui.maximumValue = kTrackingSpeedSteps - 1.0;
+				sliderui.continuous = YES;
+				sliderui.value = tapViewController.trackingSpeed;
+				sliderui.backgroundColor = [UIColor clearColor];
+				[sliderui setTag:kTrackingSpeedTag];
+				[cell setAccessoryView:sliderui];
+				[sliderui release];
+			}
+			cell = trackingSpeedCell;
 			break;
 		case kSectionClickingOptions:
 			if (row == 0) {

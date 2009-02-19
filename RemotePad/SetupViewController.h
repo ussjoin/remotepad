@@ -41,6 +41,9 @@
 	UITableViewCell *twoFingersScrollCell;
 	UITableViewCell *allowHorizontalScrollCell;
 	UITableViewCell *scrollWithMouse3Cell;
+	UITableViewCell *scrollingSpeedCell;
+
+	UITableViewCell *trackingSpeedCell;
 
 	UITableViewCell *clickByTapCell;
 	UITableViewCell *dragByTapCell;

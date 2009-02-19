@@ -53,6 +53,8 @@
 #define kDefaultKeyAutorotateOrientation	@"autorotateOrientation"
 #define kDefaultKeyTwoFingersSecondary		@"twoFingersSecondary"
 #define kDefaultKeyProhibitSleeping			@"prohibitSleeping"
+#define kDefaultKeyTrackingSpeed			@"trackingSpeed"
+#define kDefaultKeyScrollingSpeed			@"scrollingSpeed"
 // application defaults values
 #define kDefaultVersion					kVersion
 #define kDefaultTopviewLocationX		@"0"
@@ -74,6 +76,8 @@
 #define kDefaultAutorotateOrientation	@"YES"
 #define kDefaultTwoFingersSecondary		@"YES"
 #define kDefaultProhibitSleeping		@"NO"
+#define kDefaultTrackingSpeed			@"0"
+#define kDefaultScrollingSpeed			@"0"
 
 // Bonjour constants
 
@@ -131,6 +135,8 @@
 #define kSwitchHeight				27.0
 #define kLabelHeight				20.0
 #define kToggleButtonItemWidth		90.0
+#define kSliderWidth				120.0
+#define kSliderHeight				30.0
 
 // table row dimensions
 #define kUIRowSegmentHeight			40.0
@@ -138,3 +144,12 @@
 #define kUIRowButtonHeight			40.0
 #define kUIRowCommentHeight			20.0
 #define kUIRowLabelHeight			40.0
+#define kUIRowSliderHeight			40.0
+
+// view tag
+#define kTrackingSpeedTag			1
+#define kScrollingSpeedTag			2
+
+// slider steps
+#define kTrackingSpeedSteps			10
+#define kScrollingSpeedSteps		10
