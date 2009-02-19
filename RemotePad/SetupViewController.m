@@ -30,8 +30,46 @@
 #import "SetupViewController.h"
 #import "Constants.h"
 
-@implementation SetupViewController
 
+@interface SetupSlider : UISlider
+@end
+
+@implementation SetupSlider
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+	[self touchesMoved:touches withEvent:event];
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+	[self setHighlighted:NO];
+	[self sendActionsForControlEvents:UIControlEventValueChanged];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+	[self setHighlighted:NO];
+	[self sendActionsForControlEvents:UIControlEventValueChanged];
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+	UITouch *touch = [touches anyObject];
+	CGPoint point = [touch locationInView:self];
+	float value = point.x / kSliderWidth * (self.maximumValue - self.minimumValue) + self.minimumValue;
+	if (value < self.minimumValue)
+		value = self.minimumValue;
+	else if (self.maximumValue < value)
+		value = self.maximumValue;
+	[self setHighlighted:YES];
+	if (value != self.value) {
+		[self setValue:value];
+		if (self.continuous)
+			[self sendActionsForControlEvents:UIControlEventValueChanged];
+	}
+}
+
+@end
+
+
+@implementation SetupViewController
 
 enum TableSections
 {
@@ -489,7 +527,7 @@ enum TableSections
 					cell = [self obtainTableCell];
 					scrollingSpeedCell = [cell retain];
 					[cell setText:@"Scrolling Speed"];
-					sliderui = [[UISlider alloc] initWithFrame:CGRectMake(0.0, 0.0, kSliderWidth, kSliderHeight)];
+					sliderui = [[SetupSlider alloc] initWithFrame:CGRectMake(0.0, 0.0, kSliderWidth, kSliderHeight)];
 					[sliderui addTarget:self action:@selector(changeScrollingSpeed:) forControlEvents:UIControlEventValueChanged];
 					sliderui.minimumValue = 0.0;
 					sliderui.maximumValue = kScrollingSpeedSteps - 1.0;
@@ -508,7 +546,7 @@ enum TableSections
 				cell = [self obtainTableCell];
 				trackingSpeedCell = [cell retain];
 				[cell setText:@"Tracking Speed"];
-				sliderui = [[UISlider alloc] initWithFrame:CGRectMake(0.0, 0.0, kSliderWidth, kSliderHeight)];
+				sliderui = [[SetupSlider alloc] initWithFrame:CGRectMake(0.0, 0.0, kSliderWidth, kSliderHeight)];
 				[sliderui addTarget:self action:@selector(changeTrackingSpeed:) forControlEvents:UIControlEventValueChanged];
 				sliderui.minimumValue = 0.0;
 				sliderui.maximumValue = kTrackingSpeedSteps - 1.0;
@@ -740,6 +778,5 @@ enum TableSections
 	
 	return cell;
 }
-
 
 @end
