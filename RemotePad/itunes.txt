@@ -19,5 +19,6 @@ ADDITIONAL REQUIREMENTS:
 
 WHAT'S NEW IN THIS VERSION:
 • Option to keep an iPhone/iPod touch from going to sleep.
+• Tracking and scrolling speed accelerations
 
 Servers were also improved and critical bugs fixed (Windows server no longer has the 'lag' effect).
