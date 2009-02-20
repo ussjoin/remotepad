@@ -388,6 +388,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 // This should never be called, since we resolve with a timeout of 0.0, which means indefinite
 - (void)netService:(NSNetService *)sender didNotResolve:(NSDictionary *)errorDict {
 	[self stopCurrentResolve];
+	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 	[self.tableView reloadData];
 }
 
@@ -397,6 +398,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	
 	[service retain];
 	[self stopCurrentResolve];
+	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 	
 	[self.delegate browserViewController:self didResolveInstance:service];
 	[service release];
@@ -404,6 +406,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 
 - (void)cancelAction {
+	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 	[self.delegate browserViewController:self didResolveInstance:nil];
 }
 
