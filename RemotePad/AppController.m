@@ -186,7 +186,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 }
 
 - (void) showTapView {
-	[[UIApplication sharedApplication] setStatusBarHidden:YES animated:YES];
 	[tapViewController resetAllStates:self];
 	[navigationController pushViewController:tapViewController animated:YES];
 	[tapViewController prepareTapView];
