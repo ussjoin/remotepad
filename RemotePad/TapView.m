@@ -636,7 +636,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 				if (!CGRectContainsPoint(accelRect, delta)) {
 					accel = sqrt(delta.x*delta.x + delta.y*delta.y) / deltaRange;
 				}
-				accel = accel / numTouches;
+				if (numTouches == 1)
+					accel = accel * 2;
 				if (allowHorizontalScroll)
 					[appc send:EVENT_MOUSE_DELTA_W with:accel * (delta.x + prevDelta.x) / 2 time:event.timestamp];
 				[appc send:EVENT_MOUSE_DELTA_Z with:accel * (delta.y + prevDelta.y) / 2 time:event.timestamp];
