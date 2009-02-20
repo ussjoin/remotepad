@@ -123,6 +123,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 			[addButton release];
 		}
 
+		self.searchingForServicesString = @"Searching for servers...";
+		bonjourIcon = [[UIImage imageNamed:@"Bonjour.png"] retain];
+
 		// Make sure we have a chance to discover devices before showing the user that nothing was found (yet)
 		[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(initialWaitOver:) userInfo:nil repeats:NO];
 	}
@@ -233,6 +236,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	if (cell == nil) {
 		cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:tableCellIdentifier] autorelease];
 	}
+	
+	cell.image = bonjourIcon;
 	
 	NSUInteger count = [self.services count];
 	if (count == 0 && self.searchingForServicesString) {

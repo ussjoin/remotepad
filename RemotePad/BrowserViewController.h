@@ -91,6 +91,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	NSTimer* _timer;
 	BOOL _needsActivityIndicator;
 	BOOL _initialWaitOver;
+	UIImage *bonjourIcon;
 }
 
 @property (nonatomic, assign) id<BrowserViewControllerDelegate> delegate;
