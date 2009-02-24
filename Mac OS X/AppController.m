@@ -148,6 +148,8 @@
 		return;
 	}
 	
+	accumuW = 0;
+	accumuZ = 0;
 }	
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification
 {
@@ -351,40 +353,41 @@
 	int32_t countW = -w.value;
 	int32_t countZ = -z.value;
 	
+#if (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5)
 	if (countW != 0 || countZ != 0) {
 		CFRelease(CGEventCreate(NULL));
-#if (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5)
 		CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitPixel, 2, countZ, countW);
-#else
-		CGEventRef event = CGEventCreate(NULL);
-		CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, countZ);
-		CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2, countW);
-		CGEventSetIntegerValueField(event, kCGScrollWheelEventInstantMouser, 0);
-#endif
 		CGEventSetType(event, kCGEventScrollWheel);
 		CGEventPost(kCGSessionEventTap, event);
 		CFRelease(event);
 	}
+#else
+#define kAdhocFactor 16
+	accumuW += countW;
+	countW = accumuW / kAdhocFactor;
+	accumuW = accumuW % kAdhocFactor;
+	accumuZ += countZ;
+	countZ = accumuZ / kAdhocFactor;
+	accumuZ = accumuZ %kAdhocFactor;
+	if (countW != 0 || countZ != 0) {
+		CFRelease(CGEventCreate(NULL));
+		CGEventRef event = CGEventCreate(NULL);
+		CGEventSetType(event, kCGEventScrollWheel);
+		CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, countZ);
+		CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2, countW);
+		CGEventSetIntegerValueField(event, kCGScrollWheelEventInstantMouser, 0);
+		CGEventSetType(event, kCGEventScrollWheel);
+		CGEventPost(kCGSessionEventTap, event);
+		CFRelease(event);
+	}
+#endif
 }
 
 - (void)scrollWheelZ:(MouseEvent)z
 {
-	int32_t countZ = -z.value;
-	
-	if (countZ != 0) {
-		CFRelease(CGEventCreate(NULL));
-#if (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5)
-		CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitPixel, 1, countZ);
-#else
-		CGEventRef event = CGEventCreate(NULL);
-		CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, countZ);
-		CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2, 0);
-		CGEventSetIntegerValueField(event, kCGScrollWheelEventInstantMouser, 0);
-#endif
-		CGEventSetType(event, kCGEventScrollWheel);
-		CGEventPost(kCGSessionEventTap, event);
-		CFRelease(event);
-	}
+	MouseEvent w;
+	w.value = 0;
+	[self scrollWheelW:w Z:z];
 }
 
 - (void)keyDown:(MouseEvent)event0

@@ -75,6 +75,8 @@
 	NSThread *streamThread;
 	CFRunLoopSourceRef runLoopSource;
 	NSTimer *keepAliveTimer;
+	int32_t accumuW;
+	int32_t accumuZ;
 	
 	NSStatusItem *statusItem;
 }
