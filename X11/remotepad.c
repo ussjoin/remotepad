@@ -89,6 +89,8 @@ int main( int argc, char ** argv)
 	prevevent.value = 0;
 
 	Display	*dpy; /* X server connection */
+	Window	win;
+	XWindowAttributes winattr;
 	int xtest_major_version = 0;
 	int xtest_minor_version = 0;
 	int dummy;
@@ -122,6 +124,12 @@ int main( int argc, char ** argv)
 	   fprintf(stderr,"XTEST extension not supported");
 	   exit(1);
     }
+
+	/*
+	 * create a small unmapped window on a screen just so xdm can use
+	 * it as a handle on which to killclient() us.
+	 */
+	win = XCreateWindow(dpy, DefaultRootWindow(dpy), 0, 0, 1, 1, 0, CopyFromParent, InputOutput, CopyFromParent, 0, (XSetWindowAttributes*)0);
 
 //network stuff
 	//configure socket
@@ -175,6 +183,18 @@ int main( int argc, char ** argv)
 			fprintf(stderr, "waiting on port %d\n", port);
 		}
 
+		struct timeval tv = {5, 0};
+		while (1) {
+			fd_set fdset;
+			FD_ZERO(&fdset);
+			FD_SET(s, &fdset);
+			select(s+1, &fdset, NULL, NULL, &tv);
+			if (FD_ISSET(s, &fdset))
+				break;
+			// sending a keep-alive event for an X server
+			XGetWindowAttributes(dpy, win, &winattr);
+		}
+
 		s_accept = accept( s, &s_client, &s_client_size );
 
 		if ( s_accept == -1 )
@@ -185,7 +205,6 @@ int main( int argc, char ** argv)
 			fprintf(stderr, "Connected!\n");
 		}
 
-		struct timeval tv = {5, 0};
 		setsockopt(s_accept, SOL_SOCKET, SO_RCVTIMEO, (void *)&tv, sizeof(tv));
 
 		while( 1 )
@@ -293,6 +312,8 @@ int main( int argc, char ** argv)
 				break; //exit this while loop, wait for another connection
 			}
 			else if (errno == EAGAIN) {
+				// sending a keep-alive event for an X server
+				XGetWindowAttributes(dpy, win, &winattr);
 			    // sending a keep-alive packet
 			    struct timeval tv;
 			    gettimeofday(&tv, NULL);
