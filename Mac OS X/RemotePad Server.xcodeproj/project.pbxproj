@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
 		3A166AF30E7F6B8F00001374 /* RemotePad Server.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3A166AF20E7F6B8F00001374 /* RemotePad Server.icns */; };
-		3A99D79A0F20D63700C16512 /* COPYRIGHT in Resources */ = {isa = PBXBuildFile; fileRef = 3A99D7990F20D63700C16512 /* COPYRIGHT */; };
 		3AB151190E7F5D0500FB4375 /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB151180E7F5D0500FB4375 /* TCPServer.m */; };
 		3AB1512C0E7F5D8B00FB4375 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AB1512B0E7F5D8B00FB4375 /* Carbon.framework */; };
 		5631BFD80F2A2FD80042B665 /* pointer.png in Resources */ = {isa = PBXBuildFile; fileRef = 5631BFD70F2A2FD80042B665 /* pointer.png */; };
@@ -32,11 +31,9 @@
 		32DBCF750370BD2300C91783 /* RemotePad Server_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RemotePad Server_Prefix.pch"; sourceTree = "<group>"; };
 		3A166AF20E7F6B8F00001374 /* RemotePad Server.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "RemotePad Server.icns"; sourceTree = "<group>"; };
 		3A166AF50E7F6C6300001374 /* icon.xcf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icon.xcf; sourceTree = "<group>"; };
-		3A99D7990F20D63700C16512 /* COPYRIGHT */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYRIGHT; sourceTree = "<group>"; };
 		3AB151170E7F5D0500FB4375 /* TCPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPServer.h; sourceTree = "<group>"; };
 		3AB151180E7F5D0500FB4375 /* TCPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPServer.m; sourceTree = "<group>"; };
 		3AB1512B0E7F5D8B00FB4375 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
-		3ACB0FD30F206FB700502F28 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		3AD7F5680F2C007F00CD6BF7 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Event.h; path = ../Common/Event.h; sourceTree = SOURCE_ROOT; };
 		3AD7F5690F2C00A500CD6BF7 /* inputevent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = inputevent.h; path = ../Common/inputevent.h; sourceTree = SOURCE_ROOT; };
 		3AF6AE0C0F11A049005EDBB2 /* Makefile4dist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile4dist; sourceTree = "<group>"; };
@@ -126,8 +123,6 @@
 			children = (
 				3AD7F5690F2C00A500CD6BF7 /* inputevent.h */,
 				5631BFD70F2A2FD80042B665 /* pointer.png */,
-				3A99D7990F20D63700C16512 /* COPYRIGHT */,
-				3ACB0FD30F206FB700502F28 /* README */,
 				3A166AF50E7F6C6300001374 /* icon.xcf */,
 				3AD7F5680F2C007F00CD6BF7 /* Event.h */,
 				3A166AF20E7F6B8F00001374 /* RemotePad Server.icns */,
@@ -210,7 +205,6 @@
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
 				1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */,
 				3A166AF30E7F6B8F00001374 /* RemotePad Server.icns in Resources */,
-				3A99D79A0F20D63700C16512 /* COPYRIGHT in Resources */,
 				5631BFD80F2A2FD80042B665 /* pointer.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
