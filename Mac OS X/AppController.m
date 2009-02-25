@@ -297,19 +297,23 @@
 {
 	CGPoint point = [self getMousePointWithDeltaX:0 deltaY:0];
 	CGEventType type;
+	CGEventType typedown;
 	CGMouseButton button;
 	
 	int mouseNum = MouseNumber(event0.value), clickCount = MouseClickCount(event0.value);
 	if (mouseNum == 0) {
 		type = kCGEventLeftMouseUp;
+		typedown = kCGEventLeftMouseDown;
 		button = kCGMouseButtonLeft;
 		mouse1Clicked = NO;
 	} else if (mouseNum == 1) {
 		type = kCGEventRightMouseUp;
+		typedown = kCGEventRightMouseDown;
 		button = kCGMouseButtonRight;
 		mouse2Clicked = NO;
 	} else {
 		type = kCGEventOtherMouseUp;
+		typedown = kCGEventOtherMouseDown;
 		button = kCGMouseButtonCenter;
 		mouse3Clicked = NO;
 	}
@@ -318,6 +322,18 @@
 	CGEventSetIntegerValueField(event, kCGMouseEventClickState, clickCount);
 	CGEventSetType(event, type);
 	CGEventPost(kCGSessionEventTap, event);
+#if (MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_5)
+	if (clickCount > 1 && mouseNum == 0) {
+		for (int i = 1; i < clickCount; i++) {
+			CGEventSetType(event, typedown);
+			CGEventSetIntegerValueField(event, kCGMouseEventClickState, clickCount);
+			CGEventPost(kCGSessionEventTap, event);
+			CGEventSetType(event, type);
+			CGEventSetIntegerValueField(event, kCGMouseEventClickState, clickCount);
+			CGEventPost(kCGSessionEventTap, event);
+		}
+	}
+#endif
 	CFRelease(event);
 }
 
