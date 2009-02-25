@@ -1,11 +1,30 @@
-RemotePad COPYRIGHTs
+RemotePad for iPhone and RemotePad Server COPYRIGHTs
 
 The following files included in this directory are copyrighted by the
 Apple and licensed by the Apple Public Software License.
 
-    AppController.h, AppController.m, bg.png, BrowserViewController.h,
-    BrowserViewController.m, Picker.h, Picker.m, TapView.h, TapView.m,
-    TCPServer.h, TCPServer.m
+    Mac OS X/AppController.h
+    Mac OS X/AppController.m
+    Mac OS X/TCPServer.h
+    Mac OS X/TCPServer.m
+    RemotePad/AppController.h
+    RemotePad/AppController.m
+    RemotePad/bg.png
+    RemotePad/BrowserViewController.h
+    RemotePad/BrowserViewController.m
+    RemotePad/Picker.h
+    RemotePad/Picker.m
+    RemotePad/TapView.h
+    RemotePad/TapView.m
+    RemotePad/TCPServer.h
+    RemotePad/TCPServer.m
+
+The following files included in this directory and executable binaries
+which you compile are licensed by the GNU General Public License v2.
+
+    Common/inputevent.h
+    Windows/remotepadwin.cpp
+    X11/remotepad.c
 
 The files excluding the aboves are copyrighted by the tenjin.org and
 licensed by the following license.

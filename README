@@ -1,0 +1,14 @@
+RemotePad for iPhone and RemotePad Server README
+
+    This directory contains source files of RemotePad for iPhone, and
+    RemotePad Server for Mac OS X, Windows and X11.  The software
+    'RemotePad Server' is a server application for and used with
+    'RemotePad,' an iPhone/iPod touch application.
+
+        RemotePad is an application that controls the mouse cursor
+        of your desktop PC.  This way, you can use your iPhone or
+        iPod touch as a wireless touchpad.  You can get RemotePad
+        from the iTunes App Store.
+
+    To compile and install RemotePad for iPhone or RemotePad Servers,
+    please read a INSTALL file.
