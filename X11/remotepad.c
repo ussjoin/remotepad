@@ -68,8 +68,6 @@
 #define BUTTON_SCROLL_UP Button5
 #define BUTTON_SCROLL_DOWN Button4
 
-#define delta 5
-
 #define NButtons 5
 int ButtonNumber[NButtons] = {Button1, Button3, Button2, Button4, Button5};
 
@@ -226,14 +224,7 @@ int main( int argc, char ** argv)
 					case EVENT_MOUSE_DELTA_Y:
 					//	printf( "move: %d, %d!\n", pEvent->move_info.dx, pEvent->move_info.dy );
 						if (prevevent.type == EVENT_MOUSE_DELTA_X) {
-							double accel = 1;
-							int x = prevevent.value, y = event.value;
-							if (delta < abs(x) || delta < abs(y)) {
-								accel = sqrt(x*x+y*y)/delta;
-							}
-							x = x * accel;
-							y = y * accel;
-							XTestFakeRelativeMotionEvent( dpy, x, y, 0 );
+							XTestFakeRelativeMotionEvent( dpy, prevevent.value, event.value, 0 );
 						} else {
 							fprintf( stderr, "stray event EVENT_MOUSE_DELTA_Y" );
 						}
