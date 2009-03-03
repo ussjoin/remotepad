@@ -89,7 +89,7 @@ typedef struct {
 
 //CLASS INTERFACES:
 
-@interface TapViewController : UIViewController <UIAccelerometerDelegate>
+@interface TapViewController : UIViewController <UIAccelerometerDelegate, UITextFieldDelegate>
 {
 	AppController *appc;
 	CGPoint start;
@@ -99,6 +99,7 @@ typedef struct {
 	UIToolbar *bottombar;
 	BOOL hiddenStatusbar;
 	BOOL hiddenToolbars;
+	BOOL hiddenKeyboard;
 	UIImage *buttonLeftImage, *buttonLeftHighlightedImage;
 	UIImage *buttonRightImage, *buttonRightHighlightedImage;
 	UIImage *buttonCenterImage, *buttonCenterHighlightedImage;
@@ -128,6 +129,9 @@ typedef struct {
 	BOOL prohibitSleeping;
 	int trackingSpeed;
 	int scrollingSpeed;
+	
+	UITextField *keyboardField;
+	NSDictionary *keycodes;
 }
 
 - (void)resetAllStates:(id)applicationControllerDelegate;

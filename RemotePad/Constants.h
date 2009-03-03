@@ -138,6 +138,11 @@
 #define kSliderWidth				120.0
 #define kSliderHeight				30.0
 
+// keyboard constants
+#define kToggleKeyboardItemWidth		120.0
+#define kStatusKeyboardOffsetLand		160.0
+#define kStatusKeyboardOffsetPort		215.0
+
 // table row dimensions
 #define kUIRowSegmentHeight			40.0
 #define kUIRowSwitchHeight			40.0
