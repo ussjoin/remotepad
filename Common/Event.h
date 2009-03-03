@@ -46,10 +46,14 @@
 #define EVENT_MOUSE_ABSOLUTE_W   15      /* W location */
 
 // key codes
-#define kKeycodeLeft             123
-#define kKeycodeRight            124
-#define kKeycodeDown             125
-#define kKeycodeUp               126
+#define kKeycodeBackSpace		51
+#define kKeycodeReturn			52
+#define kKeycodeShift			56
+#define kKeycodeOption			58
+#define kKeycodeLeft			123
+#define kKeycodeRight			124
+#define kKeycodeDown			125
+#define kKeycodeUp				126
 
 typedef struct {
 	uint32_t type;

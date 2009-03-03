@@ -426,6 +426,69 @@
 	CFRelease(event);
 }
 
+- (void)simulateKeyWithUnichar:(MouseEvent)event0 {
+#define kUniCharLength 65536
+	if (event0.value < 0 || kUniCharLength <= event0.value) {
+		NSLog(@"invalid KeyCode %d", event0.value);
+		return;
+	}
+	CGKeyCode charToKey[kUniCharLength];
+	UInt32 charToMod[kUniCharLength];
+	memset(charToKey, 0xff, sizeof(CGKeyCode)*kUniCharLength);
+	memset(charToMod, 0, sizeof(UInt32)*kUniCharLength);
+	KeyboardLayoutRef keyboardLayoutRef;
+	if (KLGetCurrentKeyboardLayout(&keyboardLayoutRef) != noErr) {
+		NSLog(@"KLGetCurrentKeyboardLayout failed.");
+		return;
+	}
+	UCKeyboardLayout *keyboarLayout = NULL;
+	if (KLGetKeyboardLayoutProperty(keyboardLayoutRef, kKLuchrData, (const void **)&keyboarLayout) != noErr) {
+		NSLog(@"KLGetKeyboardLayoutProperty failed.");
+		return;
+	}
+	UInt32 keyboardType = LMGetKbdType();
+	UInt32 deadKeyState;
+	UniCharCount actualStringLength;
+	UniChar unicodeString[255];
+	CGKeyCode keyCode;
+#define kNumModifierKeyState 4
+	UInt32 modifierKeyStates[kNumModifierKeyState] = { 0, shiftKey, optionKey, shiftKey | optionKey };
+	for (int i = 0; i < kNumModifierKeyState; i++) {
+		UInt32 modifierKeyState = (modifierKeyStates[i] >> 8) & 0xff;
+		for (keyCode = 0; keyCode < 128; keyCode++) {
+			if (UCKeyTranslate(keyboarLayout, keyCode, kUCKeyActionDown, modifierKeyState, keyboardType, 0, &deadKeyState, 255, &actualStringLength, unicodeString) == noErr) {
+				if (actualStringLength == 1 && charToKey[unicodeString[0]] == 0xffff) {
+					charToKey[unicodeString[0]] = keyCode;
+					charToMod[unicodeString[0]] = modifierKeyStates[i];
+				}
+			}
+		}
+	}
+	// special treatments
+	if (charToKey['\n'] == 0xffff)
+		charToKey['\n'] = kKeycodeReturn;
+	
+	keyCode = charToKey[event0.value];
+	if (keyCode != 0xffff) {
+		CFRelease(CGEventCreate(NULL));
+		CGEventFlags modifierFlags = 0;
+		if (charToMod[event0.value] & optionKey)
+			modifierFlags |= kCGEventFlagMaskAlternate;
+		if (charToMod[event0.value] & shiftKey)
+			modifierFlags |= kCGEventFlagMaskShift;
+		CGEventRef event = CGEventCreateKeyboardEvent(NULL, keyCode, true);
+		CGEventSetType(event, kCGEventKeyDown);
+		CGEventSetFlags(event, modifierFlags);
+		CGEventPost(kCGSessionEventTap, event);
+		CGEventSetType(event, kCGEventKeyUp);
+		CGEventPost(kCGSessionEventTap, event);
+		CFRelease(event);
+	} else {
+		//NSLog(@"cannot provide any characters: %d", event0.value);
+		NSBeep();
+	}
+}
+
 #pragma mark Stream routines
 
 - (void)openStreams
@@ -578,6 +641,9 @@
 							break;
 						case EVENT_KEY_UP:
 							[self keyUp:event];
+							break;
+						case EVENT_ASCII:
+							[self simulateKeyWithUnichar:event];
 							break;
 						default:
 							break;
