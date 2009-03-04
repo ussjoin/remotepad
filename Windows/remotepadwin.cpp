@@ -73,6 +73,7 @@ struct timespec {
 #endif
 
 void handleKeyEvent( MouseEvent *pEvent );
+void simulateKeyWithUnichar(MouseEvent *pEvent);
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -264,8 +265,12 @@ int _tmain(int argc, _TCHAR* argv[])
 						handleKeyEvent( pEvent );
 						break;
 
+					case EVENT_ASCII:
+						simulateKeyWithUnichar(pEvent);
+						break;
+
 					default:
-						fprintf( stderr, "unknown message type: %d\n", event.type );
+						//fprintf( stderr, "unknown message type: %d\n", event.type );
 						break;
 				}
 				prevevent = event;
@@ -416,4 +421,32 @@ void handleKeyEvent( MouseEvent *pEvent )
 		keybd_event( bKey, 0, KEYEVENTF_KEYUP, 0 );
 	}
 
+}
+
+void simulateKeyWithUnichar(MouseEvent *pEvent) {
+	unsigned int charCode = pEvent->value, mod = 0;
+	short vkKey = VkKeyScan(charCode);
+	if (vkKey != -1) {
+		byte bKey = LOBYTE(vkKey), bMod = HIBYTE(vkKey);
+		if(bMod) {
+			if (bMod & kModShift)
+				keybd_event(VK_SHIFT, 0, 0, 0);
+			if (bMod & kModControl)
+				keybd_event(VK_CONTROL, 0, 0, 0);
+			if (bMod & kModAlt)
+				keybd_event(VK_MENU, 0, 0, 0);
+		}
+		keybd_event(bKey, 0, 0, 0);
+		if(bMod) {
+			if (bMod & kModShift)
+				keybd_event(VK_SHIFT, 0, KEYEVENTF_KEYUP, 0);
+			if (bMod & kModControl)
+				keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);
+			if (bMod & kModAlt)
+				keybd_event(VK_MENU, 0, KEYEVENTF_KEYUP, 0);
+		}
+		keybd_event(bKey, 0, KEYEVENTF_KEYUP, 0);
+	} else {
+		MessageBeep(MB_OK);
+	}
 }
