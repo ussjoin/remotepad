@@ -427,15 +427,15 @@
 }
 
 - (void)simulateKeyWithUnichar:(MouseEvent)event0 {
-#define kUniCharLength 65536
-	if (event0.value < 0 || kUniCharLength <= event0.value) {
+#define kNumUniChar 65536
+	if (event0.value < 0 || kNumUniChar <= event0.value) {
 		NSLog(@"invalid KeyCode %d", event0.value);
 		return;
 	}
-	CGKeyCode charToKey[kUniCharLength];
-	UInt32 charToMod[kUniCharLength];
-	memset(charToKey, 0xff, sizeof(CGKeyCode)*kUniCharLength);
-	memset(charToMod, 0, sizeof(UInt32)*kUniCharLength);
+	CGKeyCode charToKey[kNumUniChar];
+	UInt32 charToMod[kNumUniChar];
+	memset(charToKey, 0xff, sizeof(CGKeyCode)*kNumUniChar);
+	memset(charToMod, 0, sizeof(UInt32)*kNumUniChar);
 	KeyboardLayoutRef keyboardLayoutRef;
 	if (KLGetCurrentKeyboardLayout(&keyboardLayoutRef) != noErr) {
 		NSLog(@"KLGetCurrentKeyboardLayout failed.");
