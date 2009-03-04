@@ -151,8 +151,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	keyboardField.delegate = self;
 	
 	[view addSubview:keyboardField];
-	keycodes = [[NSDictionary alloc] init];
-	
 	[view release];
 
 	// read defaults
@@ -808,7 +806,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	[topview release];
 	[bottombar release];
 	[keyboardField release];
-	[keycodes release];
 	[mouse1Tap.button release];
 	[mouse2Tap.button release];
 	[mouse3Tap.button release];

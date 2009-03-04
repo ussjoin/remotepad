@@ -108,6 +108,7 @@ typedef struct {
 	BOOL dragByTapDragMode;
 	NSTimer *clickTimer;
 	UITouch *clickTimerTouch;
+	UITextField *keyboardField;
 	//config value
 	CGPoint topviewLocation;
 	int numberOfButtons;
@@ -129,9 +130,6 @@ typedef struct {
 	BOOL prohibitSleeping;
 	int trackingSpeed;
 	int scrollingSpeed;
-	
-	UITextField *keyboardField;
-	NSDictionary *keycodes;
 }
 
 - (void)resetAllStates:(id)applicationControllerDelegate;
