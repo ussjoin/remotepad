@@ -51,6 +51,12 @@
 #define kWinModifierAlternate	(1 << 2)
 #define kWinModifierHankaku		(1 << 3)
 
+// key modifiers for X11
+#define kX11ModifierShift		(1 << 0)
+#define kX11ModifierControl		(1 << 1)
+#define kX11ModifierMod1		(1 << 2)
+#define kX11ModifierHankaku		(1 << 3)
+
 // key codes for RemotePad and Mac OS X
 #define kKeycodeBackSpace		51
 #define kKeycodeReturn			52
