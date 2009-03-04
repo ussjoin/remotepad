@@ -1,6 +1,6 @@
 NAME = remotepad
-SRCS = $(NAME).c
-OBJS = $(NAME).o
+SRCS = $(NAME).c ucs2keysym.c
+OBJS = $(NAME).o ucs2keysym.o
 CFLAGS = -I ../Common
 LOCAL_LIBRARIES = -lX11 -lXtst -lm
 BINDIR = /usr/local/bin

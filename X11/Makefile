@@ -6,7 +6,7 @@ prefix= /usr/local
 BINDIR= ${exec_prefix}/bin
 
 PROGNAME= remotepad
-OBJS= $(PROGNAME).o
+OBJS= $(PROGNAME).o ucs2keysym.o
 
 all: $(PROGNAME)
 

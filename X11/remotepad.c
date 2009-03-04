@@ -71,6 +71,10 @@
 #define NButtons 5
 int ButtonNumber[NButtons] = {Button1, Button3, Button2, Button4, Button5};
 
+KeySym *keyboardMapping;
+int minKeycode, maxKeycode;
+int keysymsPerKeycode;
+
 typedef int SOCKET;
 
 
@@ -78,6 +82,8 @@ typedef int SOCKET;
  *  Local method declarations
  *-----------------------------------------------------------------------------*/
 void handleKeyEvent( Display * dpy, MouseEvent *pEvent );
+void simulateKeyWithUnichar(Display *dpy, MouseEvent *pEvent);
+KeySym ucs2keysym(long ucs);
 
 int main( int argc, char ** argv)
 {
@@ -119,7 +125,7 @@ int main( int argc, char ** argv)
     if(success == False || xtest_major_version < 2 ||
 (xtest_major_version <= 2 && xtest_minor_version < 2))
     {
-	   fprintf(stderr,"XTEST extension not supported");
+	   fprintf(stderr,"XTEST extension not supported\n");
 	   exit(1);
     }
 
@@ -128,6 +134,13 @@ int main( int argc, char ** argv)
 	 * it as a handle on which to killclient() us.
 	 */
 	win = XCreateWindow(dpy, DefaultRootWindow(dpy), 0, 0, 1, 1, 0, CopyFromParent, InputOutput, CopyFromParent, 0, (XSetWindowAttributes*)0);
+
+	/*
+	 * get keyboard mapping to detect modifier keys for each keysym
+	 */
+	XDisplayKeycodes(dpy, &minKeycode, &maxKeycode);
+	int keycodeCount = maxKeycode - minKeycode + 1;
+	keyboardMapping = XGetKeyboardMapping(dpy, minKeycode, keycodeCount, &keysymsPerKeycode);
 
 //network stuff
 	//configure socket
@@ -226,7 +239,7 @@ int main( int argc, char ** argv)
 						if (prevevent.type == EVENT_MOUSE_DELTA_X) {
 							XTestFakeRelativeMotionEvent( dpy, prevevent.value, event.value, 0 );
 						} else {
-							fprintf( stderr, "stray event EVENT_MOUSE_DELTA_Y" );
+							fprintf( stderr, "stray event EVENT_MOUSE_DELTA_Y\n" );
 						}
 
 						break;
@@ -283,6 +296,10 @@ int main( int argc, char ** argv)
 						handleKeyEvent( dpy, pEvent );
 						break;
 
+					case EVENT_ASCII:
+						simulateKeyWithUnichar(dpy, pEvent);
+						break;
+
 					default:
 						fprintf( stderr, "unknown message type: %d\n", event.type );
 						break;
@@ -294,7 +311,7 @@ int main( int argc, char ** argv)
 			}
 			else if ( recvsize > 0 )
 			{
-				fprintf( stderr, "partial recv!" );
+				fprintf( stderr, "partial recv!\n" );
 			}
 			else if ( recvsize == 0 )
 			{
@@ -329,11 +346,10 @@ int main( int argc, char ** argv)
 	return 0;
 }
 
-void handleKeyEvent( Display * dpy, MouseEvent *pEvent )
-{
-	//TODO: do something with the modifier field!!
+void handleKeyEvent(Display * dpy, MouseEvent *pEvent) {
+	unsigned int keycode = pEvent->value & 0xff;
 	int keysym;
-	switch (pEvent->value) {
+	switch (keycode) {
 	case kKeycodeLeft:
 		keysym = XK_Left;
 		break;
@@ -346,11 +362,52 @@ void handleKeyEvent( Display * dpy, MouseEvent *pEvent )
 	case kKeycodeUp:
 		keysym = XK_Up;
 		break;
+	case kKeycodeBackSpace:
+		keysym = XK_BackSpace;
+		break;
+	case kKeycodeReturn:
+		keysym = XK_Return;
+		break;
 	default:
-		fprintf( stderr, "Unknown keycode: %d\n", pEvent->value );
-		keysym = XK_VoidSymbol;
+		XBell(dpy, 100);
+		return;
 		break;
 	}
-	XTestFakeKeyEvent( dpy, XKeysymToKeycode( dpy, keysym ), pEvent->type == EVENT_KEY_DOWN, 0 ); 
+	KeyCode x11Keycode = XKeysymToKeycode(dpy, keysym);
+	if (x11Keycode != 0) {
+		XTestFakeKeyEvent(dpy, x11Keycode, pEvent->type == EVENT_KEY_DOWN, 0);
+	}
+}
 
+void simulateKeyWithUnichar(Display *dpy, MouseEvent *pEvent) {
+#define kNumModifierKeyState 4
+	uint32_t modifierKeyStates[kNumModifierKeyState] = {0, kX11ModifierShift, kX11ModifierMod1, kX11ModifierShift | kX11ModifierMod1};
+	KeySym keysym = ucs2keysym(pEvent->value);
+	KeyCode x11Keycode = XKeysymToKeycode(dpy, keysym);
+	if (x11Keycode != 0) {
+		int modifierIndex = 0;
+		for (modifierIndex = 0; modifierIndex < kNumModifierKeyState; modifierIndex++)
+			if (keyboardMapping[(x11Keycode - minKeycode) * keysymsPerKeycode + modifierIndex] == keysym)
+				break;
+		if (modifierIndex == kNumModifierKeyState)
+			modifierIndex = 0;
+		KeyCode shiftKeycode = 0, mod1Keycode = 0;
+		if (modifierKeyStates[modifierIndex] & kX11ModifierShift) {
+			shiftKeycode = XKeysymToKeycode(dpy, XK_Shift_L);
+			if (shiftKeycode == 0)
+				shiftKeycode = XKeysymToKeycode(dpy, XK_Shift_R);
+		}
+		if (modifierKeyStates[modifierIndex] & kX11ModifierMod1)
+			mod1Keycode = XKeysymToKeycode(dpy, XK_Mode_switch);
+		if (shiftKeycode)
+			XTestFakeKeyEvent(dpy, shiftKeycode, True, 0);
+		if (mod1Keycode)
+			XTestFakeKeyEvent(dpy, mod1Keycode, True, 0);
+		XTestFakeKeyEvent(dpy, x11Keycode, True, 0);
+		if (shiftKeycode)
+			XTestFakeKeyEvent(dpy, shiftKeycode, False, 0);
+		if (mod1Keycode)
+			XTestFakeKeyEvent(dpy, mod1Keycode, False, 0);
+		XTestFakeKeyEvent(dpy, x11Keycode, False, 0);
+	}
 }

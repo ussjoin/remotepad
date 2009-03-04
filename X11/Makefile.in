@@ -6,7 +6,7 @@ prefix= @prefix@
 BINDIR= @bindir@
 
 PROGNAME= remotepad
-OBJS= $(PROGNAME).o
+OBJS= $(PROGNAME).o ucs2keysym.o
 
 all: $(PROGNAME)
 
