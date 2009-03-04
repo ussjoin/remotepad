@@ -45,7 +45,13 @@
 #define EVENT_MOUSE_DELTA_W      14      /* W delta amount */
 #define EVENT_MOUSE_ABSOLUTE_W   15      /* W location */
 
-// key codes
+// key modifiers for Windows
+#define kWinModifierShift		(1 << 0)
+#define kWinModifierControl		(1 << 1)
+#define kWinModifierAlternate	(1 << 2)
+#define kWinModifierHankaku		(1 << 3)
+
+// key codes for RemotePad and Mac OS X
 #define kKeycodeBackSpace		51
 #define kKeycodeReturn			52
 #define kKeycodeShift			56

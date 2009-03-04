@@ -321,128 +321,61 @@ int _tmain(int argc, _TCHAR* argv[])
 	return 0;
 }
 
-void handleKeyEvent( MouseEvent *pEvent )
-{
-	unsigned int key = pEvent->value, mod = 0;
-
-	byte bKey = 0, bMod = 0;
-
-	//convert keycode and modifiers
-	{
-		//TODO: handle other cases here!
-		bKey = LOBYTE( key );
-
-		switch( key )
-		{
-			case kKeycodeLeft:
-				bKey = LOBYTE( kKeyLeft ) - VK_LEFT;
-				break;
-			case kKeycodeUp:
-				bKey = LOBYTE( kKeyUp ) - VK_LEFT;
-				break;
-			case kKeycodeRight:
-				bKey = LOBYTE( kKeyRight ) - VK_LEFT;
-				break;
-			case kKeycodeDown:
-				bKey = LOBYTE( kKeyDown ) - VK_LEFT;
-				break;
-			case kKeyBackSpace:
-				bKey = VK_BACK;
-				break;
-			case kKeyTab:
-				bKey = VK_TAB;
-				break;
-			case kKeyReturn:
-				bKey = VK_RETURN;
-				break;
-			case kKeyEscape:
-				bKey = VK_ESCAPE;
-				break;
-			default:
-				//?? :(
-				break;
-		}
+void handleKeyEvent(MouseEvent *pEvent) {
+	unsigned int keycode = LOBYTE(pEvent->value);
+	byte winKeycode = 0;
+	switch (keycode) {
+	case kKeycodeLeft:
+		winKeycode = VK_LEFT;
+		break;
+	case kKeycodeUp:
+		winKeycode = VK_UP;
+		break;
+	case kKeycodeRight:
+		winKeycode = VK_RIGHT;
+		break;
+	case kKeycodeDown:
+		winKeycode = VK_DOWN;
+		break;
+	case kKeycodeBackSpace:
+		winKeycode = VK_BACK;
+		break;
+	case kKeycodeReturn:
+		winKeycode = VK_RETURN;
+		break;
+	default:
+		MessageBeep(MB_OK);
+		return;
+		break;
 	}
-
-
-	if ( pEvent->type == EVENT_KEY_DOWN )
-	{
-		/* for now, all modifiers we press/release
-		* all modifiers immediately before/after the keyevent
-		* we only do this for the keydown...
-		* not sure if this is the best way to handle it,
-		* I expect it might break some things.
-		*/
-
-		if( mod )
-		{
-			if ( mod & kModShift )
-			{
-				keybd_event( VK_SHIFT, 0, 0, 0 );
-			}
-			if ( mod & kModControl )
-			{
-				keybd_event( VK_CONTROL, 0, 0, 0 );
-			}
-			if ( mod & kModAlt )
-			{
-				keybd_event( VK_MENU, 0, 0, 0 );
-			}
-			if ( mod & kModFn )
-			{
-				//coolness
-			}
-		}
-
-		keybd_event( bKey, 0, 0, 0 );
-
-		if( mod )
-		{
-			if ( mod & kModShift )
-			{
-				keybd_event( VK_SHIFT, 0, KEYEVENTF_KEYUP, 0 );
-			}
-			if ( mod & kModControl )
-			{
-				keybd_event( VK_CONTROL, 0, KEYEVENTF_KEYUP, 0 );
-			}
-			if ( mod & kModAlt )
-			{
-				keybd_event( VK_MENU, 0, KEYEVENTF_KEYUP, 0 );
-			}
-			if ( mod & kModFn )
-			{
-				//finish the coolness
-			}
-		}
-	}
-	else 
-	{//should be KEY_EVENT_KEY_UP
-		keybd_event( bKey, 0, KEYEVENTF_KEYUP, 0 );
+	if (pEvent->type == EVENT_KEY_DOWN) {
+		keybd_event(winKeycode, 0, 0, 0);
+	} else {
+		keybd_event(winKeycode, 0, KEYEVENTF_KEYUP, 0);
 	}
 
 }
 
 void simulateKeyWithUnichar(MouseEvent *pEvent) {
 	unsigned int charCode = pEvent->value, mod = 0;
-	short vkKey = VkKeyScan(charCode);
-	if (vkKey != -1) {
-		byte bKey = LOBYTE(vkKey), bMod = HIBYTE(vkKey);
-		if(bMod) {
-			if (bMod & kModShift)
+	short winKeycode = VkKeyScan(charCode);
+	if (winKeycode != -1) {
+		byte bKey = LOBYTE(winKeycode), bMod = HIBYTE(winKeycode);
+		if (bMod) {
+			if (bMod & kWinModifierShift)
 				keybd_event(VK_SHIFT, 0, 0, 0);
-			if (bMod & kModControl)
+			if (bMod & kWinModifierControl)
 				keybd_event(VK_CONTROL, 0, 0, 0);
-			if (bMod & kModAlt)
+			if (bMod & kWinModifierAlternate)
 				keybd_event(VK_MENU, 0, 0, 0);
 		}
 		keybd_event(bKey, 0, 0, 0);
-		if(bMod) {
-			if (bMod & kModShift)
+		if (bMod) {
+			if (bMod & kWinModifierShift)
 				keybd_event(VK_SHIFT, 0, KEYEVENTF_KEYUP, 0);
-			if (bMod & kModControl)
+			if (bMod & kWinModifierControl)
 				keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);
-			if (bMod & kModAlt)
+			if (bMod & kWinModifierAlternate)
 				keybd_event(VK_MENU, 0, KEYEVENTF_KEYUP, 0);
 		}
 		keybd_event(bKey, 0, KEYEVENTF_KEYUP, 0);
