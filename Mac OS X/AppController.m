@@ -80,7 +80,7 @@
 
 #define kBonjourIdentifier		@"remotepad"
 
-#define delta 5
+#define kNumModifierKeyState 4
 
 @implementation AppController
 
@@ -426,48 +426,52 @@
 	CFRelease(event);
 }
 
-- (void)simulateKeyWithUnichar:(MouseEvent)event0 {
-#define kNumUniChar 65536
-	if (event0.value < 0 || kNumUniChar <= event0.value) {
-		NSLog(@"invalid KeyCode %d", event0.value);
-		return;
-	}
-	CGKeyCode charToKey[kNumUniChar];
-	UInt32 charToMod[kNumUniChar];
-	memset(charToKey, 0xff, sizeof(CGKeyCode)*kNumUniChar);
-	memset(charToMod, 0, sizeof(UInt32)*kNumUniChar);
+- (void)prepareTables {
 	KeyboardLayoutRef keyboardLayoutRef;
-	if (KLGetCurrentKeyboardLayout(&keyboardLayoutRef) != noErr) {
-		NSLog(@"KLGetCurrentKeyboardLayout failed.");
+	if (KLGetCurrentKeyboardLayout(&keyboardLayoutRef) != noErr)
 		return;
-	}
 	UCKeyboardLayout *keyboarLayout = NULL;
-	if (KLGetKeyboardLayoutProperty(keyboardLayoutRef, kKLuchrData, (const void **)&keyboarLayout) != noErr) {
-		NSLog(@"KLGetKeyboardLayoutProperty failed.");
+	if (KLGetKeyboardLayoutProperty(keyboardLayoutRef, kKLuchrData, (const void **)&keyboarLayout) != noErr)
 		return;
-	}
-	UInt32 keyboardType = LMGetKbdType();
-	UInt32 deadKeyState;
-	UniCharCount actualStringLength;
-	UniChar unicodeString[255];
-	CGKeyCode keyCode;
-#define kNumModifierKeyState 4
-	UInt32 modifierKeyStates[kNumModifierKeyState] = { 0, shiftKey, optionKey, shiftKey | optionKey };
-	for (int i = 0; i < kNumModifierKeyState; i++) {
-		UInt32 modifierKeyState = (modifierKeyStates[i] >> 8) & 0xff;
-		for (keyCode = 0; keyCode < 128; keyCode++) {
-			if (UCKeyTranslate(keyboarLayout, keyCode, kUCKeyActionDown, modifierKeyState, keyboardType, 0, &deadKeyState, 255, &actualStringLength, unicodeString) == noErr) {
-				if (actualStringLength == 1 && charToKey[unicodeString[0]] == 0xffff) {
-					charToKey[unicodeString[0]] = keyCode;
-					charToMod[unicodeString[0]] = modifierKeyStates[i];
+	if (currentKeyboardLayout != keyboarLayout) {
+		currentKeyboardLayout = keyboarLayout;
+		memset(charToKey, 0xff, sizeof(CGKeyCode)*kNumUniChar);
+		memset(charToMod, 0, sizeof(UInt32)*kNumUniChar);
+		UInt32 keyboardType = LMGetKbdType();
+		UInt32 deadKeyState;
+		UniCharCount actualStringLength;
+		UniChar unicodeString[255];
+		CGKeyCode keyCode;
+		UInt32 modifierKeyStates[kNumModifierKeyState] = { 0, shiftKey, optionKey, shiftKey | optionKey };
+		for (int i = 0; i < kNumModifierKeyState; i++) {
+			UInt32 modifierKeyState = (modifierKeyStates[i] >> 8) & 0xff;
+			for (keyCode = 0; keyCode < 128; keyCode++) {
+				if (UCKeyTranslate(keyboarLayout, keyCode, kUCKeyActionDown, modifierKeyState, keyboardType, 0, &deadKeyState, 255, &actualStringLength, unicodeString) == noErr) {
+					if (actualStringLength == 1 && charToKey[unicodeString[0]] == 0xffff) {
+						charToKey[unicodeString[0]] = keyCode;
+						charToMod[unicodeString[0]] = modifierKeyStates[i];
+					}
 				}
 			}
 		}
+		// special treatments
+		if (charToKey['\n'] == 0xffff)
+			charToKey['\n'] = kKeycodeReturn;
 	}
-	// special treatments
-	if (charToKey['\n'] == 0xffff)
-		charToKey['\n'] = kKeycodeReturn;
+}
+
+- (void)simulateKeyWithUnichar:(MouseEvent)event0 {
+	if (event0.value < 0 || kNumUniChar <= event0.value) {
+		NSBeep();
+		return;
+	}
+	[self prepareTables];
+	if (currentKeyboardLayout == NULL) {
+		NSBeep();
+		return;
+	}
 	
+	CGKeyCode keyCode;
 	keyCode = charToKey[event0.value];
 	if (keyCode != 0xffff) {
 		CFRelease(CGEventCreate(NULL));
@@ -484,7 +488,6 @@
 		CGEventPost(kCGSessionEventTap, event);
 		CFRelease(event);
 	} else {
-		//NSLog(@"cannot provide any characters: %d", event0.value);
 		NSBeep();
 	}
 }
@@ -584,7 +587,8 @@
 			
 			if (_inReady && _outReady) {
 				[[[statusItem menu] itemAtIndex:0] setTitle:@"RemotePad: peer connected"];
-				 
+				
+				currentKeyboardLayout = NULL;
 				
 				prevevent.type = EVENT_NULL;
 				mouse1Clicked = NO;

@@ -62,6 +62,8 @@
 #import "TCPServer.h"
 #import "Event.h"
 
+#define kNumUniChar 65536
+
 @interface AppController : NSObject <TCPServerDelegate> {
 	TCPServer* _server;
 	NSInputStream* _inStream;
@@ -77,6 +79,9 @@
 	NSTimer *keepAliveTimer;
 	int32_t accumuW;
 	int32_t accumuZ;
+	UCKeyboardLayout *currentKeyboardLayout;
+	CGKeyCode charToKey[kNumUniChar];
+	UInt32 charToMod[kNumUniChar];
 	
 	NSStatusItem *statusItem;
 }
