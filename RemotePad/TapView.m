@@ -841,8 +841,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		[timer invalidate];
 		[insecureKeyboardWarningTimer release];
 		insecureKeyboardWarningTimer = nil;
-		[insecureKeyboardWarningDialog release];
-		insecureKeyboardWarningDialog = nil;
 	}
 }
 
