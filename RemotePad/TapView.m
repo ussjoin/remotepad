@@ -752,7 +752,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 	// Return YES for supported orientations
-	if (autorotateOrientation && tapViewOrientation != interfaceOrientation) {
+	if (autorotateOrientation && tapViewOrientation != interfaceOrientation && !insecureKeyboardWarningDialog) {
 		tapViewOrientation = interfaceOrientation;
 		[[NSUserDefaults standardUserDefaults] setInteger:tapViewOrientation forKey:kDefaultKeyTapViewOrientation];
 		[self prepareTapView];
