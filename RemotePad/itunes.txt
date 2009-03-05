@@ -20,6 +20,7 @@ ADDITIONAL REQUIREMENTS:
 WHAT'S NEW IN THIS VERSION:
 • Option to keep an iPhone/iPod touch from going to sleep.
 • Tracking and scrolling speed accelerations.
+• Option to display buttons without labels.
 • Servers were also improved and critical bugs fixed.
 • Windows server no longer has the 'lag' effect with RemotePad Server 1.7.
 • Scrolling and double-clicking bugs for Mac OS X 10.4 are fixed with RemotePad Server 2.2.
