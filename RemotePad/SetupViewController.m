@@ -125,6 +125,7 @@ enum TableSections
 	[contentView release];
 	numberOfButtonsCell = nil;
 	mouseMapLeftToRightCell = nil;
+	doLabelsForMouseButtonsCell = nil;
 	twoFingersScrollCell = nil;
 	allowHorizontalScrollCell = nil;
 	scrollWithMouse3Cell = nil;
@@ -164,6 +165,12 @@ enum TableSections
 	BOOL value = [sender isOn];
 	[[NSUserDefaults standardUserDefaults] setInteger:value forKey:kDefaultKeyTwoFingersScroll];
 	[tapViewController setTwoFingersScroll:value];
+}
+
+- (void)changeDoLabelsForMouseButtons:(id)sender {
+	BOOL value = [sender isOn];
+	[[NSUserDefaults standardUserDefaults] setBool:value forKey:kDefaultKeyDoLabelsForMouseButtons];
+	[tapViewController setDoLabelsForMouseButtons:value];
 }
 
 - (void)changeAllowHorizontalScroll:(id)sender {
@@ -378,11 +385,13 @@ enum TableSections
 		case kSectionVersion:
 			number = 1;
 			break;
-		case kSectionButtonOptions:
 		case kSectionArrowKeyGestures:
 		case kSectionAccelMouse:
 		case kSectionApplication:
 			number = 2;
+			break;
+		case kSectionButtonOptions:
+			number = 3;
 			break;
 		case kSectionScrollingOptions:
 			number = 4;
@@ -399,6 +408,11 @@ enum TableSections
 	
 	switch ([indexPath section]) {
 		case kSectionButtonOptions:
+			if ([indexPath row] == 2)
+				height = kUIRowSwitchHeight;
+			else
+				height = kUIRowSegmentHeight;
+			break;
 		case kSectionToggleStatusbar:
 			height = kUIRowSegmentHeight;
 			break;
@@ -485,7 +499,7 @@ enum TableSections
 					[segment release];
 				}
 				cell = numberOfButtonsCell;
-			} else {
+			} else if (row == 1) {
 				if (mouseMapLeftToRightCell == nil) {
 					cell = [self obtainTableCell];
 					mouseMapLeftToRightCell = [cell retain];
@@ -499,6 +513,19 @@ enum TableSections
 					[segment release];
 				}
 				cell = mouseMapLeftToRightCell;
+			} else {
+				if (doLabelsForMouseButtonsCell == nil) {
+					cell = [self obtainTableCell];
+					doLabelsForMouseButtonsCell = [cell retain];
+					[cell setText:@"Display button labels"];
+					switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
+					[switchui addTarget:self action:@selector(changeDoLabelsForMouseButtons:) forControlEvents:UIControlEventValueChanged];
+					switchui.on = tapViewController.doLabelsForMouseButtons;
+					switchui.backgroundColor = [UIColor clearColor];
+					[cell setAccessoryView:switchui];
+					[switchui release];
+				}
+				cell = doLabelsForMouseButtonsCell;
 			}
 			break;
 		case kSectionScrollingOptions:

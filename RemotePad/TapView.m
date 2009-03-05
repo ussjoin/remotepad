@@ -83,6 +83,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @synthesize trackingSpeed;
 @synthesize scrollingSpeed;
 @synthesize doneInsecureKeyboardWarning;
+@synthesize doLabelsForMouseButtons;
 
 
 - (void)loadView {
@@ -109,18 +110,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	buttonCenterHighlightedImage = [[[UIImage imageNamed:@"ButtonCenterHighlighted.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:10.0] retain];
 	buttonRoundedHighlightedImage = [[[UIImage imageNamed:@"ButtonRoundedHighlighted.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:10.0] retain];
 	mouse1Tap.button = [[UIButton buttonWithType:UIButtonTypeRoundedRect] retain];
-	[mouse1Tap.button setTitle:@"left" forState:UIControlStateNormal];
-	[mouse1Tap.button setTitle:@"end drag" forState:UIControlStateSelected];
 	[mouse1Tap.button setTitleColor:[mouse1Tap.button titleColorForState:UIControlStateHighlighted] forState:UIControlStateSelected];
 	[topview addSubview:mouse1Tap.button];
 	mouse3Tap.button = [[UIButton buttonWithType:UIButtonTypeRoundedRect] retain];
-	[mouse3Tap.button setTitle:@"center" forState:UIControlStateNormal];
-	[mouse3Tap.button setTitle:@"end drag" forState:UIControlStateSelected];
 	[mouse3Tap.button setTitleColor:[mouse3Tap.button titleColorForState:UIControlStateHighlighted] forState:UIControlStateSelected];
 	[topview addSubview:mouse3Tap.button];
 	mouse2Tap.button = [[UIButton buttonWithType:UIButtonTypeRoundedRect] retain];
-	[mouse2Tap.button setTitle:@"right" forState:UIControlStateNormal];
-	[mouse2Tap.button setTitle:@"end drag" forState:UIControlStateSelected];
 	[mouse2Tap.button setTitleColor:[mouse2Tap.button titleColorForState:UIControlStateHighlighted] forState:UIControlStateSelected];
 	[topview addSubview:mouse2Tap.button];
 	[view addSubview:topview];
@@ -160,6 +155,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	
 	// initial settting
 	[self setNumberOfButtons:numberOfButtons mouseMapLeftToRight:mouseMapLeftToRight];
+	[self setDoLabelsForMouseButtons:doLabelsForMouseButtons];
 	if (clickByTap || numberToggleStatusbar == 0) {
 		hiddenToolbars = NO;
 		hiddenStatusbar = NO;
@@ -196,6 +192,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultTrackingSpeed forKey:kDefaultKeyTrackingSpeed]];
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultScrollingSpeed forKey:kDefaultKeyScrollingSpeed]];
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultDoneInsecureKeyboardWarning forKey:kDefaultKeyDoneInsecureKeyboardWarning]];
+	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultDoLabelsForMouseButtons forKey:kDefaultKeyDoLabelsForMouseButtons]];
 }
 
 - (void) readDefaults {
@@ -228,6 +225,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	trackingSpeed = [defaults integerForKey:kDefaultKeyTrackingSpeed];
 	scrollingSpeed = [defaults integerForKey:kDefaultKeyScrollingSpeed];
 	doneInsecureKeyboardWarning = [defaults boolForKey:kDefaultKeyDoneInsecureKeyboardWarning];
+	doLabelsForMouseButtons = [defaults boolForKey:kDefaultKeyDoLabelsForMouseButtons];
 }
 
 - (void) showToolbars:(BOOL)showToolbars showStatusbar:(BOOL)showStatusbar temporal:(BOOL)temporally {
@@ -423,6 +421,25 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void)setMouseMapLeftToRight:(BOOL)isLeftToRight {
 	[self setNumberOfButtons:numberOfButtons mouseMapLeftToRight:isLeftToRight];
+}
+
+- (void)setDoLabelsForMouseButtons:(BOOL)value {
+	doLabelsForMouseButtons = value;
+	if (doLabelsForMouseButtons) {
+		[mouse1Tap.button setTitle:@"left" forState:UIControlStateNormal];
+		[mouse1Tap.button setTitle:@"end drag" forState:UIControlStateSelected];
+		[mouse3Tap.button setTitle:@"center" forState:UIControlStateNormal];
+		[mouse3Tap.button setTitle:@"end drag" forState:UIControlStateSelected];
+		[mouse2Tap.button setTitle:@"right" forState:UIControlStateNormal];
+		[mouse2Tap.button setTitle:@"end drag" forState:UIControlStateSelected];
+	} else {
+		[mouse1Tap.button setTitle:@"" forState:UIControlStateNormal];
+		[mouse1Tap.button setTitle:@"" forState:UIControlStateSelected];
+		[mouse3Tap.button setTitle:@"" forState:UIControlStateNormal];
+		[mouse3Tap.button setTitle:@"" forState:UIControlStateSelected];
+		[mouse2Tap.button setTitle:@"" forState:UIControlStateNormal];
+		[mouse2Tap.button setTitle:@"" forState:UIControlStateSelected];
+	}
 }
 
 - (void)setProhibitSleeping:(BOOL)value {

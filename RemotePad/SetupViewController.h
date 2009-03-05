@@ -37,6 +37,7 @@
 
 	UITableViewCell *numberOfButtonsCell;
 	UITableViewCell *mouseMapLeftToRightCell;
+	UITableViewCell *doLabelsForMouseButtonsCell;
 
 	UITableViewCell *twoFingersScrollCell;
 	UITableViewCell *allowHorizontalScrollCell;

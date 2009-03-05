@@ -56,6 +56,7 @@
 #define kDefaultKeyTrackingSpeed				@"trackingSpeed"
 #define kDefaultKeyScrollingSpeed				@"scrollingSpeed"
 #define kDefaultKeyDoneInsecureKeyboardWarning	@"doneInsecureKeyboardWarning"
+#define kDefaultKeyDoLabelsForMouseButtons		@"doLabelsForMouseButtons"
 // application defaults values
 #define kDefaultVersion						kVersion
 #define kDefaultTopviewLocationX			@"0"
@@ -80,6 +81,7 @@
 #define kDefaultTrackingSpeed				@"0"
 #define kDefaultScrollingSpeed				@"0"
 #define kDefaultDoneInsecureKeyboardWarning	@"NO"
+#define kDefaultDoLabelsForMouseButtons		@"YES"
 
 // Bonjour constants
 

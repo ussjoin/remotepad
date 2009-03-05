@@ -134,6 +134,7 @@ typedef struct {
 	int trackingSpeed;
 	int scrollingSpeed;
 	BOOL doneInsecureKeyboardWarning;
+	BOOL doLabelsForMouseButtons;
 }
 
 - (void)resetAllStates:(id)applicationControllerDelegate;
@@ -150,6 +151,7 @@ typedef struct {
 - (void)prepareTapView;
 - (void)showInsecureKeyboardWarning;
 - (void)insecureKeyboardWarningCountDown:(NSTimer*)timer;
+- (void)setDoLabelsForMouseButtons:(BOOL)value;
 
 @property (nonatomic,retain) AppController *appc;
 @property (readonly) UIView *topview;
@@ -172,5 +174,6 @@ typedef struct {
 @property int trackingSpeed;
 @property int scrollingSpeed;
 @property BOOL doneInsecureKeyboardWarning;
+@property (readonly) BOOL doLabelsForMouseButtons;
 
 @end
