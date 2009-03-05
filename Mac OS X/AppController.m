@@ -519,7 +519,7 @@
 	[NSThread exit];
 }
 
-#pragma mark SOMETHING delegates
+#pragma mark NSDocument delegates
 
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError
 {
