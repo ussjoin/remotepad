@@ -65,6 +65,8 @@
 
 	UITableViewCell *topviewLocationCell;
 
+	UITableViewCell *resetSecurityWarningsCell;
+
 	UITableViewCell *connectionCell;
 
 	UITableViewCell *versionCell;

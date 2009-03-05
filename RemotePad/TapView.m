@@ -82,6 +82,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @synthesize prohibitSleeping;
 @synthesize trackingSpeed;
 @synthesize scrollingSpeed;
+@synthesize doneInsecureKeyboardWarning;
 
 
 - (void)loadView {
@@ -154,9 +155,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	[view release];
 
 	// read defaults
-	if (![[NSUserDefaults standardUserDefaults] stringForKey:kDefaultKeyVersion]) {
-		[self registerDefaults];
-	}
+	[self registerDefaults];
 	[self readDefaults];
 	
 	// initial settting
@@ -194,6 +193,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultAutorotateOrientation forKey:kDefaultKeyAutorotateOrientation]];
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultTwoFingersSecondary forKey:kDefaultKeyTwoFingersSecondary]];
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultProhibitSleeping forKey:kDefaultKeyProhibitSleeping]];
+	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultTrackingSpeed forKey:kDefaultKeyTrackingSpeed]];
+	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultScrollingSpeed forKey:kDefaultKeyScrollingSpeed]];
+	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultDoneInsecureKeyboardWarning forKey:kDefaultKeyDoneInsecureKeyboardWarning]];
 }
 
 - (void) readDefaults {
@@ -225,6 +227,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	prohibitSleeping = [defaults boolForKey:kDefaultKeyProhibitSleeping];
 	trackingSpeed = [defaults integerForKey:kDefaultKeyTrackingSpeed];
 	scrollingSpeed = [defaults integerForKey:kDefaultKeyScrollingSpeed];
+	doneInsecureKeyboardWarning = [defaults boolForKey:kDefaultKeyDoneInsecureKeyboardWarning];
 }
 
 - (void) showToolbars:(BOOL)showToolbars showStatusbar:(BOOL)showStatusbar temporal:(BOOL)temporally {
@@ -301,6 +304,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 }
 
 - (void)prepareToolbarsAndStatusbar {
+	if (!hiddenKeyboard) {
+		[bottombar setAlpha:0.0];
+		[keyboardField becomeFirstResponder];
+		if (!doneInsecureKeyboardWarning)
+			[self showInsecureKeyboardWarning];
+	} else {
+		[keyboardField resignFirstResponder];
+	}
 	[self showToolbars:!hiddenToolbars showStatusbar:!hiddenStatusbar temporal:NO];
 }
 
@@ -311,8 +322,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void)toggleKeyboard {
 	hiddenKeyboard = !hiddenKeyboard;
-	if (!hiddenKeyboard) [keyboardField becomeFirstResponder];
-	else [keyboardField resignFirstResponder];
 	[self prepareToolbarsAndStatusbar];
 }
 
@@ -345,6 +354,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	[clickTimer invalidate];
 	clickTimer = nil;
 	clickTimerTouch = nil;
+	insecureKeyboardWarningDialog = nil;
+	insecureKeyboardWarningTimer = nil;
 }
 
 - (void)setNumberOfButtons:(int)val mouseMapLeftToRight:(BOOL)isLeftToRight {
@@ -750,8 +761,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 }
 
 - (void)prepareTapView {
-	if (!hiddenKeyboard) [keyboardField resignFirstResponder];
-	
+	[keyboardField resignFirstResponder];
 	CGRect rect = [[UIScreen mainScreen] bounds];
 	[self showToolbars:NO showStatusbar:NO temporal:YES];
 	switch (tapViewOrientation) {
@@ -775,8 +785,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	[[UIApplication sharedApplication] setStatusBarOrientation:tapViewOrientation];
 	[self setNumberOfButtons:numberOfButtons];
 	[self prepareToolbarsAndStatusbar];
-	
-	if (!hiddenKeyboard) [keyboardField becomeFirstResponder];
 }
 
 // START keyboardField delegate methods
@@ -795,6 +803,46 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	return FALSE;
 }
 // END keyboardField delegate methods
+
+- (void)showInsecureKeyboardWarning {
+	[insecureKeyboardWarningDialog dismissWithClickedButtonIndex:0 animated:NO];
+	[insecureKeyboardWarningDialog release];
+	[insecureKeyboardWarningTimer invalidate];
+	[insecureKeyboardWarningTimer release];
+	
+	insecureKeyboardWarningCount = 7;
+	insecureKeyboardWarningDialog = [[UIAlertView alloc] initWithTitle:@"Security Notice" message:[NSString stringWithFormat:@"%@\n(Please click a button after %d seconds to use a keyboard.)", kInsecureKeyboardMessage, insecureKeyboardWarningCount] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"I understand", nil];
+	[insecureKeyboardWarningDialog show];
+	insecureKeyboardWarningTimer = [[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(insecureKeyboardWarningCountDown:) userInfo:nil repeats:YES] retain];
+}
+
+- (void)insecureKeyboardWarningCountDown:(NSTimer*)timer {
+	if (insecureKeyboardWarningDialog && --insecureKeyboardWarningCount > 0) {
+		[insecureKeyboardWarningDialog setMessage:[NSString stringWithFormat:@"%@\n(Please click a button after %d %@ to use a keyboard.)", kInsecureKeyboardMessage, insecureKeyboardWarningCount, (insecureKeyboardWarningCount == 1) ? @"second" : @"seconds"]];
+	} else {
+		[insecureKeyboardWarningDialog setMessage:kInsecureKeyboardMessage];
+		[timer invalidate];
+		[insecureKeyboardWarningTimer release];
+		insecureKeyboardWarningTimer = nil;
+		[insecureKeyboardWarningDialog release];
+		insecureKeyboardWarningDialog = nil;
+	}
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+	[insecureKeyboardWarningDialog release];
+	insecureKeyboardWarningDialog = nil;
+	[insecureKeyboardWarningTimer invalidate];
+	[insecureKeyboardWarningTimer release];
+	insecureKeyboardWarningTimer = nil;
+	if (buttonIndex != [alertView cancelButtonIndex] && insecureKeyboardWarningCount == 0) {
+		doneInsecureKeyboardWarning = YES;
+		[[NSUserDefaults standardUserDefaults] setBool:doneInsecureKeyboardWarning forKey:kDefaultKeyDoneInsecureKeyboardWarning];
+	} else {
+		hiddenKeyboard = YES;
+		[self prepareToolbarsAndStatusbar];
+	}
+}
 
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview

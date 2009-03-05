@@ -82,6 +82,7 @@ enum TableSections
 	kSectionAccelMouse,
 	kSectionApplication,
 	kSectionResetButtonLocation,
+	kSectionResetSecurityWarnings,
 	kSectionConnection,
 	kSectionVersion,
 	kSectionEnd
@@ -143,6 +144,7 @@ enum TableSections
 	autorotateOrientationCell = nil;
 	prohibitSleepingCell = nil;
 	topviewLocationCell = nil;
+	resetSecurityWarningsCell = nil;
 }
 
 // callback routines
@@ -264,15 +266,27 @@ enum TableSections
 	[tapViewController prepareToolbarsAndStatusbar];
 }
 
+- (void)resetSecurityWarnings {
+	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Confirmation" message:@"Do you want to reset all security warnings?\nIf you click a Reset button, security warning dialogs will show again." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Reset", nil];
+	[alertView setTag:kResetSecurityWarningsTag];
+	[alertView show];
+	[alertView release];
+}
+
 - (void)disconnectSession {
 	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Disconnect?" message:@"Do you want to disconnect this session?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Disconnect", nil];
+	[alertView setTag:kDisconnectSessionTag];
 	[alertView show];
 	[alertView release];
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-	if (buttonIndex == 1) {
+	if ([alertView tag] == kDisconnectSessionTag && buttonIndex != [alertView cancelButtonIndex]) {
 		[(AppController *)([UIApplication sharedApplication].delegate) setup];
+	} else if ([alertView tag] == kResetSecurityWarningsTag && buttonIndex != [alertView cancelButtonIndex]) {
+		BOOL value = NO;
+		[[NSUserDefaults standardUserDefaults] setBool:value forKey:kDefaultKeyDoneInsecureKeyboardWarning];
+		[tapViewController setDoneInsecureKeyboardWarning:value];
 	}
 }
 
@@ -302,6 +316,8 @@ enum TableSections
 		[self resetButtonLocation];
 	} else if ([indexPath section] == kSectionConnection) {
 		[self disconnectSession];
+	} else if ([indexPath section] == kSectionResetSecurityWarnings) {
+		[self resetSecurityWarnings];
 	}
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -342,6 +358,7 @@ enum TableSections
 			title = @"Application Options";
 			break;
 		case kSectionResetButtonLocation:
+		case kSectionResetSecurityWarnings:
 		case kSectionConnection:
 		case kSectionVersion:
 			title = nil;
@@ -356,6 +373,7 @@ enum TableSections
 		case kSectionTrackingOptions:
 		case kSectionToggleStatusbar:
 		case kSectionResetButtonLocation:
+		case kSectionResetSecurityWarnings:
 		case kSectionConnection:
 		case kSectionVersion:
 			number = 1;
@@ -415,6 +433,7 @@ enum TableSections
 				height = kUIRowCommentHeight;
 			break;
 		case kSectionResetButtonLocation:
+		case kSectionResetSecurityWarnings:
 		case kSectionConnection:
 			height = kUIRowButtonHeight;
 			break;
@@ -747,6 +766,16 @@ enum TableSections
 				[cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
 			}
 			cell = topviewLocationCell;
+			break;
+		case kSectionResetSecurityWarnings:
+			if (resetSecurityWarningsCell == nil) {
+				cell = [self obtainTableCell];
+				resetSecurityWarningsCell = [cell retain];
+				[cell setText:@"Reset Security Warnings"];
+				[cell setTextAlignment:UITextAlignmentCenter];
+				[cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
+			}
+			cell = resetSecurityWarningsCell;
 			break;
 		case kSectionConnection:
 			if (connectionCell == nil) {

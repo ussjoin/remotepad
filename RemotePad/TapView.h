@@ -109,6 +109,9 @@ typedef struct {
 	NSTimer *clickTimer;
 	UITouch *clickTimerTouch;
 	UITextField *keyboardField;
+	UIAlertView *insecureKeyboardWarningDialog;
+	NSTimer *insecureKeyboardWarningTimer;
+	int insecureKeyboardWarningCount;
 	//config value
 	CGPoint topviewLocation;
 	int numberOfButtons;
@@ -130,6 +133,7 @@ typedef struct {
 	BOOL prohibitSleeping;
 	int trackingSpeed;
 	int scrollingSpeed;
+	BOOL doneInsecureKeyboardWarning;
 }
 
 - (void)resetAllStates:(id)applicationControllerDelegate;
@@ -144,6 +148,8 @@ typedef struct {
 - (void)registerDefaults;
 - (void)readDefaults;
 - (void)prepareTapView;
+- (void)showInsecureKeyboardWarning;
+- (void)insecureKeyboardWarningCountDown:(NSTimer*)timer;
 
 @property (nonatomic,retain) AppController *appc;
 @property (readonly) UIView *topview;
@@ -165,5 +171,6 @@ typedef struct {
 @property (readonly) BOOL prohibitSleeping;
 @property int trackingSpeed;
 @property int scrollingSpeed;
+@property BOOL doneInsecureKeyboardWarning;
 
 @end

@@ -33,51 +33,53 @@
 
 
 // application defaults keys
-#define kDefaultKeyVersion					@"version"
-#define kDefaultKeyTopviewLocationX			@"topviewLocationX"
-#define kDefaultKeyTopviewLocationY			@"topviewLocationY"
-#define kDefaultKeyNumberOfButtons			@"numberOfButtons"
-#define kDefaultKeyMouseMapLeftToRight		@"leftPrimaryButton"
-#define kDefaultKeyNumberArrowKeyGesture	@"numberArrowKeyGesture"
-#define kDefaultKeyTwoFingersScroll			@"twoFingerScroll"
-#define kDefaultKeyAllowHorizontalScroll	@"horizontalScroll"
-#define kDefaultKeyClickByTap				@"clickByTap"
-#define kDefaultKeyDragByTap				@"dragByTap"
-#define kDefaultKeyDragByTapLock			@"dragByTapLock"
-#define kDefaultKeyNumberToggleStatusbar	@"numberToggleStatusbar"
-#define kDefaultKeyNumberToggleToolbars		@"numberToggleToolbars"
-#define kDefaultKeyScrollWithMouse3			@"scrollWithMouse3"
-#define kDefaultKeyEnableAccelMouse			@"enableAccelMouse"
-#define kDefaultKeyServerName				@"serverName"
-#define kDefaultKeyTapViewOrientation		@"tapviewOrientation"
-#define kDefaultKeyAutorotateOrientation	@"autorotateOrientation"
-#define kDefaultKeyTwoFingersSecondary		@"twoFingersSecondary"
-#define kDefaultKeyProhibitSleeping			@"prohibitSleeping"
-#define kDefaultKeyTrackingSpeed			@"trackingSpeed"
-#define kDefaultKeyScrollingSpeed			@"scrollingSpeed"
+#define kDefaultKeyVersion						@"version"
+#define kDefaultKeyTopviewLocationX				@"topviewLocationX"
+#define kDefaultKeyTopviewLocationY				@"topviewLocationY"
+#define kDefaultKeyNumberOfButtons				@"numberOfButtons"
+#define kDefaultKeyMouseMapLeftToRight			@"leftPrimaryButton"
+#define kDefaultKeyNumberArrowKeyGesture		@"numberArrowKeyGesture"
+#define kDefaultKeyTwoFingersScroll				@"twoFingerScroll"
+#define kDefaultKeyAllowHorizontalScroll		@"horizontalScroll"
+#define kDefaultKeyClickByTap					@"clickByTap"
+#define kDefaultKeyDragByTap					@"dragByTap"
+#define kDefaultKeyDragByTapLock				@"dragByTapLock"
+#define kDefaultKeyNumberToggleStatusbar		@"numberToggleStatusbar"
+#define kDefaultKeyNumberToggleToolbars			@"numberToggleToolbars"
+#define kDefaultKeyScrollWithMouse3				@"scrollWithMouse3"
+#define kDefaultKeyEnableAccelMouse				@"enableAccelMouse"
+#define kDefaultKeyServerName					@"serverName"
+#define kDefaultKeyTapViewOrientation			@"tapviewOrientation"
+#define kDefaultKeyAutorotateOrientation		@"autorotateOrientation"
+#define kDefaultKeyTwoFingersSecondary			@"twoFingersSecondary"
+#define kDefaultKeyProhibitSleeping				@"prohibitSleeping"
+#define kDefaultKeyTrackingSpeed				@"trackingSpeed"
+#define kDefaultKeyScrollingSpeed				@"scrollingSpeed"
+#define kDefaultKeyDoneInsecureKeyboardWarning	@"doneInsecureKeyboardWarning"
 // application defaults values
-#define kDefaultVersion					kVersion
-#define kDefaultTopviewLocationX		@"0"
-#define kDefaultTopviewLocationY		@"20"
-#define kDefaultNumberOfButtons			@"3"
-#define kDefaultMouseMapLeftToRight		@"YES"
-#define kDefaultNumberArrowKeyGesture	@"0"
-#define kDefaultTwoFingersScroll		@"YES"
-#define kDefaultAllowHorizontalScroll	@"YES"
-#define kDefaultClickByTap				@"NO"
-#define kDefaultDragByTap				@"YES"
-#define kDefaultDragByTapLock			@"YES"
-#define kDefaultNumberToggleStatusbar	@"1"
-#define kDefaultNumberToggleToolbars	@"3"
-#define kDefaultScrollWithMouse3		@"NO"
-#define kDefaultEnableAccelMouse		@"NO"
-#define kDefaultServerName				@""
-#define kDefaultTapViewOrientation		@"1"
-#define kDefaultAutorotateOrientation	@"YES"
-#define kDefaultTwoFingersSecondary		@"YES"
-#define kDefaultProhibitSleeping		@"NO"
-#define kDefaultTrackingSpeed			@"0"
-#define kDefaultScrollingSpeed			@"0"
+#define kDefaultVersion						kVersion
+#define kDefaultTopviewLocationX			@"0"
+#define kDefaultTopviewLocationY			@"20"
+#define kDefaultNumberOfButtons				@"3"
+#define kDefaultMouseMapLeftToRight			@"YES"
+#define kDefaultNumberArrowKeyGesture		@"0"
+#define kDefaultTwoFingersScroll			@"YES"
+#define kDefaultAllowHorizontalScroll		@"YES"
+#define kDefaultClickByTap					@"NO"
+#define kDefaultDragByTap					@"YES"
+#define kDefaultDragByTapLock				@"YES"
+#define kDefaultNumberToggleStatusbar		@"1"
+#define kDefaultNumberToggleToolbars		@"3"
+#define kDefaultScrollWithMouse3			@"NO"
+#define kDefaultEnableAccelMouse			@"NO"
+#define kDefaultServerName					@""
+#define kDefaultTapViewOrientation			@"1"
+#define kDefaultAutorotateOrientation		@"YES"
+#define kDefaultTwoFingersSecondary			@"YES"
+#define kDefaultProhibitSleeping			@"NO"
+#define kDefaultTrackingSpeed				@"0"
+#define kDefaultScrollingSpeed				@"0"
+#define kDefaultDoneInsecureKeyboardWarning	@"NO"
 
 // Bonjour constants
 
@@ -154,7 +156,12 @@
 // view tag
 #define kTrackingSpeedTag			1
 #define kScrollingSpeedTag			2
+#define kDisconnectSessionTag		3
+#define kResetSecurityWarningsTag	4
 
 // slider steps
 #define kTrackingSpeedSteps			10
 #define kScrollingSpeedSteps		10
+
+// messages
+#define kInsecureKeyboardMessage	@"This connection is not encrypted because this version of RemotePad does not support any encryption methods.\nBe sure not to enter private information like passwords, credit card numbers, or your secrets."
