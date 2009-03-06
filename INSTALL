@@ -10,10 +10,9 @@ X11 (Linux or BSDs)
                prompt% cd the_directory_where_the_downloaded_file_is
     3. Extract source files from the downloaded file.  This command
        outputs extracted file names.
-               prompt% tar xvfz RemotePadServer-1.6-Source.tgz
-    4. Change your directory to an extracted one.  You have to enter
-       the command includes doublequotes.
-               prompt% cd "RemotePad Server/X11"
+               prompt% tar xvfz RemotePadServer-_the_version_-Source.tgz
+    4. Change your directory to an extracted one.
+               prompt% cd X11
     5. Do configure.
                prompt% ./configure
     6. Do compile with make command.  This command outputs compiling
