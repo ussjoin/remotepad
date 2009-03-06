@@ -11,6 +11,7 @@
 		3A166AF30E7F6B8F00001374 /* RemotePad Server.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3A166AF20E7F6B8F00001374 /* RemotePad Server.icns */; };
 		3AB151190E7F5D0500FB4375 /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB151180E7F5D0500FB4375 /* TCPServer.m */; };
 		3AB1512C0E7F5D8B00FB4375 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AB1512B0E7F5D8B00FB4375 /* Carbon.framework */; };
+		3AE7727C0F6108460021B2DE /* pointer-notconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AE7727B0F6108460021B2DE /* pointer-notconnected.png */; };
 		5631BFD80F2A2FD80042B665 /* pointer.png in Resources */ = {isa = PBXBuildFile; fileRef = 5631BFD70F2A2FD80042B665 /* pointer.png */; };
 		5650583F0F2A0A220067B358 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5650583E0F2A0A220067B358 /* AppController.m */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
@@ -36,6 +37,7 @@
 		3AB1512B0E7F5D8B00FB4375 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		3AD7F5680F2C007F00CD6BF7 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Event.h; path = ../Common/Event.h; sourceTree = SOURCE_ROOT; };
 		3AD7F5690F2C00A500CD6BF7 /* inputevent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = inputevent.h; path = ../Common/inputevent.h; sourceTree = SOURCE_ROOT; };
+		3AE7727B0F6108460021B2DE /* pointer-notconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pointer-notconnected.png"; sourceTree = "<group>"; };
 		3AF6AE0C0F11A049005EDBB2 /* Makefile4dist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile4dist; sourceTree = "<group>"; };
 		5631BFD70F2A2FD80042B665 /* pointer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pointer.png; sourceTree = "<group>"; };
 		5650583D0F2A0A220067B358 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 			children = (
 				3AD7F5690F2C00A500CD6BF7 /* inputevent.h */,
 				5631BFD70F2A2FD80042B665 /* pointer.png */,
+				3AE7727B0F6108460021B2DE /* pointer-notconnected.png */,
 				3A166AF50E7F6C6300001374 /* icon.xcf */,
 				3AD7F5680F2C007F00CD6BF7 /* Event.h */,
 				3A166AF20E7F6B8F00001374 /* RemotePad Server.icns */,
@@ -206,6 +209,7 @@
 				1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */,
 				3A166AF30E7F6B8F00001374 /* RemotePad Server.icns in Resources */,
 				5631BFD80F2A2FD80042B665 /* pointer.png in Resources */,
+				3AE7727C0F6108460021B2DE /* pointer-notconnected.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

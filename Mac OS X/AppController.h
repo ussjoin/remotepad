@@ -84,6 +84,8 @@
 	UInt32 charToMod[kNumUniChar];
 	
 	NSStatusItem *statusItem;
+	NSImage *connectedImage;
+	NSImage *notConnectedImage;
 }
 - (void)setup:(id)sender;
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification;

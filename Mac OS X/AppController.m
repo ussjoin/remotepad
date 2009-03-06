@@ -162,10 +162,12 @@
 					statusItemWithLength:NSVariableStatusItemLength];
 	
 	[statusItem retain];
-	NSString *imageName = [[NSBundle mainBundle]
-						   pathForResource:@"pointer" ofType:@"png"];
-	NSImage *tempImage = [[NSImage alloc] initWithContentsOfFile:imageName];
-	[statusItem setImage:tempImage];
+	NSString *imageName;
+	imageName = [[NSBundle mainBundle] pathForResource:@"pointer" ofType:@"png"];
+	connectedImage = [[NSImage alloc] initWithContentsOfFile:imageName];
+	imageName = [[NSBundle mainBundle] pathForResource:@"pointer-notconnected" ofType:@"png"];
+	notConnectedImage = [[NSImage alloc] initWithContentsOfFile:imageName];
+	[statusItem setImage:notConnectedImage];
 	[statusItem setHighlightMode:YES];
 	
 	NSMenu *menu = [[NSMenu alloc] initWithTitle:@"Menu"];	
@@ -206,6 +208,8 @@
 	[_inStream close];
 	[_outStream close];
 	[self _showAlert:@"Disconnected!"];
+	[[[statusItem menu] itemAtIndex:0] setTitle:@"RemotePad: no peer connected"];
+	[statusItem setImage:notConnectedImage];
 	//[disconnectButton setEnabled:NO];
 	[self setup:sender];
 }
@@ -587,6 +591,7 @@
 			
 			if (_inReady && _outReady) {
 				[[[statusItem menu] itemAtIndex:0] setTitle:@"RemotePad: peer connected"];
+				[statusItem setImage:connectedImage];
 				
 				currentKeyboardLayout = NULL;
 				
@@ -659,7 +664,6 @@
 		}
 		case NSStreamEventEndEncountered:
 		{
-			[[[statusItem menu] itemAtIndex:0] setTitle:@"RemotePad: no peer connected"];
 			[self performSelectorOnMainThread:@selector(disconnect:) withObject:nil waitUntilDone:YES];
 			break;
 		}
