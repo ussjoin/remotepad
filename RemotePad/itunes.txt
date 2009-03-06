@@ -2,15 +2,15 @@ RemotePad is an open source application that controls the mouse cursor of your d
 
 FEATURES:
 • Mouse control with a virtual touchpad.
+• Software keyboard for ascii text inputs.
 • Server support for major platforms, namely, Mac OS X, Windows, Linux and BSD.
 • Bonjour (Zeroconf) server detection under Mac OS X.
-• Customizable appearence and behaviour: number of buttons to display, tap clicking and dragging.
+• Customizable appearence and behaviour.
 • Landscape mode.
 • Two finger vertical and horizontal scrolling.
-• Two finger tapping for secondary click.
 • Mouse control via acceleromenter.
 • Send arrow keys.
-• BSD-style licensed source codes
+• BSD-style licensed source codes.
 
 ADDITIONAL REQUIREMENTS:
 • Computer running a version of the RemotePad Server
@@ -18,8 +18,9 @@ ADDITIONAL REQUIREMENTS:
 • WiFi connection
 
 WHAT'S NEW IN THIS VERSION:
-• Option to keep an iPhone/iPod touch from going to sleep.
+• Software keyboard for ascii text inputs.  You need to upgrade your RemotePad Server to use this feature.
 • Tracking and scrolling speed accelerations.
+• Option to keep an iPhone/iPod touch from going to sleep.
 • Option to display buttons without labels.
 • Servers were also improved and critical bugs fixed.
 • Windows server no longer has the 'lag' effect with RemotePad Server 1.7.
