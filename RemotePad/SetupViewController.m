@@ -81,8 +81,8 @@ enum TableSections
 	kSectionArrowKeyGestures,
 	kSectionAccelMouse,
 	kSectionApplication,
-	kSectionResetButtonLocation,
-	kSectionResetSecurityWarnings,
+	kSectionButtonLocation,
+	kSectionDialogs,
 	kSectionConnection,
 	kSectionVersion,
 	kSectionEnd
@@ -145,6 +145,7 @@ enum TableSections
 	autorotateOrientationCell = nil;
 	prohibitSleepingCell = nil;
 	topviewLocationCell = nil;
+	topviewLocationCommentCell = nil;
 	resetSecurityWarningsCell = nil;
 }
 
@@ -288,9 +289,11 @@ enum TableSections
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-	if ([alertView tag] == kDisconnectSessionTag && buttonIndex != [alertView cancelButtonIndex]) {
+	NSInteger tag = [alertView tag];
+	NSInteger cancelIndex = [alertView cancelButtonIndex];
+	if (tag == kDisconnectSessionTag && buttonIndex != cancelIndex) {
 		[(AppController *)([UIApplication sharedApplication].delegate) setup];
-	} else if ([alertView tag] == kResetSecurityWarningsTag && buttonIndex != [alertView cancelButtonIndex]) {
+	} else if (tag == kResetSecurityWarningsTag && buttonIndex != cancelIndex) {
 		BOOL value = NO;
 		[[NSUserDefaults standardUserDefaults] setBool:value forKey:kDefaultKeyDoneInsecureKeyboardWarning];
 		[tapViewController setDoneInsecureKeyboardWarning:value];
@@ -319,11 +322,13 @@ enum TableSections
 // UITableView Delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	if ([indexPath section] == kSectionResetButtonLocation) {
+	NSUInteger section = [indexPath section];
+	NSUInteger row = [indexPath row];
+	if (section == kSectionButtonLocation && row == 0) {
 		[self resetButtonLocation];
-	} else if ([indexPath section] == kSectionConnection) {
+	} else if (section == kSectionConnection && row == 0) {
 		[self disconnectSession];
-	} else if ([indexPath section] == kSectionResetSecurityWarnings) {
+	} else if (section == kSectionDialogs && row == 0) {
 		[self resetSecurityWarnings];
 	}
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -364,9 +369,15 @@ enum TableSections
 		case kSectionApplication:
 			title = @"Application Options";
 			break;
-		case kSectionResetButtonLocation:
-		case kSectionResetSecurityWarnings:
+		case kSectionButtonLocation:
+			title = @"Button location";
+			break;
+		case kSectionDialogs:
+			title = @"Dialogs";
+			break;
 		case kSectionConnection:
+			title = @"Connection";
+			break;
 		case kSectionVersion:
 			title = nil;
 			break;
@@ -379,8 +390,7 @@ enum TableSections
 	switch (section) {
 		case kSectionTrackingOptions:
 		case kSectionToggleStatusbar:
-		case kSectionResetButtonLocation:
-		case kSectionResetSecurityWarnings:
+		case kSectionDialogs:
 		case kSectionConnection:
 		case kSectionVersion:
 			number = 1;
@@ -388,6 +398,7 @@ enum TableSections
 		case kSectionArrowKeyGestures:
 		case kSectionAccelMouse:
 		case kSectionApplication:
+		case kSectionButtonLocation:
 			number = 2;
 			break;
 		case kSectionButtonOptions:
@@ -446,8 +457,13 @@ enum TableSections
 			else
 				height = kUIRowCommentHeight;
 			break;
-		case kSectionResetButtonLocation:
-		case kSectionResetSecurityWarnings:
+		case kSectionButtonLocation:
+			if ([indexPath row] == 0)
+				height = kUIRowButtonHeight;
+			else
+				height = kUIRowCommentHeight;
+			break;
+		case kSectionDialogs:
 		case kSectionConnection:
 			height = kUIRowButtonHeight;
 			break;
@@ -784,21 +800,32 @@ enum TableSections
 				cell = prohibitSleepingCell;
 			}
 			break;
-		case kSectionResetButtonLocation:
-			if (topviewLocationCell == nil) {
-				cell = [self obtainTableCell];
-				topviewLocationCell = [cell retain];
-				[cell setText:@"Reset button location"];
-				[cell setTextAlignment:UITextAlignmentCenter];
-				[cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
+		case kSectionButtonLocation:
+			if (row == 0) {
+				if (topviewLocationCell == nil) {
+					cell = [self obtainTableCell];
+					topviewLocationCell = [cell retain];
+					[cell setText:@"Reset button location"];
+					[cell setTextAlignment:UITextAlignmentCenter];
+					[cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
+				}
+				cell = topviewLocationCell;
+			} else {
+				if (topviewLocationCommentCell == nil) {
+					cell = [self obtainTableCell];
+					topviewLocationCommentCell = [cell retain];
+					[cell setText:@"Double click and cont. drag to relocate"];
+					[cell setIndentationLevel:1];
+					[cell setFont:[UIFont systemFontOfSize:14.0]];
+				}
+				cell = topviewLocationCommentCell;
 			}
-			cell = topviewLocationCell;
 			break;
-		case kSectionResetSecurityWarnings:
+		case kSectionDialogs:
 			if (resetSecurityWarningsCell == nil) {
 				cell = [self obtainTableCell];
 				resetSecurityWarningsCell = [cell retain];
-				[cell setText:@"Reset Security Warnings"];
+				[cell setText:@"Reset security warnings"];
 				[cell setTextAlignment:UITextAlignmentCenter];
 				[cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
 			}

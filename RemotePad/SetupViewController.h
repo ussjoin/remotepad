@@ -65,6 +65,7 @@
 	UITableViewCell *prohibitSleepingCell;
 
 	UITableViewCell *topviewLocationCell;
+	UITableViewCell *topviewLocationCommentCell;
 
 	UITableViewCell *resetSecurityWarningsCell;
 
