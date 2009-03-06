@@ -814,7 +814,7 @@ enum TableSections
 				if (topviewLocationCommentCell == nil) {
 					cell = [self obtainTableCell];
 					topviewLocationCommentCell = [cell retain];
-					[cell setText:@"Double click and cont. drag to relocate"];
+					[cell setText:@"Triple click-n-drag a tap area to relocate"];
 					[cell setIndentationLevel:1];
 					[cell setFont:[UIFont systemFontOfSize:14.0]];
 				}
