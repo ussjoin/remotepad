@@ -63,8 +63,6 @@ struct timespec {
 
 #define kVersionWindows	"1.7"
 
-#define USE_ACCEL 1
-
 //dang windows lack of compliance
 #ifndef MSG_WAITALL
 //#define MSG_WAITALL 0x08
@@ -145,15 +143,15 @@ int _tmain(int argc, _TCHAR* argv[])
 				char *or = "";
 				for (int i = 0; hptr->h_addr_list[i]; i++) {
 					memcpy(&addr.sin_addr, hptr->h_addr_list[i], hptr->h_length);
-					fprintf(stderr, "%s%s:%d ", or, inet_ntoa(addr.sin_addr), port);
+					fprintf(stderr, "%s%s ", or, inet_ntoa(addr.sin_addr));
 					or = "or ";
 				}
 				fprintf(stderr, "in your iPhone/iPod touch\n");
 			} else {
-				fprintf(stderr, "waiting on port %d\n", port);
+				fprintf(stderr, "waiting for clients\n");
 			}
 		} else {
-			fprintf(stderr, "waiting on port %d\n", port);
+			fprintf(stderr, "waiting for clients\n");
 		}
 
 		s_accept = accept( s, &s_client, &s_client_size );
@@ -194,31 +192,7 @@ int _tmain(int argc, _TCHAR* argv[])
 //						SetCursorPos( pt.x + pEvent->move_info.dx, pt.y + pEvent->move_info.dy );
 						//the mouse-accel related code is from synergy, ty
 						// save mouse speed & acceleration
-						#ifdef USE_ACCEL
-						oldSpeed[4];
-						accelChanged =
-									SystemParametersInfo(SPI_GETMOUSE,0, oldSpeed, 0) &&
-									SystemParametersInfo(SPI_GETMOUSESPEED, 0, oldSpeed + 3, 0);
-					
-						// use 1:1 motion
-						if (accelChanged) {
-							int newSpeed[4] = { 0, 0, 0, 1 };
-							accelChanged =
-									SystemParametersInfo(SPI_SETMOUSE, 0, newSpeed, 0) ||
-									SystemParametersInfo(SPI_SETMOUSESPEED, 0, newSpeed + 3, 0);
-						}
-					
-						// move relative to mouse position
-						mouse_event(MOUSEEVENTF_MOVE, prevevent.value, event.value, 0, 0);
-					
-						// restore mouse speed & acceleration
-						if (accelChanged) {
-							SystemParametersInfo(SPI_SETMOUSE, 0, oldSpeed, 0);
-							SystemParametersInfo(SPI_SETMOUSESPEED, 0, oldSpeed + 3, 0);
-						}
-						#else
-							mouse_event( MOUSEEVENTF_MOVE, pEvent->move_info.dx, pEvent->move_info.dy, 0, 0 );
-						#endif
+						mouse_event( MOUSEEVENTF_MOVE, pEvent->move_info.dx, pEvent->move_info.dy, 0, 0 );
 
 						break;
 					case EVENT_MOUSE_DELTA_W:
