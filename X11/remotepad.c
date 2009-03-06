@@ -51,14 +51,17 @@
 #include <X11/extensions/XTest.h>
 #include <sys/socket.h>
 #include <sys/types.h>
+#include <sys/ioctl.h>
 #include <netdb.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
+#include <net/if.h>
 #include <unistd.h>
 #include <math.h>
 #include <errno.h>
 #include <sys/time.h>
 
+#include "config.h"
 #include "inputevent.h"
 #include "Event.h"
 
@@ -70,6 +73,10 @@
 
 #define NButtons 5
 int ButtonNumber[NButtons] = {Button1, Button3, Button2, Button4, Button5};
+
+#if !defined(INADDR_LOOPBACK)
+#define INADDR_LOOPBACK (uint32_t)0x7f000001
+#endif
 
 KeySym *keyboardMapping;
 int minKeycode, maxKeycode;
@@ -84,6 +91,7 @@ typedef int SOCKET;
 void handleKeyEvent( Display * dpy, MouseEvent *pEvent );
 void simulateKeyWithUnichar(Display *dpy, MouseEvent *pEvent);
 KeySym ucs2keysym(long ucs);
+int findInterfaceAddresses(SOCKET sockfd);
 
 int main( int argc, char ** argv)
 {
@@ -108,15 +116,15 @@ int main( int argc, char ** argv)
 
 	int button, yDelta = 0, yTmp;
 
-	fprintf(stderr, "RemotePad Server for X11 version %s\n", kVersionX11);
-	fprintf(stderr, "Application launched.\n");
+	printf("RemotePad Server for X11 version %s\n", kVersionX11);
+	printf("Application launched.\n");
 
     /*
 	* Open the display using the $DISPLAY environment variable to locate
 	* the X server.  See Section 2.1.
 	*/
     if ((dpy = XOpenDisplay(NULL)) == NULL) {
-	   fprintf(stderr, "%s: can't open DISPLAY: %s\n", argv[0], XDisplayName(NULL));
+	   printf("%s: can't open DISPLAY: %s\n", argv[0], XDisplayName(NULL));
 	   exit(1);
     }
 
@@ -125,7 +133,7 @@ int main( int argc, char ** argv)
     if(success == False || xtest_major_version < 2 ||
 (xtest_major_version <= 2 && xtest_minor_version < 2))
     {
-	   fprintf(stderr,"XTEST extension not supported\n");
+	   printf("XTEST extension not supported\n");
 	   exit(1);
     }
 
@@ -172,27 +180,8 @@ int main( int argc, char ** argv)
 
 	while( 1 )
 	{
-		char myname[128] = "";
-		if(gethostname(myname, sizeof(myname)) == 0) {
-			struct sockaddr_in addr;
-			struct hostent *hptr;
-			hptr = gethostbyname(myname);
-			if(hptr) {
-				fprintf(stderr, "enter ");
-				char *or = "";
-				int i;
-				for (i = 0; hptr->h_addr_list[i]; i++) {
-					memcpy(&addr.sin_addr, hptr->h_addr_list[i], hptr->h_length);
-					fprintf(stderr, "%s%s:%d ", or, inet_ntoa(addr.sin_addr), port);
-					or = "or ";
-				}
-				fprintf(stderr, "in your iPhone/iPod touch\n");
-			} else {
-				fprintf(stderr, "waiting on port %d\n", port);
-			}
-		} else {
-			fprintf(stderr, "waiting on port %d\n", port);
-		}
+		if(!findInterfaceAddresses(s))
+			printf("waiting for clients\n");
 
 		struct timeval tv = {5, 0};
 		while (1) {
@@ -213,7 +202,7 @@ int main( int argc, char ** argv)
 			perror( "failed to accept!" );
 			return -1;
 		} else {
-			fprintf(stderr, "Connected!\n");
+			printf("Connected!\n");
 		}
 
 		setsockopt(s_accept, SOL_SOCKET, SO_RCVTIMEO, (void *)&tv, sizeof(tv));
@@ -239,7 +228,7 @@ int main( int argc, char ** argv)
 						if (prevevent.type == EVENT_MOUSE_DELTA_X) {
 							XTestFakeRelativeMotionEvent( dpy, prevevent.value, event.value, 0 );
 						} else {
-							fprintf( stderr, "stray event EVENT_MOUSE_DELTA_Y\n" );
+							// printf( "stray event EVENT_MOUSE_DELTA_Y\n" );
 						}
 
 						break;
@@ -301,7 +290,7 @@ int main( int argc, char ** argv)
 						break;
 
 					default:
-						fprintf( stderr, "unknown message type: %d\n", event.type );
+						printf( "unknown message type: %d\n", event.type );
 						break;
 				}
 				prevevent = event;
@@ -311,7 +300,7 @@ int main( int argc, char ** argv)
 			}
 			else if ( recvsize > 0 )
 			{
-				fprintf( stderr, "partial recv!\n" );
+				// printf( "partial recv!\n" );
 			}
 			else if ( recvsize == 0 )
 			{
@@ -337,7 +326,7 @@ int main( int argc, char ** argv)
 			}
 		}
 
-		fprintf(stderr, "Disconnected!\n");
+		printf("Disconnected!\n");
 
 	}
 
@@ -410,4 +399,58 @@ void simulateKeyWithUnichar(Display *dpy, MouseEvent *pEvent) {
 			XTestFakeKeyEvent(dpy, mod1Keycode, False, 0);
 		XTestFakeKeyEvent(dpy, x11Keycode, False, 0);
 	}
+}
+
+int findInterfaceAddresses(SOCKET sockfd) {
+	struct ifconf ifc;
+	struct ifreq *ifr, ifrcopy;
+	int lastlen = 0;
+	int len = 32 * sizeof(struct ifreq);
+	char *buf, addr[128], *ptr;
+	for (;;) {
+		buf = malloc(len);
+		if (buf == NULL)
+			return 0; // not found
+		ifc.ifc_len = len;
+		ifc.ifc_buf = buf;
+		if (ioctl(sockfd, SIOCGIFCONF, &ifc) < 0) {
+			if (errno != EINVAL || lastlen != 0) {
+				free(buf);
+				return 0; // not found
+			}
+		} else {
+			if (ifc.ifc_len == lastlen)
+				break;
+			lastlen = ifc.ifc_len;
+		}
+		len = len * 2;
+		free(buf);
+	}
+	int result = 0; // not found
+	char *or = "enter ";
+	for (ptr = buf; ptr < buf + ifc.ifc_len; ) {
+		ifr = (struct ifreq *)ptr;
+#if defined(HAVE_STRUCT_SOCKADDR_SA_LEN)
+		len = (sizeof(struct sockaddr) > ifr->ifr_addr.sa_len) ? sizeof(struct sockaddr) : ifr->ifr_addr.sa_len;
+#else
+		len = sizeof(struct sockaddr);
+#endif
+		ptr += sizeof(ifr->ifr_name) + len;
+		if (ifr->ifr_addr.sa_family != AF_INET)
+			continue;
+		ifrcopy = *ifr;
+		ioctl(sockfd, SIOCGIFFLAGS, &ifrcopy);
+		if ((ifrcopy.ifr_flags & IFF_UP) == 0)
+			continue;
+		struct sockaddr_in *sin = (struct sockaddr_in *)&ifrcopy.ifr_addr;
+		if (sin->sin_addr.s_addr != htonl(INADDR_LOOPBACK)) {
+			printf("%s%s ", or, inet_ntop(AF_INET, &sin->sin_addr, addr, sizeof(addr)));
+			result = 1; // found
+			or = "or ";
+		}
+	}
+	if (result)
+		printf("in your iPhone/iPod touch.\n");
+	free(buf);
+	return result;
 }
