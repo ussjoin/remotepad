@@ -32,6 +32,7 @@
 		32DBCF750370BD2300C91783 /* RemotePad Server_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RemotePad Server_Prefix.pch"; sourceTree = "<group>"; };
 		3A166AF20E7F6B8F00001374 /* RemotePad Server.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "RemotePad Server.icns"; sourceTree = "<group>"; };
 		3A166AF50E7F6C6300001374 /* icon.xcf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icon.xcf; sourceTree = "<group>"; };
+		3A949A2F0F6391910069CD1D /* Version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Version.h; path = ../Common/Version.h; sourceTree = SOURCE_ROOT; };
 		3AB151170E7F5D0500FB4375 /* TCPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPServer.h; sourceTree = "<group>"; };
 		3AB151180E7F5D0500FB4375 /* TCPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPServer.m; sourceTree = "<group>"; };
 		3AB1512B0E7F5D8B00FB4375 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
@@ -114,8 +115,9 @@
 		2A37F4AFFDCFA73011CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				32DBCF750370BD2300C91783 /* RemotePad Server_Prefix.pch */,
+				3A949A2F0F6391910069CD1D /* Version.h */,
 				2A37F4B0FDCFA73011CA2CEA /* main.m */,
+				32DBCF750370BD2300C91783 /* RemotePad Server_Prefix.pch */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";

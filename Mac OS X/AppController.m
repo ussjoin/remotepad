@@ -60,15 +60,9 @@
 
 #import <Carbon/Carbon.h>
 #include <sys/time.h>
-
+#import "Version.h"
 #import "AppController.h"
 
-
-#if (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5)
-#define kVersion	@"2.2alpha1 for Mac OS X 10.5"
-#else
-#define kVersion	@"2.2alpha1 for Mac OS X 10.4"
-#endif
 
 // The Bonjour application protocol, which must:
 // 1) be no longer than 14 characters
@@ -566,9 +560,12 @@
 	gettimeofday(&tv, NULL);
 	
 	MouseEvent event = {htonl(EVENT_NULL), 0, htonl(tv.tv_sec), htonl(tv.tv_usec*1000)};
-	if (_outStream && [_outStream hasSpaceAvailable])
-		if([_outStream write:(uint8_t *)&event maxLength:sizeof(MouseEvent)] == -1)
+	if (_outStream && [_outStream hasSpaceAvailable]) {
+		if([_outStream write:(uint8_t *)&event maxLength:sizeof(MouseEvent)] == -1) {
 			[self _showAlert:@"Failed sending data to peer"];
+			[self performSelectorOnMainThread:@selector(disconnect:) withObject:nil waitUntilDone:YES];
+		}
+	}
 }
 
 @end
@@ -590,6 +587,11 @@
 				_outReady = YES;
 			
 			if (_inReady && _outReady) {
+				struct timeval tv;
+				gettimeofday(&tv, NULL);
+				MouseEvent event = {htonl(EVENT_VERSION), htonl(kVersionMacCurrent), htonl(tv.tv_sec), htonl(tv.tv_usec*1000)};
+				[_outStream write:(uint8_t *)&event maxLength:sizeof(MouseEvent)];
+				
 				[[[statusItem menu] itemAtIndex:0] setTitle:@"RemotePad: peer connected"];
 				[statusItem setImage:connectedImage];
 				

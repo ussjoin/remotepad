@@ -28,9 +28,7 @@
  */
 
 
-// version
-#define kVersion @"1.4"
-
+#import "Version.h"
 
 // application defaults keys
 #define kDefaultKeyVersion						@"version"
@@ -58,7 +56,7 @@
 #define kDefaultKeyDoneInsecureKeyboardWarning	@"doneInsecureKeyboardWarning"
 #define kDefaultKeyDoLabelsForMouseButtons		@"doLabelsForMouseButtons"
 // application defaults values
-#define kDefaultVersion						kVersion
+#define kDefaultVersion						kVersionRemotePad
 #define kDefaultTopviewLocationX			@"0"
 #define kDefaultTopviewLocationY			@"20"
 #define kDefaultNumberOfButtons				@"3"

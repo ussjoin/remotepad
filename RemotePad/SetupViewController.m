@@ -847,7 +847,7 @@ enum TableSections
 				versionCell = [cell retain];
 				[cell setText:@"Version"];
 				label = [[UILabel alloc] initWithFrame:CGRectZero];
-				[label setText:kVersion];
+				[label setText:kVersionRemotePad];
 				[label setFont:[UIFont systemFontOfSize:16.0]];
 				[label setTextColor:[UIColor colorWithRed:0.2 green:0.3 blue:0.4 alpha:1.0]];
 				[label setBackgroundColor:[UIColor clearColor]];

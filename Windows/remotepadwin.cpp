@@ -60,8 +60,7 @@ struct timespec {
 	long tv_nsec;
 };
 #include "Event.h"
-
-#define kVersionWindows	"1.7"
+#include "Version.h"
 
 //dang windows lack of compliance
 #ifndef MSG_WAITALL
@@ -162,6 +161,9 @@ int _tmain(int argc, _TCHAR* argv[])
 
 		int timeout = 5*1000; //ms
 		setsockopt(s_accept, SOL_SOCKET, SO_RCVTIMEO, (const char *)&timeout, sizeof(timeout));
+
+		MouseEvent versionEvent = {htonl(EVENT_VERSION), htonl(kVersionWindowsCurrent), 0, 0};
+		send(s_accept, (const char *)&versionEvent, sizeof(MouseEvent), 0);
 
 		while( 1 )
 		{

@@ -64,8 +64,7 @@
 #include "config.h"
 #include "inputevent.h"
 #include "Event.h"
-
-#define kVersionX11 "1.6"
+#include "Version.h"
 
 #define SCROLL_AMT 40
 #define BUTTON_SCROLL_UP Button5
@@ -207,6 +206,10 @@ int main( int argc, char ** argv)
 
 		setsockopt(s_accept, SOL_SOCKET, SO_RCVTIMEO, (void *)&tv, sizeof(tv));
 
+		gettimeofday(&tv, NULL);
+		MouseEvent versionEvent = {htonl(EVENT_VERSION), htonl(kVersionX11Current), htonl(tv.tv_sec), htonl(tv.tv_usec*1000)};
+		send(s_accept, (void *)&versionEvent, sizeof(MouseEvent), 0);
+
 		while( 1 )
 		{
 			recvsize = recv( s_accept, pEvent, sizeof( MouseEvent ), MSG_WAITALL );
@@ -290,7 +293,7 @@ int main( int argc, char ** argv)
 						break;
 
 					default:
-						printf( "unknown message type: %d\n", event.type );
+						//printf( "unknown message type: %d\n", event.type );
 						break;
 				}
 				prevevent = event;

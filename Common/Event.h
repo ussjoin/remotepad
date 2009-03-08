@@ -27,7 +27,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define EVENT_NULL               0
+#define EVENT_NULL               0       /* void */
+#define EVENT_VERSION            128     /* version number */
 /* $NetBSD: wsconsio.h,v 1.88 2007/08/27 02:01:23 macallan Exp $ */
 #define EVENT_KEY_UP             1       /* key code */
 #define EVENT_KEY_DOWN           2       /* key code */

@@ -55,6 +55,7 @@
 		3A4EDFE10E64055400C2548E /* ButtonRoundedHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonRoundedHighlighted.png; sourceTree = "<group>"; };
 		3A5FD4660F3B3A5F003DBC07 /* itunes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = itunes.txt; sourceTree = "<group>"; };
 		3A6140450E55878A00B859F3 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		3A9499F90F6390450069CD1D /* Version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Version.h; path = ../Common/Version.h; sourceTree = SOURCE_ROOT; };
 		3A998FF70F4E60DE004C7143 /* Bonjour.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bonjour.png; sourceTree = "<group>"; };
 		3A9C34960E8535F900F6140E /* icon.xcf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icon.xcf; sourceTree = "<group>"; };
 		3AA90C3A0E530F030086ADCD /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = ../AppController.h; sourceTree = "<group>"; };
@@ -134,9 +135,10 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				3AE1F7760E6FB96F001DF387 /* Constants.h */,
-				32CA4F630368D1EE00C91783 /* RemotePad_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
+				3AE1F7760E6FB96F001DF387 /* Constants.h */,
+				3A9499F90F6390450069CD1D /* Version.h */,
+				32CA4F630368D1EE00C91783 /* RemotePad_Prefix.pch */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";

@@ -23,4 +23,4 @@ clean:
 	rm -f $(PROGNAME) $(OBJS)
 
 distclean:
-	rm -rf $(PROGNAME) $(OBJS) config.log config.status Makefile.bak autom4te.cache .deps
+	rm -rf $(PROGNAME) $(OBJS) config.h config.log config.status Makefile.bak autom4te.cache .deps
