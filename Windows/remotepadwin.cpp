@@ -92,10 +92,6 @@ int _tmain(int argc, _TCHAR* argv[])
 	fprintf(stderr, "RemotePad Server for Windows version %s\n", kVersionWindows);
 	fprintf(stderr, "Application launched.\n");
 
-	//mouse-relative move:
-	int oldSpeed[4];
-	bool accelChanged;
-
 //network stuff
 	//WSA \o/
 	WSADATA WsaDat;
@@ -192,7 +188,7 @@ int _tmain(int argc, _TCHAR* argv[])
 //						SetCursorPos( pt.x + pEvent->move_info.dx, pt.y + pEvent->move_info.dy );
 						//the mouse-accel related code is from synergy, ty
 						// save mouse speed & acceleration
-						mouse_event( MOUSEEVENTF_MOVE, pEvent->move_info.dx, pEvent->move_info.dy, 0, 0 );
+						mouse_event(MOUSEEVENTF_MOVE, prevevent.value, event.value, 0, 0);
 
 						break;
 					case EVENT_MOUSE_DELTA_W:
