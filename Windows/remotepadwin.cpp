@@ -333,6 +333,8 @@ void simulateKeyWithUnichar(MouseEvent *pEvent) {
 	short winKeycode = VkKeyScan(charCode);
 	if (winKeycode != -1) {
 		byte bKey = LOBYTE(winKeycode), bMod = HIBYTE(winKeycode);
+		if (bKey == '\r')
+			bMod = 0;
 		if (bMod) {
 			if (bMod & kWinModifierShift)
 				keybd_event(VK_SHIFT, 0, 0, 0);
