@@ -504,6 +504,10 @@
 	[self addSourceToCurrentRunLoop];
 	keepAliveTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(sendKeepAlive:) userInfo:nil repeats:YES];
 	[[NSRunLoop currentRunLoop] run];
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	MouseEvent event = {htonl(EVENT_VERSION), htonl(kVersionMacCurrent), htonl(tv.tv_sec), htonl(tv.tv_usec*1000)};
+	[_outStream write:(uint8_t *)&event maxLength:sizeof(MouseEvent)];
 }
 
 - (void)exitStreamThread
@@ -587,11 +591,6 @@
 				_outReady = YES;
 			
 			if (_inReady && _outReady) {
-				struct timeval tv;
-				gettimeofday(&tv, NULL);
-				MouseEvent event = {htonl(EVENT_VERSION), htonl(kVersionMacCurrent), htonl(tv.tv_sec), htonl(tv.tv_usec*1000)};
-				[_outStream write:(uint8_t *)&event maxLength:sizeof(MouseEvent)];
-				
 				[[[statusItem menu] itemAtIndex:0] setTitle:@"RemotePad: peer connected"];
 				[statusItem setImage:connectedImage];
 				
