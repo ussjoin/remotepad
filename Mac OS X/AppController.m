@@ -227,6 +227,7 @@
 
 - (void)aboutMenu:(id)sender
 {
+	[NSApp activateIgnoringOtherApps:YES];
 	[NSApp orderFrontStandardAboutPanel:sender];
 }
 
