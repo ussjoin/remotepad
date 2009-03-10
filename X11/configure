@@ -4932,6 +4932,10 @@ _ACEOF
 
   LIBS="-lX11 $LIBS"
 
+else
+  { { echo "$as_me:$LINENO: error: X Window System is required." >&5
+echo "$as_me: error: X Window System is required." >&2;}
+   { (exit 1); exit 1; }; }
 fi
 
 else
@@ -5136,11 +5140,15 @@ _ACEOF
 
   LIBS="-lXtst $LIBS"
 
+else
+  { { echo "$as_me:$LINENO: error: XTest extension development library is required.  Please install a package libXtst-dev or libXtst-devel or x11/libXtst." >&5
+echo "$as_me: error: XTest extension development library is required.  Please install a package libXtst-dev or libXtst-devel or x11/libXtst." >&2;}
+   { (exit 1); exit 1; }; }
 fi
 
 else
-  { { echo "$as_me:$LINENO: error: XTest extension development library is required." >&5
-echo "$as_me: error: XTest extension development library is required." >&2;}
+  { { echo "$as_me:$LINENO: error: XTest extension development library is required.  Please install a package libXtst-dev or libXtst-devel or x11/libXtst." >&5
+echo "$as_me: error: XTest extension development library is required.  Please install a package libXtst-dev or libXtst-devel or x11/libXtst." >&2;}
    { (exit 1); exit 1; }; }
 fi
 
