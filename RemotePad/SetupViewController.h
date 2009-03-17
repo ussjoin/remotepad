@@ -34,6 +34,8 @@
 @interface SetupViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
 	TapViewController *tapViewController;
 	UITableView *setupTableView;
+	
+	UITableViewCell *connectionCell;
 
 	UITableViewCell *numberOfButtonsCell;
 	UITableViewCell *mouseMapLeftToRightCell;
@@ -68,8 +70,6 @@
 	UITableViewCell *topviewLocationCommentCell;
 
 	UITableViewCell *resetSecurityWarningsCell;
-
-	UITableViewCell *connectionCell;
 
 	UITableViewCell *versionCell;
 }

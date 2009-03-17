@@ -73,7 +73,8 @@
 
 enum TableSections
 {
-	kSectionButtonOptions = 0,
+	kSectionConnection = 0,
+	kSectionButtonOptions,
 	kSectionScrollingOptions,
 	kSectionTrackingOptions,
 	kSectionClickingOptions,
@@ -83,7 +84,6 @@ enum TableSections
 	kSectionApplication,
 	kSectionButtonLocation,
 	kSectionDialogs,
-	kSectionConnection,
 	kSectionVersion,
 	kSectionEnd
 };
