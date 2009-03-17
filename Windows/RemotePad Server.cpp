@@ -127,12 +127,17 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 	hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, 0, kWidthMin, kHeightMin, NULL, NULL, hInstance, NULL);
 	if (!hWnd)
 		return FALSE;
-	ShowWindow(hWnd, nCmdShow);
-	UpdateWindow(hWnd);
+
+	if (nCmdShow == SW_MINIMIZE) {
+		HideInTray(hWnd, TRUE);
+	} else {
+		ShowWindow(hWnd, nCmdShow);
+		UpdateWindow(hWnd);
+		bInTray = FALSE;
+	}
 
 	CreateTrayIcons(hWnd, trayIcon);
 	Shell_NotifyIcon(NIM_ADD, &trayIcon[trayIconNotConnected]);
-	bInTray = FALSE;
 
 	HACCEL hAccelTable;
 	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_REMOTEPADSERVER));
