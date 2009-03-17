@@ -128,10 +128,11 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 	if (!hWnd)
 		return FALSE;
 
-	if (nCmdShow == SW_MINIMIZE) {
-		HideInTray(hWnd, TRUE);
+	ShowWindow(hWnd, nCmdShow);
+	if (nCmdShow == SW_SHOWMINNOACTIVE) {
+		ShowWindow(hWnd, SW_HIDE);
+		bInTray = TRUE;
 	} else {
-		ShowWindow(hWnd, nCmdShow);
 		UpdateWindow(hWnd);
 		bInTray = FALSE;
 	}
