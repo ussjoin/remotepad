@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual C++ Express 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RemotePad Server", "RemotePad Server.vcproj", "{06D84368-3CE5-4F9C-BE1C-09B5367D0B08}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RemotePad Server", "RemotePad Server.vcproj", "{B4140637-F5DD-428B-A7C7-F6333EDEC4F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{06D84368-3CE5-4F9C-BE1C-09B5367D0B08}.Debug|Win32.ActiveCfg = Debug|Win32
-		{06D84368-3CE5-4F9C-BE1C-09B5367D0B08}.Debug|Win32.Build.0 = Debug|Win32
-		{06D84368-3CE5-4F9C-BE1C-09B5367D0B08}.Release|Win32.ActiveCfg = Release|Win32
-		{06D84368-3CE5-4F9C-BE1C-09B5367D0B08}.Release|Win32.Build.0 = Release|Win32
+		{B4140637-F5DD-428B-A7C7-F6333EDEC4F8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B4140637-F5DD-428B-A7C7-F6333EDEC4F8}.Debug|Win32.Build.0 = Debug|Win32
+		{B4140637-F5DD-428B-A7C7-F6333EDEC4F8}.Release|Win32.ActiveCfg = Release|Win32
+		{B4140637-F5DD-428B-A7C7-F6333EDEC4F8}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

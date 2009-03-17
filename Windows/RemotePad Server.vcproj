@@ -1,11 +1,12 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="shift_jis"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="RemotePad Server"
-	ProjectGUID="{06D84368-3CE5-4F9C-BE1C-09B5367D0B08}"
+	ProjectGUID="{B4140637-F5DD-428B-A7C7-F6333EDEC4F8}"
+	RootNamespace="RemotePadServer"
 	Keyword="Win32Proj"
-	TargetFrameworkVersion="0"
+	TargetFrameworkVersion="196613"
 	>
 	<Platforms>
 		<Platform
@@ -17,9 +18,10 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="Debug"
-			IntermediateDirectory="Debug"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -40,13 +42,12 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/I&quot;..\Common&quot;"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="0"
+				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="4"
 			/>
 			<Tool
@@ -60,10 +61,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="wsock32.lib"
-				LinkIncremental="1"
+				AdditionalOptions="WSock32.lib"
+				LinkIncremental="2"
 				GenerateDebugInformation="true"
-				SubSystem="1"
+				SubSystem="2"
+				EntryPointSymbol=""
 				TargetMachine="1"
 			/>
 			<Tool
@@ -71,7 +73,6 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
-				EmbedManifest="false"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -91,9 +92,11 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="Release"
-			IntermediateDirectory="Release"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
+			CharacterSet="1"
+			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -112,12 +115,13 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/I&quot;..\Common&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;"
-				RuntimeLibrary="0"
+				Optimization="2"
+				EnableIntrinsicFunctions="true"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -131,12 +135,12 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="Wsock32.lib"
-				LinkIncremental="1"
+				LinkIncremental="2"
 				GenerateDebugInformation="true"
-				SubSystem="1"
+				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				EntryPointSymbol=""
 				TargetMachine="1"
 			/>
 			<Tool
@@ -144,7 +148,6 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
-				EmbedManifest="false"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -167,6 +170,16 @@
 	</References>
 	<Files>
 		<Filter
+			Name="Source Files"
+			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			>
+			<File
+				RelativePath=".\RemotePad Server.cpp"
+				>
+			</File>
+		</Filter>
+		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
@@ -176,7 +189,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\Common\inputevent.h"
+				RelativePath=".\RemotePad Server.h"
 				>
 			</File>
 			<File
@@ -186,17 +199,23 @@
 		</Filter>
 		<Filter
 			Name="Resource Files"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
-		</Filter>
-		<Filter
-			Name="Source Files"
-			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
-			>
 			<File
-				RelativePath=".\remotepadwin.cpp"
+				RelativePath=".\icon-connected.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\icon-notconnected.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\RemotePad Server.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\RemotePad Server.rc"
 				>
 			</File>
 		</Filter>

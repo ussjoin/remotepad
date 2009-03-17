@@ -1,0 +1,82 @@
+/*
+ *  RemotePad Server.rc
+ *  RemotePad Server
+ *
+ *  Created by iKawamoto Yosihisa! on 09/03/11.
+ *  Copyright 2009 tenjin.org. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE TENJIN.ORG AND CONTRIBUTORS
+ * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE TENJIN.ORG
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+
+#include "RemotePad Server.h"
+#include <windows.h>
+
+IDI_REMOTEPADSERVER ICON "RemotePad Server.ico"
+IDI_NOTCONNECTED    ICON "icon-notconnected.ico"
+IDI_CONNECTED       ICON "icon-connected.ico"
+
+IDC_REMOTEPADSERVER MENU
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&Hide", IDM_TRAY
+        MENUITEM "&Disconnect", IDM_DISCONNECT
+        MENUITEM "E&xit", IDM_EXIT
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&About ...", IDM_ABOUT
+    END
+END
+
+IDC_TRAYMENU MENU
+BEGIN
+    POPUP "dummy"
+    BEGIN
+        MENUITEM "&Open", IDM_OPEN
+        MENUITEM "&Disconnect", IDM_DISCONNECT
+        MENUITEM "E&xit", IDM_EXIT
+    END
+END
+
+IDC_REMOTEPADSERVER ACCELERATORS
+BEGIN
+    "?",            IDM_ABOUT,              ASCII,  ALT
+    "/",            IDM_ABOUT,              ASCII,  ALT
+END
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 170, 62
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About RemotePad Server"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,14,14,21,20
+    LTEXT           "RemotePad Server, Version 1.8",IDC_STATIC,42,14,114,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2009",IDC_STATIC,42,26,114,8
+    DEFPUSHBUTTON   "OK",IDOK,113,41,50,14,WS_GROUP
+END
+
+STRINGTABLE
+BEGIN
+   IDC_REMOTEPADSERVER   "REMOTEPADSERVER"
+   IDS_APP_TITLE       "RemotePad Server"
+END
