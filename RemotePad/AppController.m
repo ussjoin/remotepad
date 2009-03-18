@@ -119,12 +119,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
 	[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
 	
-	[_inStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-	[_inStream release];
-
-	[_outStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-	[_outStream release];
-
+	[self closeStreams];
 	[_server release];
 	
 	[tapViewController release];
@@ -138,18 +133,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 }
 
 - (void) setup {
+	[self closeStreams];
 	[_server release];
-	_server = nil;
-	
-	[_inStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-	[_inStream release];
-	_inStream = nil;
-	_inReady = NO;
-
-	[_outStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-	[_outStream release];
-	_outStream = nil;
-	_outReady = NO;
 	
 	_server = [TCPServer new];
 	[_server setDelegate:self];
@@ -229,6 +214,20 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	[_outStream open];
 }
 
+- (void) closeStreams {
+	[_inStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+	[_inStream close];
+	[_inStream release];
+	_inStream = nil;
+	_inReady = NO;
+	
+	[_outStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+	[_outStream close];
+	[_outStream release];
+	_outStream = nil;
+	_outReady = NO;
+}
+
 - (void) browserViewController:(BrowserViewController*)bvc didResolveInstance:(NSNetService*)netService
 {
 	if (!netService) {
@@ -305,14 +304,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		}
 		case NSStreamEventErrorOccurred:
 		{
-			[_inStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-			[_inStream release];
-			_inStream = nil;
-			_inReady = NO;
-			[_outStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-			[_outStream release];
-			_outStream = nil;
-			_outReady = NO;
 			NSError *theError = [stream streamError];
 			UIAlertView *alertView;
 			NSString *message = @"";
@@ -326,6 +317,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 						break;
 				}
 			}
+			[self closeStreams];
 			alertView = [[UIAlertView alloc] initWithTitle:@"Error from stream!" message:[NSString stringWithFormat:@"System Message:\n%@%@", [theError localizedDescription], message] delegate:self cancelButtonTitle:nil otherButtonTitles:@"Continue", nil];
 			[alertView show];
 			[alertView release];
