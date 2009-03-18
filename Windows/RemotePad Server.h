@@ -28,6 +28,14 @@
  */
 
 #define IDS_APP_TITLE				103
+#define IDS_APP_TITLE_WIN			104
+#define IDS_VERSION					105
+#define IDS_IP_ADDRESSES			106
+#define IDS_PORT					107
+#define IDS_STATUS					108
+#define IDS_CANNOT_DETECT			109
+#define IDS_CONNECTED				110
+#define IDS_NOT_CONNECTED			111
 
 #define IDR_MAINFRAME				128
 #define IDD_REMOTEPADSERVER_DIALOG	102
@@ -40,7 +48,7 @@
 #define IDI_REMOTEPADSERVER			107
 #define IDI_NOTCONNECTED			108
 #define IDI_CONNECTED				112
-#define IDC_REMOTEPADSERVER			109
+#define IDC_REMOTEPADSERVER			102
 #define IDC_MYICON					2
 #ifndef IDC_STATIC
 #define IDC_STATIC					-1

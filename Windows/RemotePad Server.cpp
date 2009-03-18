@@ -72,10 +72,21 @@ struct timespec {
 #define kNumButtons 5
 #define kDefaultPort 5583
 #define kNumTrayIcons 2
+#define kMessageValue 180
+#define kMessageHeight 20
+#define kMessageSpace 10
 
 HINSTANCE hInst;
-TCHAR szTitle[kMaxLoadString];
 TCHAR szWindowClass[kMaxLoadString];
+TCHAR szTitle[kMaxLoadString];
+TCHAR szTitleWin[kMaxLoadString];
+TCHAR szVersion[kMaxLoadString];
+TCHAR szIPAddresses[kMaxLoadString];
+TCHAR szPort[kMaxLoadString];
+TCHAR szStatus[kMaxLoadString];
+TCHAR szCannotDetect[kMaxLoadString];
+TCHAR szConnected[kMaxLoadString];
+TCHAR szNotConnected[kMaxLoadString];
 NOTIFYICONDATA trayIcon[kNumTrayIcons];
 BOOL bInTray;
 SOCKADDR_IN addrList[kNumIPAddresses];
@@ -101,8 +112,16 @@ void CloseSocket(HWND hWnd, SOCKET clientSocket);
 void StreamThread(void *args);
 
 int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow) {
-	LoadString(hInstance, IDS_APP_TITLE, szTitle, kMaxLoadString);
 	LoadString(hInstance, IDC_REMOTEPADSERVER, szWindowClass, kMaxLoadString);
+	LoadString(hInstance, IDS_APP_TITLE, szTitle, kMaxLoadString);
+	LoadString(hInstance, IDS_APP_TITLE_WIN, szTitleWin, kMaxLoadString);
+	LoadString(hInstance, IDS_VERSION, szVersion, kMaxLoadString);
+	LoadString(hInstance, IDS_IP_ADDRESSES, szIPAddresses, kMaxLoadString);
+	LoadString(hInstance, IDS_PORT, szPort, kMaxLoadString);
+	LoadString(hInstance, IDS_STATUS, szStatus, kMaxLoadString);
+	LoadString(hInstance, IDS_CANNOT_DETECT, szCannotDetect, kMaxLoadString);
+	LoadString(hInstance, IDS_CONNECTED, szConnected, kMaxLoadString);
+	LoadString(hInstance, IDS_NOT_CONNECTED, szNotConnected, kMaxLoadString);
 
 	if (!hPrevInstance) {
 		WNDCLASSEX wcex;
@@ -160,7 +179,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 	static SOCKET serverSocket;
 	static SOCKET clientSocket;
 
-	//fprintf(stderr, "message = 0x%04x, wParam = 0x%04x, lParam = 0x%04x\n", message, wParam, lParam);
 	switch (message) {
 	case WM_CREATE:
 		serverSocket = CreateSocket(hWnd);
@@ -264,34 +282,30 @@ void DisplayWindow(HWND hWnd) {
 	RECT rect;
 	RECT labelRect;
 	RECT valueRect;
+	TCHAR buf[kMaxLoadString];
 
 	hdc = BeginPaint(hWnd, &ps);
 
 	GetClientRect(hWnd, &rect);
 	labelRect.top = rect.top + 20;
 	labelRect.left = rect.left + 20;
-#define kMessageValue	180
-#define kMessageHeight	20
-#define kMessageSpace	10
 	labelRect.right = rect.right - 20;
 	labelRect.bottom = rect.bottom;
 	valueRect.top = labelRect.top;
 	valueRect.left = kMessageValue;
 	valueRect.right = rect.right - 20;
 	valueRect.bottom = rect.bottom;
-	TCHAR buf[kMaxLoadString];
-	wsprintf(buf, L"%s for Windows", szTitle);
-	DrawText(hdc, buf, -1, &labelRect, DT_WORDBREAK);
+	DrawText(hdc, szTitleWin, -1, &labelRect, DT_WORDBREAK);
 
 	labelRect.top += kMessageHeight + kMessageSpace * 2;
 	valueRect.top += kMessageHeight + kMessageSpace * 2;
-	DrawText(hdc, L"Version:", -1, &labelRect, DT_WORDBREAK);
+	DrawText(hdc, szVersion, -1, &labelRect, DT_WORDBREAK);
 	wsprintf(buf, L"%S", kVersionWindows);
 	DrawText(hdc, buf, -1, &valueRect, DT_WORDBREAK);
 
 	labelRect.top += kMessageHeight + kMessageSpace;
 	valueRect.top += kMessageHeight + kMessageSpace;
-	DrawText(hdc, L"Server IP addresses:", -1, &labelRect, DT_WORDBREAK);
+	DrawText(hdc, szIPAddresses, -1, &labelRect, DT_WORDBREAK);
 	if (numAddrs) {
 		for (int i = 0; i < numAddrs; i++) {
 			wsprintf(buf, L"%S", inet_ntoa(addrList[i].sin_addr));
@@ -300,22 +314,21 @@ void DisplayWindow(HWND hWnd) {
 			valueRect.top += kMessageHeight;
 		}
 	} else {
-		DrawText(hdc, L"cannot detect", -1, &valueRect, DT_WORDBREAK);
+		DrawText(hdc, szCannotDetect, -1, &valueRect, DT_WORDBREAK);
 		labelRect.top += kMessageHeight;
 		valueRect.top += kMessageHeight;
 	}
 
 	labelRect.top += kMessageSpace;
 	valueRect.top += kMessageSpace;
-	DrawText(hdc, L"Port:", -1, &labelRect, DT_WORDBREAK);
+	DrawText(hdc, szPort, -1, &labelRect, DT_WORDBREAK);
 	wsprintf(buf, L"%d", kDefaultPort);
 	DrawText(hdc, buf, -1, &valueRect, DT_WORDBREAK);
 
 	labelRect.top += kMessageHeight + kMessageSpace;
 	valueRect.top += kMessageHeight + kMessageSpace;
-	DrawText(hdc, L"Connection status:", -1, &labelRect, DT_WORDBREAK);
-	wsprintf(buf, L"%Sconnected", (connectionStatus == statusConnected) ? "" : "not ");
-	DrawText(hdc, buf, -1, &valueRect, DT_WORDBREAK);
+	DrawText(hdc, szStatus, -1, &labelRect, DT_WORDBREAK);
+	DrawText(hdc, (connectionStatus == statusConnected) ? szConnected : szNotConnected, -1, &valueRect, DT_WORDBREAK);
 
 	EndPaint(hWnd, &ps);
 }
