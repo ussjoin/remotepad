@@ -70,7 +70,7 @@ CAPTION "About RemotePad Server"
 FONT 8, "MS Shell Dlg"
 BEGIN
     ICON            IDI_REMOTEPADSERVER,IDC_STATIC,14,14,21,20
-    LTEXT           "RemotePad Server, Version 2.0alpha1",IDC_STATIC,42,14,134,8,SS_NOPREFIX
+    LTEXT           "RemotePad Server, Version 2.0alpha2",IDC_STATIC,42,14,134,8,SS_NOPREFIX
     LTEXT           "Copyright (C) 2009 tenjin.org",IDC_STATIC,42,26,114,8
     DEFPUSHBUTTON   "OK",IDOK,113,41,50,14,WS_GROUP
 END
