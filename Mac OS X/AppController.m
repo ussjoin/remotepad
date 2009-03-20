@@ -430,9 +430,9 @@
 	if (KLGetCurrentKeyboardLayout(&keyboardLayoutRef) != noErr)
 		return;
 	UCKeyboardLayout *keyboarLayout = NULL;
-	if (KLGetKeyboardLayoutProperty(keyboardLayoutRef, kKLuchrData, (const void **)&keyboarLayout) != noErr)
-		return;
-	if (currentKeyboardLayout != keyboarLayout) {
+	if (KLGetKeyboardLayoutProperty(keyboardLayoutRef, kKLuchrData, (const void **)&keyboarLayout) != noErr) {
+		currentKeyboardLayout = NULL;
+	} else if (currentKeyboardLayout != keyboarLayout) {
 		currentKeyboardLayout = keyboarLayout;
 		memset(charToKey, 0xff, sizeof(CGKeyCode)*kNumUniChar);
 		memset(charToMod, 0, sizeof(UInt32)*kNumUniChar);
@@ -446,6 +446,7 @@
 			UInt32 modifierKeyState = (modifierKeyStates[i] >> 8) & 0xff;
 			for (keyCode = 0; keyCode < 128; keyCode++) {
 				if (UCKeyTranslate(keyboarLayout, keyCode, kUCKeyActionDown, modifierKeyState, keyboardType, 1, &deadKeyState, 255, &actualStringLength, unicodeString) == noErr) {
+					unicodeString[actualStringLength] = 0;
 					if (actualStringLength == 1 && charToKey[unicodeString[0]] == 0xffff) {
 						charToKey[unicodeString[0]] = keyCode;
 						charToMod[unicodeString[0]] = modifierKeyStates[i];
@@ -457,6 +458,30 @@
 		if (charToKey['\n'] == 0xffff)
 			charToKey['\n'] = kKeycodeReturn;
 	}
+	if (KLGetKeyboardLayoutProperty(keyboardLayoutRef, kKLKCHRData, (const void **)&keyboarLayout) != noErr) {
+		currentKeyboardLayoutKCHR = NULL;
+	} else if (currentKeyboardLayoutKCHR != keyboarLayout) {
+		currentKeyboardLayoutKCHR = keyboarLayout;
+		memset(charToKeyKCHR, 0xff, sizeof(CGKeyCode)*kNumUniChar);
+		memset(charToModKCHR, 0, sizeof(UInt32)*kNumUniChar);
+		UInt32 deadKeyState;
+		UInt16 keyCode;
+		UInt32 modifierKeyStates[kNumModifierKeyState] = { 0, shiftKey, optionKey, shiftKey | optionKey };
+		for (int i = 0; i < kNumModifierKeyState; i++) {
+			for (keyCode = 0; keyCode < 128; keyCode++) {
+				UInt32 char12 = KeyTranslate(keyboarLayout, modifierKeyStates[i] | keyCode, &deadKeyState);
+				UInt8 char1 = (char12 >> 16) & 0xff;
+				UInt8 char2 = char12 & 0xff;
+				if (char1 == 0 && char2 != 0 && charToKeyKCHR[char2] == 0xffff) {
+					charToKeyKCHR[char2] = keyCode;
+					charToModKCHR[char2] = modifierKeyStates[i];
+				}
+			}
+		}
+		// special treatments
+		if (charToKeyKCHR['\n'] == 0xffff)
+			charToKeyKCHR['\n'] = kKeycodeReturn;
+	}
 }
 
 - (void)simulateKeyWithUnichar:(MouseEvent)event0 {
@@ -465,20 +490,25 @@
 		return;
 	}
 	[self prepareTables];
-	if (currentKeyboardLayout == NULL) {
-		NSBeep();
-		return;
-	}
 	
-	CGKeyCode keyCode;
-	keyCode = charToKey[event0.value];
-	if (keyCode != 0xffff) {
-		CFRelease(CGEventCreate(NULL));
-		CGEventFlags modifierFlags = 0;
+	CGKeyCode keyCode = 0xffff;
+	CGEventFlags modifierFlags = 0;
+	if (currentKeyboardLayout != NULL && charToKey[event0.value] != 0xffff) {
+		keyCode = charToKey[event0.value];
 		if (charToMod[event0.value] & optionKey)
 			modifierFlags |= kCGEventFlagMaskAlternate;
 		if (charToMod[event0.value] & shiftKey)
 			modifierFlags |= kCGEventFlagMaskShift;
+	} else if (currentKeyboardLayoutKCHR != NULL && charToKeyKCHR[event0.value] != 0xffff) {
+		keyCode = charToKeyKCHR[event0.value];
+		if (charToModKCHR[event0.value] & optionKey)
+			modifierFlags |= kCGEventFlagMaskAlternate;
+		if (charToModKCHR[event0.value] & shiftKey)
+			modifierFlags |= kCGEventFlagMaskShift;
+	}
+	
+	if (keyCode != 0xffff) {
+		CFRelease(CGEventCreate(NULL));
 		CGEventRef event = CGEventCreateKeyboardEvent(NULL, keyCode, true);
 		CGEventSetType(event, kCGEventKeyDown);
 		CGEventSetFlags(event, modifierFlags);
@@ -596,6 +626,7 @@
 				[statusItem setImage:connectedImage];
 				
 				currentKeyboardLayout = NULL;
+				currentKeyboardLayoutKCHR = NULL;
 				
 				prevevent.type = EVENT_NULL;
 				mouse1Clicked = NO;

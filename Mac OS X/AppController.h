@@ -82,6 +82,9 @@
 	UCKeyboardLayout *currentKeyboardLayout;
 	CGKeyCode charToKey[kNumUniChar];
 	UInt32 charToMod[kNumUniChar];
+	UCKeyboardLayout *currentKeyboardLayoutKCHR;
+	CGKeyCode charToKeyKCHR[kNumUniChar];
+	UInt32 charToModKCHR[kNumUniChar];
 	
 	NSStatusItem *statusItem;
 	NSImage *connectedImage;
