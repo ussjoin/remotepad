@@ -35,13 +35,13 @@
 #define kVersionMac			@"2.2 for Mac OS X 10.4"
 #endif
 #define kVersionX11			"1.9"
-#define kVersionWindows		"2.0alpha2"
+#define kVersionWindows		"2.0alpha3"
 
 // current version
 #define kVersionRemotePadCurrent	0x01010400
 #define kVersionMacCurrent			0x02020200
 #define kVersionX11Current			0x03010900
-#define kVersionWindowsCurrent		0x04020001
+#define kVersionWindowsCurrent		0x04020002
 
 // keyboard supported version
 #define kVersionRemotePadKeyboard	0x01010400
