@@ -445,7 +445,7 @@
 		for (int i = 0; i < kNumModifierKeyState; i++) {
 			UInt32 modifierKeyState = (modifierKeyStates[i] >> 8) & 0xff;
 			for (keyCode = 0; keyCode < 128; keyCode++) {
-				if (UCKeyTranslate(keyboarLayout, keyCode, kUCKeyActionDown, modifierKeyState, keyboardType, 0, &deadKeyState, 255, &actualStringLength, unicodeString) == noErr) {
+				if (UCKeyTranslate(keyboarLayout, keyCode, kUCKeyActionDown, modifierKeyState, keyboardType, 1, &deadKeyState, 255, &actualStringLength, unicodeString) == noErr) {
 					if (actualStringLength == 1 && charToKey[unicodeString[0]] == 0xffff) {
 						charToKey[unicodeString[0]] = keyCode;
 						charToMod[unicodeString[0]] = modifierKeyStates[i];
