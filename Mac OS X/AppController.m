@@ -469,11 +469,13 @@
 		UInt32 modifierKeyStates[kNumModifierKeyState] = { 0, shiftKey, optionKey, shiftKey | optionKey };
 		for (int i = 0; i < kNumModifierKeyState; i++) {
 			for (keyCode = 0; keyCode < 128; keyCode++) {
-				UInt32 char12 = KeyTranslate(keyboarLayout, modifierKeyStates[i] | keyCode, &deadKeyState);
+				keyCode |= modifierKeyStates[i];
+				deadKeyState = 0;
+				UInt32 char12 = KeyTranslate(keyboarLayout, keyCode, &deadKeyState);
 				UInt8 char1 = (char12 >> 16) & 0xff;
 				UInt8 char2 = char12 & 0xff;
 				if (char1 == 0 && char2 != 0 && charToKeyKCHR[char2] == 0xffff) {
-					charToKeyKCHR[char2] = keyCode;
+					charToKeyKCHR[char2] = keyCode & 0xff;
 					charToModKCHR[char2] = modifierKeyStates[i];
 				}
 			}
@@ -517,6 +519,7 @@
 		CGEventPost(kCGSessionEventTap, event);
 		CFRelease(event);
 	} else {
+		NSLog(@"keyboard layout = %x, charcode = %d, keycode = %d", currentKeyboardLayout, event0.value, keyCode);
 		NSBeep();
 	}
 }
