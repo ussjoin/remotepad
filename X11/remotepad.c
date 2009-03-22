@@ -182,7 +182,7 @@ int main( int argc, char ** argv)
 		if(!findInterfaceAddresses(s))
 			printf("waiting for clients\n");
 
-		struct timeval tv = {5, 0};
+		struct timeval tv = {4, 0};
 		while (1) {
 			fd_set fdset;
 			FD_ZERO(&fdset);
@@ -192,6 +192,7 @@ int main( int argc, char ** argv)
 				break;
 			// sending a keep-alive event for an X server
 			XGetWindowAttributes(dpy, win, &winattr);
+			sleep(1);
 		}
 
 		s_accept = accept( s, &s_client, &s_client_size );
