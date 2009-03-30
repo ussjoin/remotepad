@@ -469,14 +469,28 @@
 		UInt32 modifierKeyStates[kNumModifierKeyState] = { 0, shiftKey, optionKey, shiftKey | optionKey };
 		for (int i = 0; i < kNumModifierKeyState; i++) {
 			for (keyCode = 0; keyCode < 128; keyCode++) {
-				keyCode |= modifierKeyStates[i];
 				deadKeyState = 0;
-				UInt32 char12 = KeyTranslate(keyboarLayout, keyCode, &deadKeyState);
-				UInt8 char1 = (char12 >> 16) & 0xff;
-				UInt8 char2 = char12 & 0xff;
-				if (char1 == 0 && char2 != 0 && charToKeyKCHR[char2] == 0xffff) {
-					charToKeyKCHR[char2] = keyCode & 0xff;
-					charToModKCHR[char2] = modifierKeyStates[i];
+				UInt32 char12 = KeyTranslate(keyboarLayout, (UInt16)(keyCode | modifierKeyStates[i]), &deadKeyState);
+				UInt8 cString[3];
+				cString[0] = (char12 >> 16) & 0xff;
+				if (cString[0] == 0) {
+					cString[0] = char12 & 0xff;
+					cString[1] = 0;
+				} else {
+					cString[1] = char12 & 0xff;
+					cString[2] = 0;
+				}
+				if (cString[0] == 0)
+					continue;
+				CFStringRef unicodeString;
+				unicodeString = CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, (const char *)cString, kCFStringEncodingMacRoman, kCFAllocatorNull);
+				CFIndex unicodeLength = CFStringGetLength(unicodeString);
+				if (unicodeLength != 1)
+					continue;
+				UniChar unicodeChar = CFStringGetCharacterAtIndex(unicodeString, 0);
+				if (charToKeyKCHR[unicodeChar] == 0xffff) {
+					charToKeyKCHR[unicodeChar] = keyCode;
+					charToModKCHR[unicodeChar] = modifierKeyStates[i];
 				}
 			}
 		}
@@ -519,7 +533,7 @@
 		CGEventPost(kCGSessionEventTap, event);
 		CFRelease(event);
 	} else {
-		NSLog(@"keyboard layout = %x, charcode = %d, keycode = %d", currentKeyboardLayout, event0.value, keyCode);
+		NSLog(@"keyboard layout = %x & %x, charcode = %d, keycode = %d", currentKeyboardLayout, currentKeyboardLayoutKCHR, event0.value, keyCode);
 		NSBeep();
 	}
 }
