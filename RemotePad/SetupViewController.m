@@ -562,7 +562,7 @@ enum TableSections
 				if (allowHorizontalScrollCell == nil) {
 					cell = [self obtainTableCell];
 					allowHorizontalScrollCell = [cell retain];
-					[cell setText:@"Arrow horizontal scrolling"];
+					[cell setText:@"Allow horizontal scrolling"];
 					switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
 					[switchui addTarget:self action:@selector(changeAllowHorizontalScroll:) forControlEvents:UIControlEventValueChanged];
 					switchui.on = tapViewController.allowHorizontalScroll;
