@@ -132,7 +132,8 @@
 	NSError* error;
 	if(_server == nil || ![_server start:&error]) {
 		NSLog(@"Failed creating server: %@", error);
-		//[self _showAlert:@"Failed creating server"];
+		NSLog(@"Quit: another RemotePad Server is running");
+		[NSApp terminate:self];
 		return;
 	}
 	
