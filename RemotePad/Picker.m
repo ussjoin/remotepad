@@ -76,8 +76,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		if (![defaults stringForKey:kDefaultKeyServerName]) {
 			[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultServerName forKey:kDefaultKeyServerName]];
-		} else if ([defaults boolForKey:kDefaultKeyProhibitSleeping]) {
-			// [tapView readDefaults] is not called yet
+		}
+		if ([defaults boolForKey:kDefaultKeyProhibitSleeping]) {
 			[[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 		}
 		CGFloat runningY = kStatusBarHeight;
