@@ -165,6 +165,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		hiddenStatusbar = YES;
 		hiddenKeyboard = YES;
 	}
+	[self setProhibitSleeping:prohibitSleeping];
 	[self prepareToolbarsAndStatusbar];
 }
 
