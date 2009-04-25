@@ -146,6 +146,7 @@ typedef struct {
 - (void)setMouseMapLeftToRight:(BOOL)isLeftToRight;
 - (void)setNumberOfButtons:(int)val mouseMapLeftToRight:(BOOL)isLeftToRight;
 - (void)setProhibitSleeping:(BOOL)value;
+- (CGPoint)getTopviewLocation;
 - (void)registerDefaults;
 - (void)readDefaults;
 - (void)prepareTapView;

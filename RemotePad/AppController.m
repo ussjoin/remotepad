@@ -161,6 +161,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		[[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait];
 		[[UIApplication sharedApplication] setStatusBarHidden:NO animated:YES];
 	}
+	[setupViewController adjustCellValues];
 	[navigationController pushViewController:setupViewController animated:YES];
 }
 

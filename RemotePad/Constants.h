@@ -165,3 +165,9 @@
 
 // messages
 #define kInsecureKeyboardMessage	@"This connection is not encrypted because this version of RemotePad does not support any encryption methods.\nBe sure not to enter private information like passwords, credit card numbers, or your secrets."
+
+// topview locations
+#define kTopviewLocationTop1		20
+#define kTopviewLocationTop2		0
+#define kTopviewLocationBottom1		-45
+#define kTopviewLocationBottom2		-1

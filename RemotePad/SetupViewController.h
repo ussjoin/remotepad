@@ -67,6 +67,7 @@
 	UITableViewCell *prohibitSleepingCell;
 
 	UITableViewCell *topviewLocationCell;
+	UISegmentedControl *topviewLocationSegment;
 	UITableViewCell *topviewLocationCommentCell;
 
 	UITableViewCell *resetSecurityWarningsCell;
@@ -75,5 +76,8 @@
 }
 
 + (UILabel *)labelWithFrame:(CGRect)frame title:(NSString *)title;
+- (void)setButtonLocation:(CGPoint)value;
+- (void)adjustCellValues;
+- (void)setTopviewLocationValue;
 
 @end

@@ -145,8 +145,28 @@ enum TableSections
 	autorotateOrientationCell = nil;
 	prohibitSleepingCell = nil;
 	topviewLocationCell = nil;
+	topviewLocationSegment = nil;
 	topviewLocationCommentCell = nil;
 	resetSecurityWarningsCell = nil;
+}
+
+- (void) adjustCellValues {
+	[self setTopviewLocationValue];
+}
+
+- (void)setTopviewLocationValue {
+	if (topviewLocationSegment) {
+		if (tapViewController.topviewLocation.y == kTopviewLocationTop1)
+			topviewLocationSegment.selectedSegmentIndex = 0;
+		else if (tapViewController.topviewLocation.y == kTopviewLocationTop2)
+			topviewLocationSegment.selectedSegmentIndex = 1;
+		else if (tapViewController.topviewLocation.y == kTopviewLocationBottom1)
+			topviewLocationSegment.selectedSegmentIndex = 2;
+		else if (tapViewController.topviewLocation.y == kTopviewLocationBottom2)
+			topviewLocationSegment.selectedSegmentIndex = 3;
+		else
+			topviewLocationSegment.selectedSegmentIndex = 4;
+	}
 }
 
 // callback routines
@@ -266,8 +286,29 @@ enum TableSections
 	}
 }
 
-- (void)resetButtonLocation {
-	CGPoint value = CGPointMake([kDefaultTopviewLocationX floatValue], [kDefaultTopviewLocationY floatValue]);
+- (void)changeButtonLocation:(id)sender {
+	CGPoint point = CGPointMake(0, 0);
+	switch ([sender selectedSegmentIndex]) {
+		case 0:
+			point.y = kTopviewLocationTop1;
+			break;
+		case 1:
+			point.y = kTopviewLocationTop2;
+			break;
+		case 2:
+			point.y = kTopviewLocationBottom1;
+			break;
+		case 3:
+			point.y = kTopviewLocationBottom2;
+			break;
+		default:
+			return;
+			break;
+	}
+	[self setButtonLocation:point];
+}
+
+- (void)setButtonLocation:(CGPoint)value {
 	[[NSUserDefaults standardUserDefaults] setFloat:value.x forKey:kDefaultKeyTopviewLocationX];
 	[[NSUserDefaults standardUserDefaults] setFloat:value.y forKey:kDefaultKeyTopviewLocationY];
 	[tapViewController setTopviewLocation:value];
@@ -324,9 +365,7 @@ enum TableSections
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	NSUInteger section = [indexPath section];
 	NSUInteger row = [indexPath row];
-	if (section == kSectionButtonLocation && row == 0) {
-		[self resetButtonLocation];
-	} else if (section == kSectionConnection && row == 0) {
+	if (section == kSectionConnection && row == 0) {
 		[self disconnectSession];
 	} else if (section == kSectionDialogs && row == 0) {
 		[self resetSecurityWarnings];
@@ -459,7 +498,7 @@ enum TableSections
 			break;
 		case kSectionButtonLocation:
 			if ([indexPath row] == 0)
-				height = kUIRowButtonHeight;
+				height = kUIRowSegmentHeight;
 			else
 				height = kUIRowCommentHeight;
 			break;
@@ -805,9 +844,15 @@ enum TableSections
 				if (topviewLocationCell == nil) {
 					cell = [self obtainTableCell];
 					topviewLocationCell = [cell retain];
-					[cell setText:@"Reset button location"];
-					[cell setTextAlignment:UITextAlignmentCenter];
-					[cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
+					[cell setText:@""];
+					segment = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Top1", @"Top2", @"Bottom1", @"Bottom2", @"free", nil]];
+					topviewLocationSegment = [segment retain];
+					[segment addTarget:self action:@selector(changeButtonLocation:) forControlEvents:UIControlEventValueChanged];
+					segment.segmentedControlStyle = UISegmentedControlStyleBar;
+					[self setTopviewLocationValue];
+					[segment setFrame:CGRectMake(0, 0, kSegmentedControlWidthLong, kSegmentedControlHeight)];
+					[cell setAccessoryView:segment];
+					[segment release];
 				}
 				cell = topviewLocationCell;
 			} else {

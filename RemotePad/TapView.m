@@ -196,9 +196,19 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultDoLabelsForMouseButtons forKey:kDefaultKeyDoLabelsForMouseButtons]];
 }
 
+- (CGPoint) getTopviewLocation {
+	CGPoint value = topviewLocation;
+	if (value.y < 0) {
+		value.y += [self.view bounds].size.height - [topview frame].size.height + 1;
+	} else if (0 < value.y && value.y < 1) {
+		value.y *= [self.view bounds].size.height;
+	}
+	return value;
+}
+
 - (void) readDefaults {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	topviewLocation = CGPointMake([defaults floatForKey:kDefaultKeyTopviewLocationX], [defaults floatForKey:kDefaultKeyTopviewLocationY]);
+	[self setTopviewLocation:CGPointMake([defaults floatForKey:kDefaultKeyTopviewLocationX], [defaults floatForKey:kDefaultKeyTopviewLocationY])];
 	numberOfButtons = [defaults integerForKey:kDefaultKeyNumberOfButtons];
 	if (numberOfButtons < 1 || 3 < numberOfButtons)
 		numberOfButtons = 3;
@@ -245,7 +255,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		[[[bottombar items] objectAtIndex:2] setTitle:@"Hide keyboard"];
 	}
 	
-	[topview setFrame:CGRectMake(topviewLocation.x, topviewLocation.y, rect.size.width, tbRect.size.height)];
+	CGPoint tbPoint = [self getTopviewLocation];
+	[topview setFrame:CGRectMake(tbPoint.x, tbPoint.y, rect.size.width, tbRect.size.height)];
 	[topview setHidden:NO];
 
 	float bbHeight = rect.origin.y + rect.size.height - bbRect.size.height;
@@ -671,7 +682,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		} else if (touch == topviewTap.touch) {
 			if (topviewTap.dragMode || !CGRectContainsPoint(topviewTap.nonDragArea, touchPoint)) {
 				topviewTap.dragMode = YES;
-				topviewLocation = CGPointMake(topviewLocation.x, touchPoint.y - [topview frame].size.height/2);
+				topviewLocation = CGPointMake(topviewLocation.x, (touchPoint.y - [topview frame].size.height/2) / [self.view bounds].size.height);
+				if (topviewLocation.y < 0)
+					topviewLocation.y = 0;
 				[self showToolbars:YES temporal:YES];
 			}
 		} else if (touch == arrowKeyTap.touch) {
