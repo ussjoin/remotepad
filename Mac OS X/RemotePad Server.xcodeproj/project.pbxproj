@@ -7,11 +7,44 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
 		3A166AF30E7F6B8F00001374 /* RemotePad Server.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3A166AF20E7F6B8F00001374 /* RemotePad Server.icns */; };
+		3AAFD9F30FA40197005DF2C3 /* MainMenuNotInTheDock.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AAFD9F10FA40196005DF2C3 /* MainMenuNotInTheDock.xib */; };
 		3AB151190E7F5D0500FB4375 /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB151180E7F5D0500FB4375 /* TCPServer.m */; };
 		3AB1512C0E7F5D8B00FB4375 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AB1512B0E7F5D8B00FB4375 /* Carbon.framework */; };
+		3AB5FB580FA492B90027C02E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB5FB560FA492B90027C02E /* MainMenu.xib */; };
+		3AB5FB5C0FA496E30027C02E /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
+		3AB5FB5D0FA496E30027C02E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
+		3AB5FB5E0FA496E30027C02E /* RemotePad Server.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3A166AF20E7F6B8F00001374 /* RemotePad Server.icns */; };
+		3AB5FB5F0FA496E30027C02E /* pointer.png in Resources */ = {isa = PBXBuildFile; fileRef = 5631BFD70F2A2FD80042B665 /* pointer.png */; };
+		3AB5FB600FA496E30027C02E /* pointer-notconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AE7727B0F6108460021B2DE /* pointer-notconnected.png */; };
+		3AB5FB610FA496E30027C02E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB5FB560FA492B90027C02E /* MainMenu.xib */; };
+		3AB5FB630FA496E30027C02E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		3AB5FB640FA496E30027C02E /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB151180E7F5D0500FB4375 /* TCPServer.m */; };
+		3AB5FB650FA496E30027C02E /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5650583E0F2A0A220067B358 /* AppController.m */; };
+		3AB5FB670FA496E30027C02E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
+		3AB5FB680FA496E30027C02E /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AB1512B0E7F5D8B00FB4375 /* Carbon.framework */; };
+		3AB5FB710FA496F70027C02E /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
+		3AB5FB720FA496F70027C02E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
+		3AB5FB730FA496F70027C02E /* RemotePad Server.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3A166AF20E7F6B8F00001374 /* RemotePad Server.icns */; };
+		3AB5FB740FA496F70027C02E /* pointer.png in Resources */ = {isa = PBXBuildFile; fileRef = 5631BFD70F2A2FD80042B665 /* pointer.png */; };
+		3AB5FB750FA496F70027C02E /* pointer-notconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AE7727B0F6108460021B2DE /* pointer-notconnected.png */; };
+		3AB5FB760FA496F70027C02E /* MainMenuNotInTheDock.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AAFD9F10FA40196005DF2C3 /* MainMenuNotInTheDock.xib */; };
+		3AB5FB780FA496F70027C02E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		3AB5FB790FA496F70027C02E /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB151180E7F5D0500FB4375 /* TCPServer.m */; };
+		3AB5FB7A0FA496F70027C02E /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5650583E0F2A0A220067B358 /* AppController.m */; };
+		3AB5FB7C0FA496F70027C02E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
+		3AB5FB7D0FA496F70027C02E /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AB1512B0E7F5D8B00FB4375 /* Carbon.framework */; };
 		3AE7727C0F6108460021B2DE /* pointer-notconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AE7727B0F6108460021B2DE /* pointer-notconnected.png */; };
+		3AFA61170F918BA2008CEE62 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
+		3AFA61180F918BA2008CEE62 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
+		3AFA611A0F918BA2008CEE62 /* RemotePad Server.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3A166AF20E7F6B8F00001374 /* RemotePad Server.icns */; };
+		3AFA611B0F918BA2008CEE62 /* pointer.png in Resources */ = {isa = PBXBuildFile; fileRef = 5631BFD70F2A2FD80042B665 /* pointer.png */; };
+		3AFA611C0F918BA2008CEE62 /* pointer-notconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AE7727B0F6108460021B2DE /* pointer-notconnected.png */; };
+		3AFA611E0F918BA2008CEE62 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		3AFA611F0F918BA2008CEE62 /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB151180E7F5D0500FB4375 /* TCPServer.m */; };
+		3AFA61200F918BA2008CEE62 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5650583E0F2A0A220067B358 /* AppController.m */; };
+		3AFA61220F918BA2008CEE62 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
+		3AFA61230F918BA2008CEE62 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AB1512B0E7F5D8B00FB4375 /* Carbon.framework */; };
 		5631BFD80F2A2FD80042B665 /* pointer.png in Resources */ = {isa = PBXBuildFile; fileRef = 5631BFD70F2A2FD80042B665 /* pointer.png */; };
 		5650583F0F2A0A220067B358 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5650583E0F2A0A220067B358 /* AppController.m */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
@@ -24,7 +57,6 @@
 		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
-		1DDD582B0DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		2A37F4B0FDCFA73011CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2A37F4BAFDCFA73011CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -33,13 +65,21 @@
 		3A166AF20E7F6B8F00001374 /* RemotePad Server.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "RemotePad Server.icns"; sourceTree = "<group>"; };
 		3A166AF50E7F6C6300001374 /* icon.xcf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icon.xcf; sourceTree = "<group>"; };
 		3A949A2F0F6391910069CD1D /* Version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Version.h; path = ../Common/Version.h; sourceTree = SOURCE_ROOT; };
+		3AAFD9F20FA40196005DF2C3 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenuNotInTheDock.xib; sourceTree = "<group>"; };
 		3AB151170E7F5D0500FB4375 /* TCPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPServer.h; sourceTree = "<group>"; };
 		3AB151180E7F5D0500FB4375 /* TCPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPServer.m; sourceTree = "<group>"; };
 		3AB1512B0E7F5D8B00FB4375 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		3AB3B96F0F918C64002686FF /* InfoNotInTheDock.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InfoNotInTheDock.plist; sourceTree = "<group>"; };
+		3AB5FB570FA492B90027C02E /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		3AB5FB6C0FA496E30027C02E /* RemotePad Server.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RemotePad Server.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3AB5FB6E0FA496E30027C02E /* Info10.4.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info10.4.plist; sourceTree = "<group>"; };
+		3AB5FB810FA496F70027C02E /* RemotePad Server.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RemotePad Server.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3AB5FB830FA496F70027C02E /* InfoNotInTheDock10.4.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = InfoNotInTheDock10.4.plist; sourceTree = "<group>"; };
 		3AD7F5680F2C007F00CD6BF7 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Event.h; path = ../Common/Event.h; sourceTree = SOURCE_ROOT; };
 		3AD7F5690F2C00A500CD6BF7 /* inputevent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = inputevent.h; path = ../Common/inputevent.h; sourceTree = SOURCE_ROOT; };
 		3AE7727B0F6108460021B2DE /* pointer-notconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pointer-notconnected.png"; sourceTree = "<group>"; };
 		3AF6AE0C0F11A049005EDBB2 /* Makefile4dist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile4dist; sourceTree = "<group>"; };
+		3AFA61270F918BA2008CEE62 /* RemotePad Server.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RemotePad Server.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5631BFD70F2A2FD80042B665 /* pointer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pointer.png; sourceTree = "<group>"; };
 		5650583D0F2A0A220067B358 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		5650583E0F2A0A220067B358 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
@@ -48,6 +88,33 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3AB5FB660FA496E30027C02E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AB5FB670FA496E30027C02E /* Cocoa.framework in Frameworks */,
+				3AB5FB680FA496E30027C02E /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3AB5FB7B0FA496F70027C02E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AB5FB7C0FA496F70027C02E /* Cocoa.framework in Frameworks */,
+				3AB5FB7D0FA496F70027C02E /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3AFA61210F918BA2008CEE62 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AFA61220F918BA2008CEE62 /* Cocoa.framework in Frameworks */,
+				3AFA61230F918BA2008CEE62 /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D15AC330486D014006FF6A4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -83,6 +150,9 @@
 			isa = PBXGroup;
 			children = (
 				8D15AC370486D014006FF6A4 /* RemotePad Server.app */,
+				3AFA61270F918BA2008CEE62 /* RemotePad Server.app */,
+				3AB5FB6C0FA496E30027C02E /* RemotePad Server.app */,
+				3AB5FB810FA496F70027C02E /* RemotePad Server.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -133,8 +203,12 @@
 				3A166AF20E7F6B8F00001374 /* RemotePad Server.icns */,
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
 				8D15AC360486D014006FF6A4 /* Info.plist */,
+				3AB3B96F0F918C64002686FF /* InfoNotInTheDock.plist */,
 				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
-				1DDD582A0DA1D0D100B32029 /* MainMenu.xib */,
+				3AB5FB560FA492B90027C02E /* MainMenu.xib */,
+				3AAFD9F10FA40196005DF2C3 /* MainMenuNotInTheDock.xib */,
+				3AB5FB6E0FA496E30027C02E /* Info10.4.plist */,
+				3AB5FB830FA496F70027C02E /* InfoNotInTheDock10.4.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -166,6 +240,60 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		3AB5FB5A0FA496E30027C02E /* RemotePad Server 10.4 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3AB5FB690FA496E30027C02E /* Build configuration list for PBXNativeTarget "RemotePad Server 10.4" */;
+			buildPhases = (
+				3AB5FB5B0FA496E30027C02E /* Resources */,
+				3AB5FB620FA496E30027C02E /* Sources */,
+				3AB5FB660FA496E30027C02E /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "RemotePad Server 10.4";
+			productInstallPath = "$(HOME)/Applications";
+			productName = "RemotePad Server";
+			productReference = 3AB5FB6C0FA496E30027C02E /* RemotePad Server.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3AB5FB6F0FA496F70027C02E /* RemotePad Server 10.4 not in the Dock */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3AB5FB7E0FA496F70027C02E /* Build configuration list for PBXNativeTarget "RemotePad Server 10.4 not in the Dock" */;
+			buildPhases = (
+				3AB5FB700FA496F70027C02E /* Resources */,
+				3AB5FB770FA496F70027C02E /* Sources */,
+				3AB5FB7B0FA496F70027C02E /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "RemotePad Server 10.4 not in the Dock";
+			productInstallPath = "$(HOME)/Applications";
+			productName = "RemotePad Server";
+			productReference = 3AB5FB810FA496F70027C02E /* RemotePad Server.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3AFA61150F918BA2008CEE62 /* RemotePad Server not in the Dock */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3AFA61240F918BA2008CEE62 /* Build configuration list for PBXNativeTarget "RemotePad Server not in the Dock" */;
+			buildPhases = (
+				3AFA61160F918BA2008CEE62 /* Resources */,
+				3AFA611D0F918BA2008CEE62 /* Sources */,
+				3AFA61210F918BA2008CEE62 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "RemotePad Server not in the Dock";
+			productInstallPath = "$(HOME)/Applications";
+			productName = "RemotePad Server";
+			productReference = 3AFA61270F918BA2008CEE62 /* RemotePad Server.app */;
+			productType = "com.apple.product-type.application";
+		};
 		8D15AC270486D014006FF6A4 /* RemotePad Server */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "RemotePad Server" */;
@@ -197,27 +325,99 @@
 			projectRoot = "";
 			targets = (
 				8D15AC270486D014006FF6A4 /* RemotePad Server */,
+				3AFA61150F918BA2008CEE62 /* RemotePad Server not in the Dock */,
+				3AB5FB5A0FA496E30027C02E /* RemotePad Server 10.4 */,
+				3AB5FB6F0FA496F70027C02E /* RemotePad Server 10.4 not in the Dock */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3AB5FB5B0FA496E30027C02E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AB5FB5C0FA496E30027C02E /* Credits.rtf in Resources */,
+				3AB5FB5D0FA496E30027C02E /* InfoPlist.strings in Resources */,
+				3AB5FB5E0FA496E30027C02E /* RemotePad Server.icns in Resources */,
+				3AB5FB5F0FA496E30027C02E /* pointer.png in Resources */,
+				3AB5FB600FA496E30027C02E /* pointer-notconnected.png in Resources */,
+				3AB5FB610FA496E30027C02E /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3AB5FB700FA496F70027C02E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AB5FB710FA496F70027C02E /* Credits.rtf in Resources */,
+				3AB5FB720FA496F70027C02E /* InfoPlist.strings in Resources */,
+				3AB5FB730FA496F70027C02E /* RemotePad Server.icns in Resources */,
+				3AB5FB740FA496F70027C02E /* pointer.png in Resources */,
+				3AB5FB750FA496F70027C02E /* pointer-notconnected.png in Resources */,
+				3AB5FB760FA496F70027C02E /* MainMenuNotInTheDock.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3AFA61160F918BA2008CEE62 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AFA61170F918BA2008CEE62 /* Credits.rtf in Resources */,
+				3AFA61180F918BA2008CEE62 /* InfoPlist.strings in Resources */,
+				3AFA611A0F918BA2008CEE62 /* RemotePad Server.icns in Resources */,
+				3AFA611B0F918BA2008CEE62 /* pointer.png in Resources */,
+				3AFA611C0F918BA2008CEE62 /* pointer-notconnected.png in Resources */,
+				3AAFD9F30FA40197005DF2C3 /* MainMenuNotInTheDock.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D15AC2B0486D014006FF6A4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */,
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
-				1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */,
 				3A166AF30E7F6B8F00001374 /* RemotePad Server.icns in Resources */,
 				5631BFD80F2A2FD80042B665 /* pointer.png in Resources */,
 				3AE7727C0F6108460021B2DE /* pointer-notconnected.png in Resources */,
+				3AB5FB580FA492B90027C02E /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3AB5FB620FA496E30027C02E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AB5FB630FA496E30027C02E /* main.m in Sources */,
+				3AB5FB640FA496E30027C02E /* TCPServer.m in Sources */,
+				3AB5FB650FA496E30027C02E /* AppController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3AB5FB770FA496F70027C02E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AB5FB780FA496F70027C02E /* main.m in Sources */,
+				3AB5FB790FA496F70027C02E /* TCPServer.m in Sources */,
+				3AB5FB7A0FA496F70027C02E /* AppController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3AFA611D0F918BA2008CEE62 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AFA611E0F918BA2008CEE62 /* main.m in Sources */,
+				3AFA611F0F918BA2008CEE62 /* TCPServer.m in Sources */,
+				3AFA61200F918BA2008CEE62 /* AppController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D15AC300486D014006FF6A4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -239,14 +439,6 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		1DDD582A0DA1D0D100B32029 /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1DDD582B0DA1D0D100B32029 /* English */,
-			);
-			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
 		2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -255,9 +447,126 @@
 			name = Credits.rtf;
 			sourceTree = "<group>";
 		};
+		3AAFD9F10FA40196005DF2C3 /* MainMenuNotInTheDock.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3AAFD9F20FA40196005DF2C3 /* English */,
+			);
+			name = MainMenuNotInTheDock.xib;
+			sourceTree = "<group>";
+		};
+		3AB5FB560FA492B90027C02E /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3AB5FB570FA492B90027C02E /* English */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		3AB5FB6A0FA496E30027C02E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RemotePad Server_Prefix.pch";
+				INFOPLIST_FILE = "/Users/kawamoto/iphone/RemotePad/trunk/Mac OS X/Info10.4.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PRODUCT_NAME = "RemotePad Server";
+				SDKROOT = macosx10.4;
+			};
+			name = Debug;
+		};
+		3AB5FB6B0FA496E30027C02E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RemotePad Server_Prefix.pch";
+				INFOPLIST_FILE = "/Users/kawamoto/iphone/RemotePad/trunk/Mac OS X/Info10.4.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PRODUCT_NAME = "RemotePad Server";
+				SDKROOT = macosx10.4;
+			};
+			name = Release;
+		};
+		3AB5FB7F0FA496F70027C02E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RemotePad Server_Prefix.pch";
+				INFOPLIST_FILE = "/Users/kawamoto/iphone/RemotePad/trunk/Mac OS X/InfoNotInTheDock10.4.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PRODUCT_NAME = "RemotePad Server";
+				SDKROOT = macosx10.4;
+			};
+			name = Debug;
+		};
+		3AB5FB800FA496F70027C02E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RemotePad Server_Prefix.pch";
+				INFOPLIST_FILE = "/Users/kawamoto/iphone/RemotePad/trunk/Mac OS X/InfoNotInTheDock10.4.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PRODUCT_NAME = "RemotePad Server";
+				SDKROOT = macosx10.4;
+			};
+			name = Release;
+		};
+		3AFA61250F918BA2008CEE62 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RemotePad Server_Prefix.pch";
+				INFOPLIST_FILE = InfoNotInTheDock.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = "RemotePad Server";
+			};
+			name = Debug;
+		};
+		3AFA61260F918BA2008CEE62 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RemotePad Server_Prefix.pch";
+				INFOPLIST_FILE = InfoNotInTheDock.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = "RemotePad Server";
+			};
+			name = Release;
+		};
 		C05733C808A9546B00998B17 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -306,6 +615,7 @@
 		C05733CD08A9546B00998B17 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ADDITIONAL_SDKS = "";
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -318,6 +628,33 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3AB5FB690FA496E30027C02E /* Build configuration list for PBXNativeTarget "RemotePad Server 10.4" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AB5FB6A0FA496E30027C02E /* Debug */,
+				3AB5FB6B0FA496E30027C02E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3AB5FB7E0FA496F70027C02E /* Build configuration list for PBXNativeTarget "RemotePad Server 10.4 not in the Dock" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AB5FB7F0FA496F70027C02E /* Debug */,
+				3AB5FB800FA496F70027C02E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3AFA61240F918BA2008CEE62 /* Build configuration list for PBXNativeTarget "RemotePad Server not in the Dock" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AFA61250F918BA2008CEE62 /* Debug */,
+				3AFA61260F918BA2008CEE62 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "RemotePad Server" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

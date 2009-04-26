@@ -21,8 +21,10 @@
 	<key>CFBundleVersion</key>
 	<string>2.4</string>
 	<key>NSMainNibFile</key>
-	<string>MainMenu</string>
+	<string>MainMenuNotInTheDock</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSUIElement</key>
+	<string>1</string>
 </dict>
 </plist>
