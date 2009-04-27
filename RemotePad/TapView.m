@@ -749,8 +749,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 // UIAccelerometerDelegate method, called when the device accelerates.
 - (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration {
-	if (!enableAccelMouse)
-		return;
 	// pseudo high pass filter
 	currAccel.ax = acceleration.x * kFilteringFactor + currAccel.ax * (1.0 - kFilteringFactor);
 	currAccel.ay = acceleration.y * kFilteringFactor + currAccel.ay * (1.0 - kFilteringFactor);
@@ -758,7 +756,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	UIAccelerationValue dx = acceleration.x - currAccel.ax, dy = acceleration.y - currAccel.ay, dz = acceleration.z - currAccel.az;
 	// check if iphone is stable or not
 	currAccel.stability = currAccel.stability * kAccelerationStabilityFactor + dx*dx + dy*dy + dz*dz;
-	if (!currAccel.enabled)
+	if (!currAccel.enabled) {
+		if (tapViewOrientation != UIInterfaceOrientationPortrait && currAccel.stability < 0.1 && acceleration.y < -0.8)
+			[self shouldAutorotateToInterfaceOrientation:UIInterfaceOrientationPortrait];
+		return;
+	}
+	if (!enableAccelMouse)
 		return;
 	int32_t deltaX, deltaY;
 	if (currAccel.stopping || currAccel.stability < 0.1) {
