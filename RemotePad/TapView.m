@@ -756,13 +756,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	UIAccelerationValue dx = acceleration.x - currAccel.ax, dy = acceleration.y - currAccel.ay, dz = acceleration.z - currAccel.az;
 	// check if iphone is stable or not
 	currAccel.stability = currAccel.stability * kAccelerationStabilityFactor + dx*dx + dy*dy + dz*dz;
-	if (!currAccel.enabled) {
+	if (!currAccel.enabled || !enableAccelMouse) {
 		if (tapViewOrientation != UIInterfaceOrientationPortrait && currAccel.stability < 0.1 && acceleration.y < -0.8)
 			[self shouldAutorotateToInterfaceOrientation:UIInterfaceOrientationPortrait];
 		return;
 	}
-	if (!enableAccelMouse)
-		return;
 	int32_t deltaX, deltaY;
 	if (currAccel.stopping || currAccel.stability < 0.1) {
 		currAccel.vx = currAccel.vx * kAccelerationReleaseFactor;
