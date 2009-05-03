@@ -87,8 +87,11 @@
 	UInt32 charToModKCHR[kNumUniChar];
 	
 	NSStatusItem *statusItem;
+	NSMenuItem *inTheDockItem;
 	NSImage *connectedImage;
 	NSImage *notConnectedImage;
+	
+	BOOL notInTheDock;
 }
 - (void)setup:(id)sender;
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification;

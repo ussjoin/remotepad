@@ -9,7 +9,7 @@
 	<key>CFBundleIconFile</key>
 	<string>RemotePad Server.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.yourcompany.${PRODUCT_NAME:identifier}</string>
+	<string>org.tenjin.${PRODUCT_NAME:identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -24,5 +24,7 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSUIElement</key>
+	<string>0</string>
 </dict>
 </plist>

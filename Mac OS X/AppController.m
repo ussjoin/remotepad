@@ -139,16 +139,19 @@
 	
 	//Start advertising to clients, passing nil for the name to tell Bonjour to pick use default name
 	if(![_server enableBonjourWithDomain:@"local" applicationProtocol:[TCPServer bonjourTypeFromIdentifier:kBonjourIdentifier] name:nil]) {
-		//[self _showAlert:@"Failed advertising server"];
+		NSLog(@"Failed advertising server");
 		return;
 	}
 	
 	accumuW = 0;
 	accumuZ = 0;
-}	
+}
+
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification
 {
 	[self setup:self];
+	
+	notInTheDock = [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"NSUIElement"] boolValue];
 	
 	//
 	// Setup the menu bar item
@@ -183,7 +186,15 @@
 								   keyEquivalent:@""];
 	[menuItem setEnabled:YES];
 	[menu addItem:menuItem];
-
+	
+	menuItem = [[NSMenuItem alloc] initWithTitle:@"Show an icon in the Dock..."
+										  action:@selector(inTheDockMenu:)
+								   keyEquivalent:@""];
+	[menuItem setEnabled:YES];
+	[menuItem setState:notInTheDock ? NSOffState : NSOnState];
+	[menu addItem:menuItem];
+	inTheDockItem = [menuItem retain];
+	
 	menuItem = [[NSMenuItem alloc] initWithTitle:@"Quit RemotePad"
 										  action:@selector(quitMenu:)
 								   keyEquivalent:@""];
@@ -202,7 +213,7 @@
 	[self requestExitStreamThread];
 	[_inStream close];
 	[_outStream close];
-	[self _showAlert:@"Disconnected!"];
+	NSLog(@"Disconnected!");
 	[[[statusItem menu] itemAtIndex:0] setTitle:@"RemotePad: no peer connected"];
 	[statusItem setImage:notConnectedImage];
 	//[disconnectButton setEnabled:NO];
@@ -230,6 +241,40 @@
 {
 	[NSApp activateIgnoringOtherApps:YES];
 	[NSApp orderFrontStandardAboutPanel:sender];
+}
+
+- (void)inTheDockMenu:(id)sender
+{
+	NSString *plistPath;
+	
+	if (plistPath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Contents/Info.plist"]) {
+		NSFileManager *manager = [NSFileManager defaultManager];
+		if ([manager isWritableFileAtPath:plistPath]) {
+			[NSApp activateIgnoringOtherApps:YES];
+			if ([[NSAlert alertWithMessageText:@"Updating RemotePad Server.app"
+								 defaultButton:@"OK"
+							   alternateButton:@"Cancel"
+								   otherButton:nil
+					 informativeTextWithFormat:@"To make this change effective, you need to restart the RemotePad Server.app."]
+				 runModal]) {
+				notInTheDock = !notInTheDock;
+				[inTheDockItem setState:notInTheDock ? NSOffState : NSOnState];
+				
+				NSMutableDictionary *infoDict = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
+				[infoDict setObject:[NSNumber numberWithBool:notInTheDock] forKey:@"NSUIElement"];
+				[infoDict writeToFile:plistPath atomically:NO];
+				[manager changeFileAttributes:[NSDictionary dictionaryWithObject:[NSDate date] forKey:NSFileModificationDate] atPath: [[NSBundle mainBundle] bundlePath]];
+			}
+		} else {
+			[NSApp activateIgnoringOtherApps:YES];
+			[[NSAlert alertWithMessageText:@"Cannot update RemotePad Server.app"
+							 defaultButton:@"OK"
+						   alternateButton:nil
+							   otherButton:nil
+				 informativeTextWithFormat:@"To change a Dock setting, RemotePad Server.app should be writable."]
+			 runModal];
+		}
+	}
 }
 
 #pragma mark CG routines
@@ -615,7 +660,7 @@
 	MouseEvent event = {htonl(EVENT_NULL), 0, htonl(tv.tv_sec), htonl(tv.tv_usec*1000)};
 	if (_outStream && [_outStream hasSpaceAvailable]) {
 		if([_outStream write:(uint8_t *)&event maxLength:sizeof(MouseEvent)] == -1) {
-			[self _showAlert:@"Failed sending data to peer"];
+			NSLog(@"Failed sending data to peer");
 			[self performSelectorOnMainThread:@selector(disconnect:) withObject:nil waitUntilDone:YES];
 		}
 	}
@@ -662,7 +707,7 @@
 				len = [_inStream read:(uint8_t *)&event maxLength:sizeof(MouseEvent)];
 				if(len != sizeof(MouseEvent)) {
 					if ([stream streamStatus] != NSStreamStatusAtEnd)
-						[self _showAlert:@"Failed reading data from peer"];
+						NSLog(@"Failed reading data from peer");
 				} else {
 					event.type = ntohl(event.type);
 					event.value = ntohl(event.value);
@@ -683,7 +728,7 @@
 							if (prevevent.type == EVENT_MOUSE_DELTA_X) {
 								[self mouseMoveX:prevevent Y:event];
 							} else {
-								[self _showAlert:@"stray event EVENT_MOUSE_DELTA_Y"];
+								NSLog(@"stray event EVENT_MOUSE_DELTA_Y");
 							}
 							break;
 						case EVENT_MOUSE_DELTA_W:
@@ -720,7 +765,7 @@
 		}
 		case NSStreamEventErrorOccurred:
 		{
-			[self _showAlert:@"Connection Error!"];
+			NSLog(@"Connection Error!");
 			[self performSelectorOnMainThread:@selector(disconnect:) withObject:nil waitUntilDone:YES];
 			break;
 		}
