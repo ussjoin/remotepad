@@ -182,17 +182,18 @@ int main( int argc, char ** argv)
 		if(!findInterfaceAddresses(s))
 			printf("waiting for clients\n");
 
-		struct timeval tv = {4, 0};
+		struct timeval tv;
 		while (1) {
 			fd_set fdset;
 			FD_ZERO(&fdset);
 			FD_SET(s, &fdset);
+			tv.tv_sec = 5;
+			tv.tv_usec = 0;
 			select(s+1, &fdset, NULL, NULL, &tv);
 			if (FD_ISSET(s, &fdset))
 				break;
 			// sending a keep-alive event for an X server
 			XGetWindowAttributes(dpy, win, &winattr);
-			sleep(1);
 		}
 
 		s_accept = accept( s, &s_client, &s_client_size );
@@ -205,6 +206,8 @@ int main( int argc, char ** argv)
 			printf("Connected!\n");
 		}
 
+		tv.tv_sec = 5;
+		tv.tv_usec = 0;
 		setsockopt(s_accept, SOL_SOCKET, SO_RCVTIMEO, (void *)&tv, sizeof(tv));
 
 		gettimeofday(&tv, NULL);
