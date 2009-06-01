@@ -68,6 +68,7 @@ typedef struct {
 	UIButton *button;
 	BOOL dragMode;
 	BOOL twoFingersClick;
+	BOOL postponedClick;
 	// for multi-fingers click
 	NSTimeInterval timestamp;
 	int numFingers;
