@@ -68,6 +68,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @synthesize numberOfButtons;
 @synthesize mouseMapLeftToRight;
 @synthesize numberArrowKeyGesture;
+@synthesize arrowKeyGestureOneKey;
 @synthesize twoFingersScroll;
 @synthesize allowHorizontalScroll;
 @synthesize clickByTap;
@@ -177,6 +178,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultNumberOfButtons forKey:kDefaultKeyNumberOfButtons]];
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultMouseMapLeftToRight forKey:kDefaultKeyMouseMapLeftToRight]];
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultNumberArrowKeyGesture forKey:kDefaultKeyNumberArrowKeyGesture]];
+	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultArrowKeyGestureOneKey forKey:kDefaultKeyArrowKeyGestureOneKey]];
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultTwoFingersScroll forKey:kDefaultKeyTwoFingersScroll]];
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultAllowHorizontalScroll forKey:kDefaultKeyAllowHorizontalScroll]];
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultClickByTap forKey:kDefaultKeyClickByTap]];
@@ -216,6 +218,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	numberArrowKeyGesture = [defaults integerForKey:kDefaultKeyNumberArrowKeyGesture];
 	if (numberArrowKeyGesture < 0)
 		numberArrowKeyGesture = 0;
+	arrowKeyGestureOneKey = [defaults boolForKey:kDefaultKeyArrowKeyGestureOneKey];
 	twoFingersScroll = [defaults boolForKey:kDefaultKeyTwoFingersScroll];
 	allowHorizontalScroll = [defaults boolForKey:kDefaultKeyAllowHorizontalScroll];
 	clickByTap = [defaults boolForKey:kDefaultKeyClickByTap];
@@ -699,6 +702,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 			}
 		} else if (touch == arrowKeyTap.touch) {
 			if (!CGRectContainsPoint(arrowKeyTap.nonDragArea, touchPoint)) {
+				if (arrowKeyGestureOneKey && arrowKeyTap.dragMode)
+					continue;
 				arrowKeyTap.dragMode = YES;
 				int32_t keycode;
 				if (arrowKeyTap.tapLocation.y - touchPoint.y > abs(touchPoint.x - arrowKeyTap.tapLocation.x)) {

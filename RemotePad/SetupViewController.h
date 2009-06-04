@@ -59,6 +59,7 @@
 
 	UITableViewCell *numberArrowKeyGestureCell;
 	UITableViewCell *numberArrowKeyGestureCommentCell;
+	UITableViewCell *arrowKeyGestureOneKeyCell;
 
 	UITableViewCell *enableAccelMouseCell;
 	UITableViewCell *enableAccelMouseCommentCell;

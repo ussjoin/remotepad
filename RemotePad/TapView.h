@@ -118,6 +118,7 @@ typedef struct {
 	int numberOfButtons;
 	BOOL mouseMapLeftToRight;
 	int numberArrowKeyGesture;
+	BOOL arrowKeyGestureOneKey;
 	BOOL twoFingersScroll;
 	BOOL allowHorizontalScroll;
 	BOOL clickByTap;
@@ -161,6 +162,7 @@ typedef struct {
 @property (readonly) int numberOfButtons;
 @property (readonly) BOOL mouseMapLeftToRight;
 @property int numberArrowKeyGesture;
+@property BOOL arrowKeyGestureOneKey;
 @property BOOL twoFingersScroll;
 @property BOOL allowHorizontalScroll;
 @property BOOL clickByTap;

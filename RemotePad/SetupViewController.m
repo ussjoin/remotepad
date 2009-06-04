@@ -140,6 +140,7 @@ enum TableSections
 	numberToggleStatusbarCell = nil;
 	numberArrowKeyGestureCell = nil;
 	numberArrowKeyGestureCommentCell = nil;
+	arrowKeyGestureOneKeyCell = nil;
 	enableAccelMouseCell = nil;
 	enableAccelMouseCommentCell = nil;
 	autorotateOrientationCell = nil;
@@ -234,6 +235,12 @@ enum TableSections
 	NSInteger value = ([sender selectedSegmentIndex] == 0) ? 1 : ([sender selectedSegmentIndex] == 1) ? 2 : 0;
 	[[NSUserDefaults standardUserDefaults] setInteger:value forKey:kDefaultKeyNumberArrowKeyGesture];
 	[tapViewController setNumberArrowKeyGesture:value];
+}
+
+- (void)changeArrowKeyGestureOneKey:(id)sender {
+	BOOL value = [sender isOn];
+	[[NSUserDefaults standardUserDefaults] setInteger:value forKey:kDefaultKeyArrowKeyGestureOneKey];
+	[tapViewController setArrowKeyGestureOneKey:value];
 }
 
 - (void)changeEnableAccelMouse:(id)sender {
@@ -434,13 +441,13 @@ enum TableSections
 		case kSectionVersion:
 			number = 1;
 			break;
-		case kSectionArrowKeyGestures:
 		case kSectionAccelMouse:
 		case kSectionApplication:
 		case kSectionButtonLocation:
 			number = 2;
 			break;
 		case kSectionButtonOptions:
+		case kSectionArrowKeyGestures:
 			number = 3;
 			break;
 		case kSectionScrollingOptions:
@@ -462,9 +469,6 @@ enum TableSections
 				height = kUIRowSwitchHeight;
 			else
 				height = kUIRowSegmentHeight;
-			break;
-		case kSectionToggleStatusbar:
-			height = kUIRowSegmentHeight;
 			break;
 		case kSectionScrollingOptions:
 			if ([indexPath row] == 3)
@@ -489,18 +493,21 @@ enum TableSections
 					break;
 			}
 			break;
+		case kSectionToggleStatusbar:
 		case kSectionArrowKeyGestures:
 		case kSectionAccelMouse:
-			if ([indexPath row] == 0)
-				height = kUIRowSegmentHeight;
-			else
-				height = kUIRowCommentHeight;
-			break;
 		case kSectionButtonLocation:
-			if ([indexPath row] == 0)
-				height = kUIRowSegmentHeight;
-			else
-				height = kUIRowCommentHeight;
+			switch ([indexPath row]) {
+				case 0:
+					height = kUIRowSegmentHeight;
+					break;
+				case 1:
+					height = kUIRowCommentHeight;
+					break;
+				default:
+					height = kUIRowSwitchHeight;
+					break;
+			}
 			break;
 		case kSectionDialogs:
 		case kSectionConnection:
@@ -665,7 +672,7 @@ enum TableSections
 				if (clickByTapCell == nil) {
 					cell = [self obtainTableCell];
 					clickByTapCell = [cell retain];
-					[cell setText:@"Clicking"];
+					[cell setText:@"Clicking by Tapping"];
 					switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
 					[switchui addTarget:self action:@selector(changeClickByTap:) forControlEvents:UIControlEventValueChanged];
 					switchui.on = tapViewController.clickByTap;
@@ -773,7 +780,7 @@ enum TableSections
 					[segment release];
 				}
 				cell = numberArrowKeyGestureCell;
-			} else {
+			} else if (row == 1) {
 				if (numberArrowKeyGestureCommentCell == nil) {
 					cell = [self obtainTableCell];
 					numberArrowKeyGestureCommentCell = [cell retain];
@@ -782,6 +789,19 @@ enum TableSections
 					[cell setFont:[UIFont systemFontOfSize:14.0]];
 				}
 				cell = numberArrowKeyGestureCommentCell;
+			} else {
+				if (arrowKeyGestureOneKeyCell == nil) {
+					cell = [self obtainTableCell];
+					arrowKeyGestureOneKeyCell = [cell retain];
+					[cell setText:@"One key by One gesture"];
+					switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
+					[switchui addTarget:self action:@selector(changeArrowKeyGestureOneKey:) forControlEvents:UIControlEventValueChanged];
+					switchui.on = tapViewController.arrowKeyGestureOneKey;
+					switchui.backgroundColor = [UIColor clearColor];
+					[cell setAccessoryView:switchui];
+					[switchui release];
+				}
+				cell = arrowKeyGestureOneKeyCell;
 			}
 			break;
 		case kSectionAccelMouse:
