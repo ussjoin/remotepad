@@ -518,14 +518,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 				multiFingersTap.phase = UITouchPhaseCancelled;
 			}
 			prevDelta = CGPointZero;
-			if (clickByTap) {
-				dragByTapDragMode = NO;
-			} else {
-				// Timer for click & drag gestures
-				[clickTimer invalidate];
-				clickTimer = [NSTimer scheduledTimerWithTimeInterval:kTapHoldInterval target:self selector:@selector(clicked:) userInfo:[NSArray arrayWithObjects:[NSNumber numberWithInt:numTouches], [NSNumber numberWithUnsignedInteger:tapCount], nil] repeats:NO];
-				clickTimerTouch = touch;
-			}
+			dragByTapDragMode = NO;
+			// Timer for click & drag gestures
+			[clickTimer invalidate];
+			clickTimer = [NSTimer scheduledTimerWithTimeInterval:kTapHoldInterval target:self selector:@selector(clicked:) userInfo:[NSArray arrayWithObjects:[NSNumber numberWithInt:numTouches], [NSNumber numberWithUnsignedInteger:tapCount], nil] repeats:NO];
+			clickTimerTouch = touch;
 		}
 	}
 }
@@ -536,7 +533,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	if (clickTimerTouch != nil) {
 		// click and hold or drag
 		CGPoint touchPoint = [clickTimerTouch locationInView:self.view];
-		if (numberToggleToolbars && numberToggleToolbars == tapCount && !topviewTap.touch && oldNumTouches == 1) {
+		if (!clickByTap && numberToggleToolbars && numberToggleToolbars == tapCount && !topviewTap.touch && oldNumTouches == 1) {
 			if ([clickTimerTouch phase] == UITouchPhaseBegan)
 				[self showToolbars:YES temporal:NO];
 			topviewTap.touch = clickTimerTouch;
@@ -553,7 +550,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 			numTouches--;
 			multiFingersTap.touch = nil;
 		}
-	} else {
+	} else if (!clickByTap) {
 		// click and release
 		if (numberToggleStatusbar && numberToggleStatusbar == tapCount && oldNumTouches == 1)
 			[self toggleStatusbars];
@@ -602,11 +599,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 				multiFingersTap.phase = UITouchPhaseEnded;
 			}
 			prevDelta = CGPointZero;
-			if (!clickByTap) {
-				// Timer for click & drag gestures
-				if (clickTimerTouch == touch)
-					clickTimerTouch = nil;
-			} else if (event.timestamp - multiFingersTap.timestamp < kTapHoldInterval && numTouches == 0 && multiFingersTap.phase == UITouchPhaseEnded) {
+			// Timer for click & drag gestures
+			if (clickTimerTouch == touch)
+				clickTimerTouch = nil;
+			if (event.timestamp - multiFingersTap.timestamp < kTapHoldInterval && numTouches == 0 && multiFingersTap.phase == UITouchPhaseEnded) {
 				if (mouse1Tap.dragMode) {
 					[appc send:EVENT_MOUSE_UP with:MouseEventValue(mouse1Tap.twoFingersClick ? 1 : 0, tapCount) time:event.timestamp];
 					[mouse1Tap.button setSelected:NO];
@@ -629,7 +625,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 					[appc send:EVENT_MOUSE_DOWN with:MouseEventValue(0, tapCount) time:event.timestamp];
 					[appc send:EVENT_MOUSE_UP with:MouseEventValue(0, tapCount) time:event.timestamp];
 				}
-			} else if (dragByTapDragMode && !dragByTapLock) {
+			} else if (clickByTap && dragByTapDragMode && !dragByTapLock) {
 				[appc send:EVENT_MOUSE_UP with:MouseEventValue(0, tapCount) time:event.timestamp];
 				dragByTapDragMode = NO;
 			}
