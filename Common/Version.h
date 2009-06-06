@@ -28,7 +28,7 @@
  */
 
 // version strings
-#define kVersionRemotePad	@"1.4"
+#define kVersionRemotePad	@"1.5"
 #if (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5)
 #define kVersionMac			@"2.5 for Mac OS X 10.5"
 #else
@@ -38,7 +38,7 @@
 #define kVersionWindows		"2.0"
 
 // current version
-#define kVersionRemotePadCurrent	0x01010400
+#define kVersionRemotePadCurrent	0x01010500
 #define kVersionMacCurrent			0x02020500
 #define kVersionX11Current			0x03010a00
 #define kVersionWindowsCurrent		0x04020003
