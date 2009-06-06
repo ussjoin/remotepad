@@ -602,7 +602,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 			// Timer for click & drag gestures
 			if (clickTimerTouch == touch)
 				clickTimerTouch = nil;
-			if (event.timestamp - multiFingersTap.timestamp < kTapHoldInterval && numTouches == 0 && multiFingersTap.phase == UITouchPhaseEnded) {
+			if (!clickByTap) {
+				continue;
+			} else if (event.timestamp - multiFingersTap.timestamp < kTapHoldInterval && numTouches == 0 && multiFingersTap.phase == UITouchPhaseEnded) {
 				if (mouse1Tap.dragMode) {
 					[appc send:EVENT_MOUSE_UP with:MouseEventValue(mouse1Tap.twoFingersClick ? 1 : 0, tapCount) time:event.timestamp];
 					[mouse1Tap.button setSelected:NO];
@@ -625,7 +627,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 					[appc send:EVENT_MOUSE_DOWN with:MouseEventValue(0, tapCount) time:event.timestamp];
 					[appc send:EVENT_MOUSE_UP with:MouseEventValue(0, tapCount) time:event.timestamp];
 				}
-			} else if (clickByTap && dragByTapDragMode && !dragByTapLock) {
+			} else if (dragByTapDragMode && !dragByTapLock) {
 				[appc send:EVENT_MOUSE_UP with:MouseEventValue(0, tapCount) time:event.timestamp];
 				dragByTapDragMode = NO;
 			}
