@@ -533,7 +533,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	if (clickTimerTouch != nil) {
 		// click and hold or drag
 		CGPoint touchPoint = [clickTimerTouch locationInView:self.view];
-		if (!clickByTap && numberToggleToolbars && numberToggleToolbars == tapCount && !topviewTap.touch && oldNumTouches == 1) {
+		if (mouse1Tap.dragMode || mouse2Tap.dragMode || mouse3Tap.dragMode) {
+			// skip following blocks
+		} else if (!clickByTap && numberToggleToolbars && numberToggleToolbars == tapCount && !topviewTap.touch && oldNumTouches == 1) {
 			if ([clickTimerTouch phase] == UITouchPhaseBegan)
 				[self showToolbars:YES temporal:NO];
 			topviewTap.touch = clickTimerTouch;
