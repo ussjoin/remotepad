@@ -18,9 +18,5 @@ ADDITIONAL REQUIREMENTS:
 • WiFi connection
 
 WHAT'S NEW IN THIS VERSION:
-• Option to choose mouse locations
-• Disconnect button at the top of the Setup menu
 • Many bug fixes
 • Servers were also improved and bugs fixed.
-• Status icon on the menu bar with RemotePad Server for Mac
-• GUI version of RemotePad Server for Windows
