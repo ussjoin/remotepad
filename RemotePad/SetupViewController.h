@@ -69,6 +69,7 @@
 
 	UITableViewCell *topviewLocationCell;
 	UISegmentedControl *topviewLocationSegment;
+	UITableViewCell *topviewRelocationGestureCell;
 	UITableViewCell *topviewLocationCommentCell;
 
 	UITableViewCell *resetSecurityWarningsCell;

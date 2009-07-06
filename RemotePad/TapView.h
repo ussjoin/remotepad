@@ -115,6 +115,7 @@ typedef struct {
 	int insecureKeyboardWarningCount;
 	//config value
 	CGPoint topviewLocation;
+	BOOL topviewRelocationGesture;
 	int numberOfButtons;
 	BOOL mouseMapLeftToRight;
 	int numberArrowKeyGesture;
@@ -159,6 +160,7 @@ typedef struct {
 @property (nonatomic,retain) AppController *appc;
 @property (readonly) UIView *topview;
 @property CGPoint topviewLocation;
+@property BOOL topviewRelocationGesture;
 @property (readonly) int numberOfButtons;
 @property (readonly) BOOL mouseMapLeftToRight;
 @property int numberArrowKeyGesture;

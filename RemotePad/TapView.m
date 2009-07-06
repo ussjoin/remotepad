@@ -65,6 +65,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @synthesize appc;
 @synthesize topview;
 @synthesize topviewLocation;
+@synthesize topviewRelocationGesture;
 @synthesize numberOfButtons;
 @synthesize mouseMapLeftToRight;
 @synthesize numberArrowKeyGesture;
@@ -175,6 +176,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultVersion forKey:kDefaultKeyVersion]];
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultTopviewLocationX forKey:kDefaultKeyTopviewLocationX]];
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultTopviewLocationY forKey:kDefaultKeyTopviewLocationY]];
+	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultTopviewRelocationGesture forKey:kDefaultKeyTopviewRelocationGesture]];
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultNumberOfButtons forKey:kDefaultKeyNumberOfButtons]];
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultMouseMapLeftToRight forKey:kDefaultKeyMouseMapLeftToRight]];
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:kDefaultNumberArrowKeyGesture forKey:kDefaultKeyNumberArrowKeyGesture]];
@@ -211,6 +213,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (void) readDefaults {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	[self setTopviewLocation:CGPointMake([defaults floatForKey:kDefaultKeyTopviewLocationX], [defaults floatForKey:kDefaultKeyTopviewLocationY])];
+	topviewRelocationGesture = [defaults boolForKey:kDefaultKeyTopviewRelocationGesture];
 	numberOfButtons = [defaults integerForKey:kDefaultKeyNumberOfButtons];
 	if (numberOfButtons < 1 || 3 < numberOfButtons)
 		numberOfButtons = 3;
@@ -535,7 +538,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		CGPoint touchPoint = [clickTimerTouch locationInView:self.view];
 		if (mouse1Tap.dragMode || mouse2Tap.dragMode || mouse3Tap.dragMode) {
 			// skip following blocks
-		} else if (!clickByTap && numberToggleToolbars && numberToggleToolbars == tapCount && !topviewTap.touch && oldNumTouches == 1) {
+		} else if (!clickByTap && topviewRelocationGesture && numberToggleToolbars && numberToggleToolbars == tapCount && !topviewTap.touch && oldNumTouches == 1) {
 			if ([clickTimerTouch phase] == UITouchPhaseBegan)
 				[self showToolbars:YES temporal:NO];
 			topviewTap.touch = clickTimerTouch;

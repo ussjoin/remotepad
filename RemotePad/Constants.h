@@ -34,6 +34,7 @@
 #define kDefaultKeyVersion						@"version"
 #define kDefaultKeyTopviewLocationX				@"topviewLocationX"
 #define kDefaultKeyTopviewLocationY				@"topviewLocationY"
+#define kDefaultKeyTopviewRelocationGesture		@"topviewRelocationGesture"
 #define kDefaultKeyNumberOfButtons				@"numberOfButtons"
 #define kDefaultKeyMouseMapLeftToRight			@"leftPrimaryButton"
 #define kDefaultKeyNumberArrowKeyGesture		@"numberArrowKeyGesture"
@@ -60,6 +61,7 @@
 #define kDefaultVersion						kVersionRemotePad
 #define kDefaultTopviewLocationX			@"0"
 #define kDefaultTopviewLocationY			@"20"
+#define kDefaultTopviewRelocationGesture	@"YES"
 #define kDefaultNumberOfButtons				@"3"
 #define kDefaultMouseMapLeftToRight			@"YES"
 #define kDefaultNumberArrowKeyGesture		@"0"

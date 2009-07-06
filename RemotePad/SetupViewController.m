@@ -147,6 +147,7 @@ enum TableSections
 	prohibitSleepingCell = nil;
 	topviewLocationCell = nil;
 	topviewLocationSegment = nil;
+	topviewRelocationGestureCell = nil;
 	topviewLocationCommentCell = nil;
 	resetSecurityWarningsCell = nil;
 }
@@ -322,6 +323,12 @@ enum TableSections
 	[tapViewController prepareToolbarsAndStatusbar];
 }
 
+- (void)changeTopviewRelocationGesture:(id)sender {
+	BOOL value = [sender isOn];
+	[[NSUserDefaults standardUserDefaults] setInteger:value forKey:kDefaultKeyTopviewRelocationGesture];
+	[tapViewController setTopviewRelocationGesture:value];
+}
+
 - (void)resetSecurityWarnings {
 	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Confirmation" message:@"Do you want to reset all security warnings?\nIf you click a Reset button, security warning dialogs will show again." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Reset", nil];
 	[alertView setTag:kResetSecurityWarningsTag];
@@ -443,11 +450,11 @@ enum TableSections
 			break;
 		case kSectionAccelMouse:
 		case kSectionApplication:
-		case kSectionButtonLocation:
 			number = 2;
 			break;
 		case kSectionButtonOptions:
 		case kSectionArrowKeyGestures:
+		case kSectionButtonLocation:
 			number = 3;
 			break;
 		case kSectionScrollingOptions:
@@ -496,7 +503,6 @@ enum TableSections
 		case kSectionToggleStatusbar:
 		case kSectionArrowKeyGestures:
 		case kSectionAccelMouse:
-		case kSectionButtonLocation:
 			switch ([indexPath row]) {
 				case 0:
 					height = kUIRowSegmentHeight;
@@ -506,6 +512,19 @@ enum TableSections
 					break;
 				default:
 					height = kUIRowSwitchHeight;
+					break;
+			}
+			break;
+		case kSectionButtonLocation:
+			switch ([indexPath row]) {
+				case 0:
+					height = kUIRowSegmentHeight;
+					break;
+				case 1:
+					height = kUIRowSwitchHeight;
+					break;
+				default:
+					height = kUIRowCommentHeight;
 					break;
 			}
 			break;
@@ -875,6 +894,19 @@ enum TableSections
 					[segment release];
 				}
 				cell = topviewLocationCell;
+			} else if (row == 1) {
+				if (topviewRelocationGestureCell == nil) {
+					cell = [self obtainTableCell];
+					topviewRelocationGestureCell = [cell retain];
+					[cell setText:@"Relocation Gesture"];
+					switchui = [[UISwitch alloc] initWithFrame:CGRectZero];
+					[switchui addTarget:self action:@selector(changeTopviewRelocationGesture:) forControlEvents:UIControlEventValueChanged];
+					switchui.on = tapViewController.topviewRelocationGesture;
+					switchui.backgroundColor = [UIColor clearColor];
+					[cell setAccessoryView:switchui];
+					[switchui release];
+				}
+				cell = topviewRelocationGestureCell;
 			} else {
 				if (topviewLocationCommentCell == nil) {
 					cell = [self obtainTableCell];
