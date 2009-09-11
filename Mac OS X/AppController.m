@@ -282,14 +282,15 @@
 - (CGPoint)getMousePointWithDeltaX:(int)x deltaY:(int)y
 {
 	CGPoint point;
-	Point globalPoint;
+	NSPoint globalPoint;
 	CGDirectDisplayID displayID;
 	CGDisplayCount displayCnt;
 	CGRect disp = CGDisplayBounds(kCGDirectMainDisplay);
 	
-	GetGlobalMouse(&globalPoint);
-	point.x = globalPoint.h;
-	point.y = globalPoint.v;
+	// NB: NSPoint and CGPoint have different Y coordinates (top vs bottom)
+	globalPoint = [NSEvent mouseLocation];
+	point.x = globalPoint.x;
+	point.y = disp.size.height - globalPoint.y;
 	if (x == 0 && y == 0)
 		return point;
 	
@@ -297,8 +298,8 @@
 	point.y += y;
 	if (CGGetDisplaysWithPoint(point, 1, &displayID, &displayCnt) != 0 || displayCnt < 1) {
 		CGPoint oldPoint;
-		oldPoint.x = globalPoint.h;
-		oldPoint.y = globalPoint.v;
+		oldPoint.x = globalPoint.x;
+		oldPoint.y = disp.size.height - globalPoint.y;
 		if (CGGetDisplaysWithPoint(oldPoint, 1, &displayID, &displayCnt) == 0 && displayCnt > 0)
 			disp = CGDisplayBounds(displayID);
 		if (point.x < disp.origin.x) point.x = disp.origin.x;
@@ -471,15 +472,21 @@
 	CFRelease(event);
 }
 
-- (void)prepareTables {
-	KeyboardLayoutRef keyboardLayoutRef;
-	if (KLGetCurrentKeyboardLayout(&keyboardLayoutRef) != noErr)
-		return;
-	UCKeyboardLayout *keyboarLayout = NULL;
-	if (KLGetKeyboardLayoutProperty(keyboardLayoutRef, kKLuchrData, (const void **)&keyboarLayout) != noErr) {
+- (void)prepareTables
+{
+	TISInputSourceRef keyboardLayoutRef;
+	const void *chr_data = NULL;
+	UCKeyboardLayout *keyboardLayout = NULL;
+	CFDataRef keyboardLayoutDataRef;
+	
+	keyboardLayoutRef = TISCopyCurrentKeyboardLayoutInputSource();
+	keyboardLayout = TISGetInputSourceProperty(keyboardLayoutRef, kTISPropertyUnicodeKeyLayoutData);
+	chr_data = CFDataGetBytePtr((CFDataRef)keyboardLayout);
+
+	if (keyboardLayout == NULL) {
 		currentKeyboardLayout = NULL;
-	} else if (currentKeyboardLayout != keyboarLayout) {
-		currentKeyboardLayout = keyboarLayout;
+	} else if (currentKeyboardLayout != keyboardLayout) {
+		currentKeyboardLayout = keyboardLayout;
 		memset(charToKey, 0xff, sizeof(CGKeyCode)*kNumUniChar);
 		memset(charToMod, 0, sizeof(UInt32)*kNumUniChar);
 		UInt32 keyboardType = LMGetKbdType();
@@ -491,7 +498,10 @@
 		for (int i = 0; i < kNumModifierKeyState; i++) {
 			UInt32 modifierKeyState = (modifierKeyStates[i] >> 8) & 0xff;
 			for (keyCode = 0; keyCode < 128; keyCode++) {
-				if (UCKeyTranslate(keyboarLayout, keyCode, kUCKeyActionDown, modifierKeyState, keyboardType, 1, &deadKeyState, 255, &actualStringLength, unicodeString) == noErr) {
+				if (UCKeyTranslate(chr_data, keyCode, kUCKeyActionDown, 
+								   modifierKeyState, keyboardType, 1,
+								   &deadKeyState, 255, &actualStringLength, 
+								   unicodeString) == noErr) {
 					unicodeString[actualStringLength] = 0;
 					if (actualStringLength == 1 && charToKey[unicodeString[0]] == 0xffff) {
 						charToKey[unicodeString[0]] = keyCode;
@@ -504,9 +514,10 @@
 		if (charToKey['\n'] == 0xffff)
 			charToKey['\n'] = kKeycodeReturn;
 	}
+#if 0
 	if (KLGetKeyboardLayoutProperty(keyboardLayoutRef, kKLKCHRData, (const void **)&keyboarLayout) != noErr) {
 		currentKeyboardLayoutKCHR = NULL;
-	} else if (currentKeyboardLayoutKCHR != keyboarLayout) {
+	} else if (currentKeyboardLayoutKCHR != keyboardLayout) {
 		currentKeyboardLayoutKCHR = keyboarLayout;
 		memset(charToKeyKCHR, 0xff, sizeof(CGKeyCode)*kNumUniChar);
 		memset(charToModKCHR, 0, sizeof(UInt32)*kNumUniChar);
@@ -544,6 +555,10 @@
 		if (charToKeyKCHR['\n'] == 0xffff)
 			charToKeyKCHR['\n'] = kKeycodeReturn;
 	}
+#endif
+	
+	if (keyboardLayoutRef)
+		CFRelease(keyboardLayoutRef);
 }
 
 - (void)simulateKeyWithUnichar:(MouseEvent)event0 {
@@ -561,13 +576,16 @@
 			modifierFlags |= kCGEventFlagMaskAlternate;
 		if (charToMod[event0.value] & shiftKey)
 			modifierFlags |= kCGEventFlagMaskShift;
-	} else if (currentKeyboardLayoutKCHR != NULL && charToKeyKCHR[event0.value] != 0xffff) {
+	}
+#if 0
+	else if (currentKeyboardLayoutKCHR != NULL && charToKeyKCHR[event0.value] != 0xffff) {
 		keyCode = charToKeyKCHR[event0.value];
 		if (charToModKCHR[event0.value] & optionKey)
 			modifierFlags |= kCGEventFlagMaskAlternate;
 		if (charToModKCHR[event0.value] & shiftKey)
 			modifierFlags |= kCGEventFlagMaskShift;
 	}
+#endif
 	
 	if (keyCode != 0xffff) {
 		CFRelease(CGEventCreate(NULL));
