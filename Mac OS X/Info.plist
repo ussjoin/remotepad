@@ -26,5 +26,7 @@
 	<string>NSApplication</string>
 	<key>NSUIElement</key>
 	<string>0</string>
+	<key>NSSupportsSuddenTermination</key>
+	<true/>
 </dict>
 </plist>
