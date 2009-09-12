@@ -263,7 +263,7 @@
 				NSMutableDictionary *infoDict = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
 				[infoDict setObject:[NSNumber numberWithBool:notInTheDock] forKey:@"NSUIElement"];
 				[infoDict writeToFile:plistPath atomically:NO];
-				[manager changeFileAttributes:[NSDictionary dictionaryWithObject:[NSDate date] forKey:NSFileModificationDate] atPath: [[NSBundle mainBundle] bundlePath]];
+				[manager setAttributes:[NSDictionary dictionaryWithObject:[NSDate date] forKey:NSFileModificationDate] ofItemAtPath:[[NSBundle mainBundle] bundlePath] error:NULL];
 			}
 		} else {
 			[NSApp activateIgnoringOtherApps:YES];
