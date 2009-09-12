@@ -477,7 +477,6 @@
 	TISInputSourceRef keyboardLayoutRef;
 	const void *chr_data = NULL;
 	UCKeyboardLayout *keyboardLayout = NULL;
-	CFDataRef keyboardLayoutDataRef;
 	
 	keyboardLayoutRef = TISCopyCurrentKeyboardLayoutInputSource();
 	keyboardLayout = TISGetInputSourceProperty(keyboardLayoutRef, kTISPropertyUnicodeKeyLayoutData);

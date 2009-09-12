@@ -64,7 +64,7 @@
 
 #define kNumUniChar 65536
 
-@interface AppController : NSObject <TCPServerDelegate> {
+@interface AppController : NSObject <TCPServerDelegate, NSStreamDelegate> {
 	TCPServer* _server;
 	NSInputStream* _inStream;
 	NSOutputStream* _outStream;
